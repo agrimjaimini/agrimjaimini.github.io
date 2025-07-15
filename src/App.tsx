@@ -67,7 +67,7 @@ interests ={ [
   "Blockchain",
   "Machine Learning",
   "NLP",]}
-            profileImage="/profile.jpg"
+  profileImage={`${process.env.PUBLIC_URL}/profile.jpg`}
             socialLinks={{
               github: "https://github.com/agrimjaimini",
               linkedin: "https://linkedin.com/in/agrimjaimini",
