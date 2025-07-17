@@ -26,7 +26,7 @@ const Projects: React.FC = () => {
       className="min-h-screen flex flex-col items-center justify-center text-center"
     >
       <h2 className="text-4xl md:text-5xl font-bold mb-8">Projects</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-5xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl px-8 py-12">
         {projects.map((project, i) => (
           <motion.div
             key={project.title}
@@ -41,7 +41,9 @@ const Projects: React.FC = () => {
             <div className="text-neutral-400 mb-3">{project.description}</div>
             <div className="flex flex-wrap gap-2 mb-4">
               {project.tech.map((tech) => (
-                <span key={tech} className="bg-neutral-700/80 px-3 py-1 rounded-full text-xs font-medium text-neutral-300 hover:bg-neutral-600 transition-colors duration-200">{tech}</span>
+                <span key={tech} className="bg-neutral-700/80 px-3 py-1 rounded-full text-xs font-medium text-neutral-200 transition-all duration-200 shadow hover:bg-primary/80 hover:scale-105 hover:shadow-lg">
+                  {tech}
+                </span>
               ))}
             </div>
             {project.demo && (

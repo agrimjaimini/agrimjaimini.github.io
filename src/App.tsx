@@ -22,36 +22,48 @@ export default function App() {
     <div className="text-white min-h-screen">
       {/* Animated black and white gradient background */}
       <div className="animated-bw-gradient" />
-      {/* SVG dots pattern overlay for texture */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-[-5] opacity-20 animate-dots"
-        style={{
-          backgroundImage:
-            'url("data:image/svg+xml,%3Csvg width=\'48\' height=\'48\' viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\' fill=\'%23fff\' fill-opacity=\'0.12\'/%3E%3C/svg%3E")',
-          backgroundRepeat: 'repeat',
-          backgroundSize: '48px 48px',
-        }}
-      />
-      <header className="sticky top-0 z-50 w-full backdrop-blur bg-black/70 border-b border-neutral-800">
-        <nav className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
-          <div className="font-bold text-lg tracking-tight">Agrim Jaimini</div>
-          <ul className="flex gap-6">
+      <header className="sticky top-0 z-50 w-full bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-xl rounded-b-2xl transition-all duration-300 supports-[backdrop-filter]:bg-white/30 supports-[backdrop-filter]:bg-opacity-60">
+        <nav className="max-w-5xl mx-auto flex items-center justify-between px-4 md:px-6 py-3 md:py-4">
+          <div className="flex items-center gap-3">
+            <span className="font-extrabold text-xl tracking-tight text-white drop-shadow-sm">Agrim Jaimini</span>
+          </div>
+          <ul className="flex gap-2 md:gap-6 bg-black/40 md:bg-black/60 rounded-full px-2 md:px-4 py-1 md:py-2 shadow border border-white/10 md:border-neutral-800 relative overflow-x-auto">
             {sections.map((section) => (
-              <li key={section.id}>
+              <li key={section.id} className="relative">
                 <Link
                   to={section.id}
                   smooth={true}
                   duration={500}
-                  offset={section.id === "contact" ? -25 : -80}
+                  offset={-80}
                   spy={true}
-                  activeClass="bg-neutral-700/80 text-primary rounded-full px-3 py-1 font-bold transition-colors duration-200"
-                  className="hover:text-primary transition-colors duration-200 cursor-pointer"
+                  activeClass="active-nav"
+                  className="navbar-link hover:text-primary hover:underline underline-offset-8 decoration-2 transition-all duration-200 cursor-pointer px-3 py-1 rounded-full font-semibold whitespace-nowrap"
                 >
                   {section.label}
                 </Link>
               </li>
             ))}
+            {/* Animated underline indicator */}
+            <style>{`
+              .active-nav {
+                color: #18181b !important;
+                background: #fff !important;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 9999px;
+                box-shadow: 0 2px 8px 0 rgba(24, 24, 27, 0.10);
+              }
+              .active-nav:hover {
+                color: #18181b !important;
+              }
+              .navbar-link {
+                color: #fff;
+                transition: color 0.2s;
+              }
+              .navbar-link:hover {
+                color: #fff;
+              }
+            `}</style>
           </ul>
         </nav>
       </header>
@@ -60,14 +72,14 @@ export default function App() {
           <Hero
             name="Agrim Jaimini"
             tagline="Computer Science @ Cornell University"
-interests ={ [
-  "Software Engineering",
-  "Data Science",
-  "Quantitative Finance",
-  "Blockchain",
-  "Machine Learning",
-  "NLP",]}
-  profileImage={`${process.env.PUBLIC_URL}/profile.jpg`}
+            interests ={ [
+              "Software Engineering",
+              "Data Science",
+              "Quantitative Finance",
+              "Blockchain",
+              "Machine Learning",
+              "NLP",]}
+            profileImage={`${process.env.PUBLIC_URL}/profile.jpg`}
             socialLinks={{
               github: "https://github.com/agrimjaimini",
               linkedin: "https://linkedin.com/in/agrimjaimini",
@@ -87,10 +99,15 @@ interests ={ [
         <Element name="experience" style={{ scrollMarginTop: 80 }}>
           <Experience />
         </Element>
-        <Element name="contact" style={{ scrollMarginTop: 100 }}>
+        <Element name="contact" style={{ scrollMarginTop: 80 }}>
           <Contact />
         </Element>
       </main>
+      
+      {/* Footer */}
+      <footer className="text-center py-6 text-neutral-400 text-sm">
+        <p>&copy; 2025 Agrim Jaimini. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

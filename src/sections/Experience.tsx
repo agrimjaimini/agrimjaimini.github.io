@@ -12,7 +12,7 @@ const Experience: React.FC = () => {
       className="min-h-screen flex flex-col items-center justify-center text-center"
     >
       <h2 className="text-4xl md:text-5xl font-bold mb-8">Experience</h2>
-      <div className="relative w-full max-w-2xl mx-auto">
+      <div className="relative w-full max-w-4xl px-8 py-12 mx-auto">
         {/* Vertical timeline line */}
         <div className="absolute left-4 top-0 bottom-0 w-1 bg-neutral-800 rounded-full" style={{ zIndex: 0 }} />
         <div className="space-y-12 pl-12">

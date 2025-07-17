@@ -10,7 +10,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: "Cortex",
-    description: "Developed a digital second brain application that clusters user-inputted notes based on semantic similarity. Leveraged a fine-tuned SentenceTransformer model for embeddings and implemented a dynamic clustering backend via K-Means in Python. Built an intuitive React interface to display clustered insights, and integrated MongoDB for scalable data storage. Designed with modularity for future support of PDFs, videos, and advanced retrieval.",
+    description: "Developed a digital second brain application that clusters user-inputted notes based on semantic similarity. Leveraged a fine-tuned SentenceTransformer model for embeddings and implemented a dynamic clustering backend via K-Means in Python. Built an intuitive React interface to display clustered insights, and integrated MongoDB for scalable data storage. Designed with modularity for future support of videos and other diverse data types.",
     tech: ["React", "Node.js", "MongoDB", "Python", "SentenceTransformers"],
     date: "July 2025",
     github: "https://github.com/agrimjaimini/cortex" // replace with actual link if different

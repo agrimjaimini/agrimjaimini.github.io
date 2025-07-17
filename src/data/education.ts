@@ -17,7 +17,7 @@ export const education: Education[] = [
       "Database Systems",
       "Data Structures and Object-Oriented Programming (Java)",
       "Functional Programming and Advanced Data Structure (OCaml)",
-    "Discrete Math"
+    "Discrete Math", "Linear Algebra"
     ]
   }
 ]; 

@@ -14,7 +14,7 @@ const Skills: React.FC = () => {
       className="min-h-screen flex flex-col items-center justify-center text-center"
     >
       <h2 className="text-4xl md:text-5xl font-bold mb-8">Tech Skills</h2>
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-4xl px-8 py-12">
         {categories.map((cat) => (
           <div key={cat} className="mb-6">
             <div className="text-left text-lg font-semibold mb-2 text-neutral-300">{cat}</div>
@@ -22,7 +22,7 @@ const Skills: React.FC = () => {
               {skills.filter((s) => s.category === cat).map((skill) => (
                 <span
                   key={skill.name}
-                  className="bg-neutral-700/80 px-3 py-1 rounded-full text-xs font-medium text-neutral-300 hover:bg-neutral-600 transition-colors duration-200"
+                  className="bg-neutral-700/80 px-3 py-1 rounded-full text-xs font-medium text-neutral-200 transition-all duration-200 shadow hover:bg-primary/80 hover:scale-105 hover:shadow-lg"
                 >
                   {skill.name}
                 </span>
