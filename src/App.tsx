@@ -1,12 +1,22 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import "./index.css";
-import Hero from "./sections/Hero";
-import Projects from "./sections/Projects";
-import Skills from "./sections/Skills";
-import Experience from "./sections/Experience";
-import Contact from "./sections/Contact";
-import Education from "./sections/Education";
-import { Link, Element } from "react-scroll";
+import LoadingSkeleton from "./components/LoadingSkeleton";
+import ScrollProgress from "./components/ScrollProgress";
+import FloatingNav from "./components/FloatingNav";
+import FloatingActionButton from "./components/FloatingActionButton";
+import ParticleBackground from "./components/ParticleBackground";
+import MetaTags from "./components/MetaTags";
+import ParallaxSection from "./components/ParallaxSection";
+import Navbar from "./components/Navbar";
+import { Element } from "react-scroll";
+
+// Lazy load sections for better performance
+const Hero = lazy(() => import("./sections/Hero"));
+const Projects = lazy(() => import("./sections/Projects"));
+const Skills = lazy(() => import("./sections/Skills"));
+const Experience = lazy(() => import("./sections/Experience"));
+const Contact = lazy(() => import("./sections/Contact"));
+const Education = lazy(() => import("./sections/Education"));
 
 const sections = [
   { id: "hero", label: "About" },
@@ -19,94 +29,109 @@ const sections = [
 
 export default function App() {
   return (
-    <div className="text-white min-h-screen">
-      {/* Animated black and white gradient background */}
+    <div className="text-neutral-900 dark:text-white min-h-screen">
+      {/* Meta Tags */}
+      <MetaTags />
+      
+      {/* Particle Background */}
+      <ParticleBackground />
+      
+      {/* Scroll Progress Indicator */}
+      <ScrollProgress />
+      
+      {/* Floating Navigation */}
+      <FloatingNav sections={sections} />
+      
+      {/* Floating Action Button */}
+      <FloatingActionButton
+        socialLinks={{
+          github: "https://github.com/agrimjaimini",
+          linkedin: "https://linkedin.com/in/agrimjaimini",
+          email: "aj638@cornell.edu",
+        }}
+      />
+      
+      {/* Animated gradient background */}
       <div className="animated-bw-gradient" />
-      <header className="sticky top-0 z-50 w-full bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-xl rounded-b-2xl transition-all duration-300 supports-[backdrop-filter]:bg-white/30 supports-[backdrop-filter]:bg-opacity-60">
-        <nav className="max-w-5xl mx-auto flex items-center justify-between px-4 md:px-6 py-3 md:py-4">
-          <div className="flex items-center gap-3">
-            <span className="font-extrabold text-xl tracking-tight text-white drop-shadow-sm">Agrim Jaimini</span>
-          </div>
-          <ul className="flex gap-2 md:gap-6 bg-black/40 md:bg-black/60 rounded-full px-2 md:px-4 py-1 md:py-2 shadow border border-white/10 md:border-neutral-800 relative overflow-x-auto">
-            {sections.map((section) => (
-              <li key={section.id} className="relative">
-                <Link
-                  to={section.id}
-                  smooth={true}
-                  duration={500}
-                  offset={-80}
-                  spy={true}
-                  activeClass="active-nav"
-                  className="navbar-link hover:text-primary hover:underline underline-offset-8 decoration-2 transition-all duration-200 cursor-pointer px-3 py-1 rounded-full font-semibold whitespace-nowrap"
-                >
-                  {section.label}
-                </Link>
-              </li>
-            ))}
-            {/* Animated underline indicator */}
-            <style>{`
-              .active-nav {
-                color: #18181b !important;
-                background: #fff !important;
-                text-decoration: none;
-                font-weight: bold;
-                border-radius: 9999px;
-                box-shadow: 0 2px 8px 0 rgba(24, 24, 27, 0.10);
-              }
-              .active-nav:hover {
-                color: #18181b !important;
-              }
-              .navbar-link {
-                color: #fff;
-                transition: color 0.2s;
-              }
-              .navbar-link:hover {
-                color: #fff;
-              }
-            `}</style>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <Element name="hero" style={{ scrollMarginTop: 80 }}>
-          <Hero
-            name="Agrim Jaimini"
-            tagline="Computer Science @ Cornell University"
-            interests ={ [
-              "Software Engineering",
-              "Data Science",
-              "Quantitative Finance",
-              "Blockchain",
-              "Machine Learning",
-              "NLP",]}
-            profileImage={`${process.env.PUBLIC_URL}/profile.jpg`}
-            socialLinks={{
-              github: "https://github.com/agrimjaimini",
-              linkedin: "https://linkedin.com/in/agrimjaimini",
-              email: "aj638@cornell.edu",
-            }}
-          />
+      
+      {/* Floating parallax background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <ParallaxSection speed={0.2} className="absolute top-20 left-10 w-72 h-72 bg-primary-500/5 rounded-full blur-3xl" />
+        <ParallaxSection speed={0.3} direction="down" className="absolute top-96 right-20 w-96 h-96 bg-accent-500/5 rounded-full blur-3xl" />
+        <ParallaxSection speed={0.15} className="absolute bottom-96 left-1/3 w-64 h-64 bg-primary-400/5 rounded-full blur-3xl" />
+      </div>
+      
+      <Navbar sections={sections} />
+      
+      <main className="relative z-10 overflow-x-hidden">
+        <Element name="hero" style={{ scrollMarginTop: 100 }}>
+          <Suspense fallback={<LoadingSkeleton />}>
+            <Hero
+              name="Agrim Jaimini"
+              tagline="Computer Science @ Cornell University"
+              interests={[
+                "Software Engineering",
+                "Data Science",
+                "Quantitative Finance",
+                "Blockchain",
+                "Machine Learning",
+                "NLP",
+              ]}
+              profileImage={`${process.env.PUBLIC_URL}/profile.jpg`}
+              socialLinks={{
+                github: "https://github.com/agrimjaimini",
+                linkedin: "https://linkedin.com/in/agrimjaimini",
+                email: "aj638@cornell.edu",
+              }}
+            />
+          </Suspense>
         </Element>
-        <Element name="projects" style={{ scrollMarginTop: 80 }}>
-          <Projects />
+        
+        <Element name="projects" style={{ scrollMarginTop: 100 }}>
+          <ParallaxSection speed={0.1}>
+            <Suspense fallback={<LoadingSkeleton />}>
+              <Projects />
+            </Suspense>
+          </ParallaxSection>
         </Element>
-        <Element name="skills" style={{ scrollMarginTop: 80 }}>
-          <Skills />
+        
+        <Element name="skills" style={{ scrollMarginTop: 100 }}>
+          <ParallaxSection speed={0.15} direction="down">
+            <Suspense fallback={<LoadingSkeleton />}>
+              <Skills />
+            </Suspense>
+          </ParallaxSection>
         </Element>
-        <Element name="education" style={{ scrollMarginTop: 80 }}>
-          <Education />
+        
+        <Element name="education" style={{ scrollMarginTop: 100 }}>
+          <ParallaxSection speed={0.1}>
+            <Suspense fallback={<LoadingSkeleton />}>
+              <Education />
+            </Suspense>
+          </ParallaxSection>
         </Element>
-        <Element name="experience" style={{ scrollMarginTop: 80 }}>
-          <Experience />
+        
+        <Element name="experience" style={{ scrollMarginTop: 100 }}>
+          <ParallaxSection speed={0.12} direction="down">
+            <Suspense fallback={<LoadingSkeleton />}>
+              <Experience />
+            </Suspense>
+          </ParallaxSection>
         </Element>
-        <Element name="contact" style={{ scrollMarginTop: 80 }}>
-          <Contact />
+        
+        <Element name="contact" style={{ scrollMarginTop: 100 }}>
+          <Suspense fallback={<LoadingSkeleton />}>
+            <Contact />
+          </Suspense>
         </Element>
       </main>
       
-      {/* Footer */}
-      <footer className="text-center py-6 text-neutral-400 text-sm">
-        <p>&copy; 2025 Agrim Jaimini. All rights reserved.</p>
+      {/* Enhanced Footer */}
+      <footer className="relative z-10 text-center py-8 px-4 text-neutral-600 dark:text-neutral-400 text-sm border-t border-neutral-200 dark:border-white/5 glass">
+        <div className="max-w-4xl mx-auto">
+          <p className="font-medium">&copy; 2025 Agrim Jaimini. All rights reserved.</p>
+          <p className="text-neutral-500 dark:text-neutral-500 mt-2">Built with React, TypeScript, and Tailwind CSS</p>
+        </div>
       </footer>
     </div>
   );

@@ -13,11 +13,11 @@ export const education: Education[] = [
     duration: "Expected May 2027",
     gpa: "3.96",
     coursework: [
-      "Machine Learning",
-      "Database Systems",
+
       "Data Structures and Object-Oriented Programming (Java)",
-      "Functional Programming and Advanced Data Structure (OCaml)",
-    "Discrete Math", "Linear Algebra"
+      "Functional Programming and Advanced Data Structure (OCaml)",      "Machine Learning",
+      "Database Systems",
+    "Discrete Math", "Linear Algebra", "Backend Development", "Blockchain Technology"
     ]
   }
 ]; 
