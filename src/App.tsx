@@ -3,7 +3,6 @@ import "./index.css";
 import LoadingSkeleton from "./components/LoadingSkeleton";
 import ScrollProgress from "./components/ScrollProgress";
 import FloatingNav from "./components/FloatingNav";
-import FloatingActionButton from "./components/FloatingActionButton";
 import ParticleBackground from "./components/ParticleBackground";
 import MetaTags from "./components/MetaTags";
 import ParallaxSection from "./components/ParallaxSection";
@@ -41,15 +40,6 @@ export default function App() {
       
       {/* Floating Navigation */}
       <FloatingNav sections={sections} />
-      
-      {/* Floating Action Button */}
-      <FloatingActionButton
-        socialLinks={{
-          github: "https://github.com/agrimjaimini",
-          linkedin: "https://linkedin.com/in/agrimjaimini",
-          email: "aj638@cornell.edu",
-        }}
-      />
       
       {/* Animated gradient background */}
       <div className="animated-bw-gradient" />

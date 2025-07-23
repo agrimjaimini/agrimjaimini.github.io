@@ -8,8 +8,17 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
+    company: "Ripple Labs",
+    title: "Software Engineering Fellow",
+    duration: "Jun 2025 -- Present",
+    location: "New York City, NY",
+    points: [
+      "Built and demoed blockchain applications as part of the XRPL Student Builder Residency",
+    ]
+  },
+  {
     company: "Texas Instruments",
-    title: "Machine Learning Engineering Intern (Research Collaborator)",
+    title: "Machine Learning Engineering Intern",
     duration: "Jun 2025 -- Present",
     location: "Dallas, TX",
     points: [

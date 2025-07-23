@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, MessageCircle, ArrowUpRight } from "lucide-react";
+import { Mail, Linkedin, MessageCircle, ArrowUpRight, Calendar } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -49,16 +49,6 @@ const Contact: React.FC = () => {
       borderColor: "hover:border-blue-500/50"
     },
     {
-      icon: Github,
-      title: "GitHub",
-      value: "agrimjaimini",
-      href: "https://github.com/agrimjaimini",
-      description: "View my projects",
-      color: "hover:text-neutral-100",
-      bgColor: "hover:bg-neutral-500/10",
-      borderColor: "hover:border-neutral-500/50"
-    },
-    {
       icon: MessageCircle,
       title: "Telegram",
       value: "agrimjaimini",
@@ -67,6 +57,16 @@ const Contact: React.FC = () => {
       color: "hover:text-blue-400",
       bgColor: "hover:bg-blue-500/10",
       borderColor: "hover:border-blue-500/50"
+    },
+    {
+      icon: Calendar,
+      title: "Book a Meeting",
+      value: "15/30 Min Call",
+      href: "https://cal.com/agrim-jaimini",
+      description: "Schedule a call with me",
+      color: "hover:text-green-500",
+      bgColor: "hover:bg-green-500/10",
+      borderColor: "hover:border-green-500/50"
     }
   ];
 
