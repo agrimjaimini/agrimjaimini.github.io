@@ -24,7 +24,7 @@ const FloatingNav: React.FC<FloatingNavProps> = ({ sections }) => {
     switch (sectionId) {
       case 'hero': return Home;
       case 'projects': return Code;
-      case 'skills': return Code;
+      case 'skills': return User;
       case 'education': return GraduationCap;
       case 'experience': return Briefcase;
       case 'contact': return Mail;
