@@ -14,6 +14,10 @@ export const experience: Experience[] = [
     location: "New York City, NY",
     points: [
       "Built and demoed blockchain applications as part of the XRPL Student Builder Residency",
+      "Designed and implemented a feature bounty platform on the XRP Ledger to streamline funding for open-source development",
+      "Used native XRPL functions like EscrowCreate, EscrowFinish, and EscrowCancel to hold funds in escrow and release them only when code was merged",
+      "Built secure wallet interactions and on-chain logic to ensure transparent, automatic payment and refund handling",
+      "Enabled developers to link GitHub issues directly to escrows, making it easier for maintainers to highlight high-priority tasks and for contributors to trust payouts"
     ]
   },
   {

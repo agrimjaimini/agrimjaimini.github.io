@@ -81,7 +81,7 @@ const Skills: React.FC = () => {
                 <motion.div
                   whileHover={{ scale: 1.02, y: -4 }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg p-6 relative overflow-hidden hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
+                  className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg p-6 relative overflow-visible hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
                 >
                   {/* Hover gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -92,7 +92,7 @@ const Skills: React.FC = () => {
                   <div className="relative z-10">
                     {/* Category header */}
                     <div className="flex items-center justify-between mb-6">
-                      <h3 className="font-display font-bold text-xl text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
+                      <h3 className="font-editorial font-light text-xl text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
                         {category}
                       </h3>
                       <div className="text-sm text-neutral-600 dark:text-neutral-500 font-medium">
@@ -101,7 +101,7 @@ const Skills: React.FC = () => {
                     </div>
                     
                     {/* Skills grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 relative overflow-visible">
                       {categorySkills.map((skill, skillIndex) => (
                         <motion.div
                           key={skill.name}
@@ -112,7 +112,7 @@ const Skills: React.FC = () => {
                             y: -2
                           }}
                           whileTap={{ scale: 0.95 }}
-                          className="group/skill"
+                          className="group/skill relative"
                         >
                           <div className="relative p-3 rounded-xl bg-neutral-100/80 dark:bg-neutral-800/40 border border-neutral-300/50 dark:border-neutral-700/30 hover:border-primary-500/50 hover:bg-primary-500/10 transition-all duration-300 cursor-default">
                             {/* Skill name */}
@@ -127,6 +127,16 @@ const Skills: React.FC = () => {
                             
                             {/* Subtle glow effect */}
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-500/10 to-accent-500/10 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300" />
+                          </div>
+                          
+                          {/* Tooltip with usedIn information */}
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-white dark:bg-neutral-900 border border-primary-500/30 dark:border-primary-400/30 text-neutral-800 dark:text-neutral-100 text-xs rounded-xl shadow-2xl opacity-0 group-hover/skill:opacity-100 transition-all duration-300 pointer-events-none z-50 max-w-xs group-hover/skill:translate-y-0 translate-y-1 hover:opacity-100">
+                            <div className="font-medium text-sm mb-2 text-primary-600 dark:text-primary-400">{skill.name}</div>
+                            <div className="text-neutral-600 dark:text-neutral-300 text-xs leading-relaxed break-words">
+                              {skill.usedIn}
+                            </div>
+                            {/* Tooltip arrow */}
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white dark:border-t-neutral-900"></div>
                           </div>
                         </motion.div>
                       ))}

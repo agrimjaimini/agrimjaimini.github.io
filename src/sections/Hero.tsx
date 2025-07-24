@@ -97,7 +97,7 @@ const Hero: React.FC<HeroProps> = ({ name, tagline, interests, profileImage, soc
             {/* Name */}
             <motion.h1
               variants={itemVariants}
-              className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-3 text-gradient-primary leading-tight tracking-tight py-1 md:py-2 lg:py-3"
+              className="font-editorial text-4xl md:text-6xl lg:text-7xl font-light mb-2 md:mb-3 text-gradient-primary leading-tight tracking-tight py-1 md:py-2 lg:py-3"
               style={{ 
                 textRendering: 'optimizeLegibility',
                 WebkitFontSmoothing: 'antialiased',

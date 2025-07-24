@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+// Helper function to detect dark mode
+const isDarkMode = () => {
+  return document.documentElement.classList.contains('dark');
+};
+
 interface Particle {
   x: number;
   y: number;
@@ -135,9 +140,17 @@ const ParticleBackground: React.FC = () => {
           particle.x, particle.y, 0,
           particle.x, particle.y, particle.size * 2
         );
-        gradient.addColorStop(0, `rgba(14, 165, 233, ${particle.opacity})`);
-        gradient.addColorStop(0.5, `rgba(14, 165, 233, ${particle.opacity * 0.5})`);
-        gradient.addColorStop(1, `rgba(14, 165, 233, 0)`);
+        
+        const darkMode = isDarkMode();
+        if (darkMode) {
+          gradient.addColorStop(0, `rgba(255, 255, 255, ${particle.opacity})`);
+          gradient.addColorStop(0.5, `rgba(163, 163, 163, ${particle.opacity * 0.5})`);
+          gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+        } else {
+          gradient.addColorStop(0, `rgba(0, 0, 0, ${particle.opacity})`);
+          gradient.addColorStop(0.5, `rgba(64, 64, 64, ${particle.opacity * 0.5})`);
+          gradient.addColorStop(1, `rgba(0, 0, 0, 0)`);
+        }
         
         ctx.fillStyle = gradient;
         ctx.fill();
@@ -166,7 +179,8 @@ const ParticleBackground: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(14, 165, 233, ${opacity})`;
+            const darkMode = isDarkMode();
+            ctx.strokeStyle = darkMode ? `rgba(255, 255, 255, ${opacity})` : `rgba(0, 0, 0, ${opacity})`;
             ctx.lineWidth = lineWidth;
             ctx.stroke();
           }

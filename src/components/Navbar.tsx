@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Link } from 'react-scroll';
-import { Menu, X, ChevronDown, Home, Briefcase, Code, GraduationCap, User, Mail } from 'lucide-react';
+import { Menu, X, Home, Briefcase, Code, GraduationCap, User, Mail } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 interface NavbarProps {
@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections }) => {
               className="relative group cursor-pointer"
               onClick={() => handleNavClick('hero')}
             >
-              <span className="font-display font-bold text-xl lg:text-2xl tracking-tight text-neutral-900 dark:text-white drop-shadow-sm">
+                              <span className="font-editorial font-light text-xl lg:text-2xl tracking-tight text-neutral-900 dark:text-white drop-shadow-sm">
                 Agrim Jaimini
               </span>
               <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 transition-all duration-300 group-hover:w-full"></div>
@@ -126,8 +126,8 @@ const Navbar: React.FC<NavbarProps> = ({ sections }) => {
                   <Link
                     to={section.id}
                     smooth={true}
-                    duration={500}
-                    offset={-100}
+                    duration={800}
+                    offset={-80}
                     spy={true}
                     activeClass="active-nav"
                     onClick={() => handleNavClick(section.id)}
@@ -213,8 +213,10 @@ const Navbar: React.FC<NavbarProps> = ({ sections }) => {
                         <Link
                           to={section.id}
                           smooth={true}
-                          duration={500}
-                          offset={-100}
+                          duration={800}
+                          offset={-80}
+                          spy={true}
+                          activeClass="active-nav"
                           onClick={() => handleNavClick(section.id)}
                           className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all duration-300 cursor-pointer ${
                             activeSection === section.id 

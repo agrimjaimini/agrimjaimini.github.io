@@ -31,13 +31,13 @@ const Typography: React.FC<TypographyProps> = ({
   const baseClasses = "text-optimize-legibility";
   
   const variantClasses = {
-    h1: "text-4xl md:text-5xl lg:text-6xl font-bold font-display tracking-tight",
-    h2: "text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight",
-    h3: "text-2xl md:text-3xl lg:text-4xl font-semibold font-display tracking-tight",
-    h4: "text-xl md:text-2xl lg:text-3xl font-semibold font-display tracking-tight",
-    h5: "text-lg md:text-xl lg:text-2xl font-medium font-display tracking-tight",
-    h6: "text-base md:text-lg lg:text-xl font-medium font-display tracking-tight",
-    hero: "text-5xl md:text-7xl lg:text-8xl font-black font-display tracking-tighter leading-none text-balance",
+      h1: "text-4xl md:text-5xl lg:text-6xl font-light font-editorial tracking-tight",
+  h2: "text-3xl md:text-4xl lg:text-5xl font-light font-editorial tracking-tight",
+  h3: "text-2xl md:text-3xl lg:text-4xl font-light font-editorial tracking-tight",
+  h4: "text-xl md:text-2xl lg:text-3xl font-light font-editorial tracking-tight",
+  h5: "text-lg md:text-xl lg:text-2xl font-light font-editorial tracking-tight",
+  h6: "text-base md:text-lg lg:text-xl font-light font-editorial tracking-tight",
+  hero: "text-5xl md:text-7xl lg:text-8xl font-light font-editorial tracking-tighter leading-none text-balance",
     "hero-subtitle": "text-xl md:text-2xl lg:text-3xl font-medium font-sans tracking-tight leading-relaxed text-balance",
     "body-large": "text-lg md:text-xl font-normal font-sans leading-relaxed",
     body: "text-base font-normal font-sans leading-relaxed",

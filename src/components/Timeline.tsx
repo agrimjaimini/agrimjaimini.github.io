@@ -117,7 +117,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title, type }) => {
                       {/* Header */}
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
                         <div className="flex-1">
-                          <h3 className="font-display font-bold text-xl text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
+                          <h3 className="font-sans font-bold text-xl text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
                             {item.title}
                           </h3>
                           <p className="text-primary-300 font-semibold text-lg mt-1">
@@ -173,7 +173,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title, type }) => {
                       {/* Relevant courses for education */}
                       {item.courses && item.courses.length > 0 && (
                         <div>
-                          <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 mb-2">Relevant Coursework:</h4>
+                          <h4 className="text-sm font-semibold font-sans text-neutral-600 dark:text-neutral-400 mb-2">Relevant Coursework:</h4>
                           <div className="flex flex-wrap gap-2">
                             {item.courses.map((course, courseIndex) => (
                               <motion.span

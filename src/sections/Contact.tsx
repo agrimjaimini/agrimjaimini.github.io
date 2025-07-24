@@ -128,7 +128,7 @@ const Contact: React.FC = () => {
                           <Icon className={`w-6 h-6 text-neutral-600 dark:text-neutral-400 transition-colors duration-300 ${method.color}`} />
                         </div>
                         <div>
-                          <h3 className="font-display font-bold text-xl text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
+                          <h3 className="font-editorial font-light text-xl text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
                             {method.title}
                           </h3>
                           <p className="text-sm text-neutral-600 dark:text-neutral-500 mt-1">
@@ -168,7 +168,7 @@ const Contact: React.FC = () => {
           className="text-center mt-12"
         >
           <div className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-            <h3 className="font-display font-bold text-2xl text-neutral-800 dark:text-neutral-100 mb-4">
+                          <h3 className="font-editorial font-light text-2xl text-neutral-800 dark:text-neutral-100 mb-4">
               Let's Build Something Amazing Together
             </h3>
             <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">

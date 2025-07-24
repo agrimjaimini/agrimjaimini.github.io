@@ -54,7 +54,7 @@ export default function App() {
       <Navbar sections={sections} />
       
       <main className="relative z-10 overflow-x-hidden">
-        <Element name="hero" style={{ scrollMarginTop: 100 }}>
+        <Element name="hero" style={{ scrollMarginTop: 80 }}>
           <Suspense fallback={<LoadingSkeleton />}>
             <Hero
               name="Agrim Jaimini"
@@ -77,7 +77,7 @@ export default function App() {
           </Suspense>
         </Element>
         
-        <Element name="projects" style={{ scrollMarginTop: 100 }}>
+        <Element name="projects" style={{ scrollMarginTop: 80 }}>
           <ParallaxSection speed={0.1}>
             <Suspense fallback={<LoadingSkeleton />}>
               <Projects />
@@ -85,7 +85,7 @@ export default function App() {
           </ParallaxSection>
         </Element>
         
-        <Element name="skills" style={{ scrollMarginTop: 100 }}>
+        <Element name="skills" style={{ scrollMarginTop: 80 }}>
           <ParallaxSection speed={0.15} direction="down">
             <Suspense fallback={<LoadingSkeleton />}>
               <Skills />
@@ -93,7 +93,7 @@ export default function App() {
           </ParallaxSection>
         </Element>
         
-        <Element name="education" style={{ scrollMarginTop: 100 }}>
+        <Element name="education" style={{ scrollMarginTop: 80 }}>
           <ParallaxSection speed={0.1}>
             <Suspense fallback={<LoadingSkeleton />}>
               <Education />
@@ -101,7 +101,7 @@ export default function App() {
           </ParallaxSection>
         </Element>
         
-        <Element name="experience" style={{ scrollMarginTop: 100 }}>
+        <Element name="experience" style={{ scrollMarginTop: 80 }}>
           <ParallaxSection speed={0.12} direction="down">
             <Suspense fallback={<LoadingSkeleton />}>
               <Experience />
@@ -109,7 +109,7 @@ export default function App() {
           </ParallaxSection>
         </Element>
         
-        <Element name="contact" style={{ scrollMarginTop: 100 }}>
+        <Element name="contact" style={{ scrollMarginTop: 80 }}>
           <Suspense fallback={<LoadingSkeleton />}>
             <Contact />
           </Suspense>

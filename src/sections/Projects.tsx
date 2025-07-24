@@ -76,7 +76,7 @@ const Projects: React.FC = () => {
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <h3 className="font-display font-bold text-xl mb-2 text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
+                      <h3 className="font-editorial font-light text-xl mb-2 text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
                         {project.title}
                       </h3>
                       {project.date && (

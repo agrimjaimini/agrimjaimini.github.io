@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp, Home, Briefcase, Code, GraduationCap, User, Mail, X } from 'lucide-react';
+import { Link } from 'react-scroll';
 
 interface FloatingNavProps {
   sections: Array<{ id: string; label: string }>;
@@ -31,12 +32,8 @@ const FloatingNav: React.FC<FloatingNavProps> = ({ sections }) => {
     }
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
-    }
+  const handleSectionClick = (sectionId: string) => {
+    setIsOpen(false);
   };
 
   if (!scrolled) return null;
@@ -61,18 +58,27 @@ const FloatingNav: React.FC<FloatingNavProps> = ({ sections }) => {
                 {sections.map((section, index) => {
                   const Icon = getIcon(section.id);
                   return (
-                    <motion.button
+                    <Link
                       key={section.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      onClick={() => scrollToSection(section.id)}
-                      className="p-3 glass rounded-xl hover:glass-strong transition-all duration-200 group"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      to={section.id}
+                      smooth={true}
+                      duration={800}
+                      offset={-80}
+                      onClick={() => handleSectionClick(section.id)}
+                      spy={true}
+                      activeClass="active-nav"
                     >
-                      <Icon className="w-5 h-5 text-neutral-700 dark:text-neutral-300 group-hover:text-primary-500 transition-colors duration-200" />
-                    </motion.button>
+                      <motion.button
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.2, delay: index * 0.05 }}
+                        className="p-3 glass rounded-xl hover:glass-strong transition-all duration-200 group"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Icon className="w-5 h-5 text-neutral-700 dark:text-neutral-300 group-hover:text-primary-500 transition-colors duration-200" />
+                      </motion.button>
+                    </Link>
                   );
                 })}
               </div>
