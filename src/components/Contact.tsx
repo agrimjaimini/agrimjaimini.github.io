@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 export default function Contact() {
     const fadeInUp = {
         hidden: { y: 20, scale: 0.95 },
-        visible: { y: 0, scale: 1, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } }
+        visible: { y: 0, scale: 1, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const } }
     };
 
     return (
@@ -38,7 +38,7 @@ export default function Contact() {
                                 viewport={{ once: true, margin: "-50px" }}
                                 variants={{
                                     hidden: { y: 20, scale: 0.95 },
-                                    visible: { y: 0, scale: 1, transition: { duration: 0.5, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] } }
+                                    visible: { y: 0, scale: 1, transition: { duration: 0.5, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] as const } }
                                 }}
                                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             >
