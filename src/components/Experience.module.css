@@ -1,0 +1,81 @@
+.section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    z-index: 1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.card {
+    padding: var(--spacing-md);
+    border-radius: 12px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--spacing-xs);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.role {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.company {
+    color: var(--accent);
+}
+
+.duration {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+.location {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.point {
+    color: var(--text-dim);
+    line-height: 1.6;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.point::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+    }
+}

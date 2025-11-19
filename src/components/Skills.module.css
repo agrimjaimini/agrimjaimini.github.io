@@ -1,0 +1,114 @@
+.section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    z-index: 1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: var(--spacing-md);
+    align-items: start;
+}
+
+.categoryCard {
+    padding: 2rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.categoryTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+}
+
+.skillList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.skillItem {
+    position: relative;
+}
+
+.skillPill {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    transition: all 0.3s ease;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.skillPill:hover {
+    background: rgba(37, 99, 235, 0.1);
+    border-color: var(--accent);
+    color: var(--foreground);
+    transform: translateY(-2px);
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    width: max-content;
+    max-width: 250px;
+    padding: 1rem;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.skillItem:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.tooltipTitle {
+    display: block;
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.tooltipDesc {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.tooltipUsed {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-family: var(--font-mono);
+}

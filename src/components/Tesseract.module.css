@@ -1,0 +1,175 @@
+.scene {
+    width: 300px;
+    height: 300px;
+    perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+}
+
+.scene:active {
+    cursor: grabbing;
+}
+
+.tesseract {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin 60s linear infinite;
+}
+
+.cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.outer {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    /* Scale AI Style: Pastel Matte Gradient */
+    /* Lavender -> Pastel Blue -> Pastel Pink */
+    background: linear-gradient(135deg, rgba(233, 213, 255, 0.9), rgba(147, 197, 253, 0.8), rgba(251, 207, 232, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    /* Strong blur for matte look */
+    box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+/* Face Transforms */
+.front {
+    transform: translateZ(100px);
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(100px);
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(100px);
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(100px);
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(100px);
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(100px);
+}
+
+/* Inner Cube - Offset and Intersecting */
+.inner {
+    width: 120px;
+    height: 120px;
+    top: -30px;
+    left: 40px;
+    animation: breathe 8s ease-in-out infinite;
+}
+
+.inner .face {
+    width: 120px;
+    height: 120px;
+    /* Slightly different gradient for contrast */
+    background: linear-gradient(135deg, rgba(147, 197, 253, 0.9), rgba(233, 213, 255, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.inner .front {
+    transform: translateZ(60px);
+}
+
+.inner .back {
+    transform: rotateY(180deg) translateZ(60px);
+}
+
+.inner .right {
+    transform: rotateY(90deg) translateZ(60px);
+}
+
+.inner .left {
+    transform: rotateY(-90deg) translateZ(60px);
+}
+
+.inner .top {
+    transform: rotateX(90deg) translateZ(60px);
+}
+
+.inner .bottom {
+    transform: rotateX(-90deg) translateZ(60px);
+}
+
+/* Core (Glowing Center) - Subtle pulse */
+.core {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(233, 213, 255, 0.8) 50%, transparent 100%);
+    border-radius: 50%;
+    top: 10px;
+    left: 80px;
+    box-shadow: 0 0 60px rgba(233, 213, 255, 0.6), 0 0 80px rgba(147, 197, 253, 0.4);
+    filter: blur(12px);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: scale3d(1, 1, 1) rotate3d(1, 1, 1, 0deg);
+    }
+
+    50% {
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(1, 1, 1, 5deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.1);
+    }
+}
+
+/* Particles */
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white;
+}
