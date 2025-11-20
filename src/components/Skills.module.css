@@ -2,6 +2,21 @@
     padding: var(--spacing-xl) 0;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+/* Subtle background glow */
+.section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(233, 213, 255, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .container {
@@ -12,26 +27,55 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: var(--spacing-md);
     align-items: start;
 }
 
 .categoryCard {
-    padding: 2rem;
-    border-radius: 16px;
+    padding: 2.5rem;
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.categoryCard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.categoryCard:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.categoryCard:hover::before {
+    opacity: 1;
 }
 
 .categoryTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent);
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: var(--text-primary);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     margin: 0;
+    letter-spacing: -0.02em;
 }
 
 .skillList {
@@ -45,23 +89,26 @@
 }
 
 .skillPill {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 99px;
     font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-dim);
-    transition: all 0.3s ease;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: default;
     white-space: nowrap;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(5px);
 }
 
 .skillPill:hover {
-    background: rgba(37, 99, 235, 0.1);
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent);
-    color: var(--foreground);
+    color: var(--text-primary);
     transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(233, 213, 255, 0.15);
 }
 
 /* Tooltip */
@@ -71,44 +118,53 @@
     left: 50%;
     transform: translateX(-50%) translateY(-10px);
     width: max-content;
-    max-width: 250px;
-    padding: 1rem;
-    background: #0a0a0a;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    max-width: 280px;
+    padding: 1.25rem;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     z-index: 10;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
 }
 
 .skillItem:hover .tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(-5px);
+    transform: translateX(-50%) translateY(-8px);
 }
 
 .tooltipTitle {
     display: block;
-    font-weight: 700;
-    color: var(--foreground);
-    margin-bottom: 0.25rem;
-    font-size: 0.9rem;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
 }
 
 .tooltipDesc {
     display: block;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    font-weight: 300;
 }
 
 .tooltipUsed {
-    display: block;
+    display: inline-block;
     font-size: 0.75rem;
     color: var(--accent);
     font-family: var(--font-mono);
+    padding: 0.25rem 0.5rem;
+    background: rgba(233, 213, 255, 0.05);
+    border-radius: 4px;
+    border: 1px solid rgba(233, 213, 255, 0.1);
 }
