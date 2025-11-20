@@ -27,61 +27,56 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
     align-items: start;
 }
 
 .categoryCard {
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
 
-.categoryCard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
 .categoryCard:hover {
     transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-}
-
-.categoryCard:hover::before {
-    opacity: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
 }
 
 .categoryTitle {
-    font-family: var(--font-heading);
-    font-size: 1.75rem;
-    font-weight: 300;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     color: var(--text-primary);
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    margin: 0;
+    font-weight: 500;
     letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.categoryTitle::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 24px;
+    background: var(--accent);
+    border-radius: 2px;
 }
 
 .skillList {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.8rem;
 }
 
 .skillItem {
@@ -91,80 +86,93 @@
 .skillPill {
     padding: 0.6rem 1.2rem;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
     font-size: 0.9rem;
-    font-weight: 400;
     color: var(--text-secondary);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     cursor: default;
-    white-space: nowrap;
-    letter-spacing: 0.02em;
-    backdrop-filter: blur(5px);
+    animation: float 6s ease-in-out infinite;
+    animation-delay: var(--delay);
 }
 
-.skillPill:hover {
-    background: rgba(255, 255, 255, 0.08);
+.skillItem:hover .skillPill {
+    background: var(--accent);
+    color: var(--background);
     border-color: var(--accent);
-    color: var(--text-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(233, 213, 255, 0.15);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--accent-glow);
+    animation-play-state: paused;
 }
 
-/* Tooltip */
 .tooltip {
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    width: max-content;
-    max-width: 280px;
-    padding: 1.25rem;
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    transform: translateX(-50%) translateY(10px);
+    padding: 1rem;
+    background: rgba(10, 10, 10, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
     border-radius: 12px;
-    z-index: 10;
+    width: 220px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+    z-index: 20;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .skillItem:hover .tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(-8px);
+    transform: translateX(-50%) translateY(-10px);
 }
 
 .tooltipTitle {
     display: block;
-    font-family: var(--font-heading);
-    font-weight: 400;
+    font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
 }
 
 .tooltipDesc {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 0.75rem;
-    font-weight: 300;
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
 }
 
 .tooltipUsed {
-    display: inline-block;
+    display: block;
     font-size: 0.75rem;
     color: var(--accent);
     font-family: var(--font-mono);
-    padding: 0.25rem 0.5rem;
-    background: rgba(233, 213, 255, 0.05);
-    border-radius: 4px;
-    border: 1px solid rgba(233, 213, 255, 0.1);
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categoryCard {
+        padding: 1.5rem;
+    }
 }

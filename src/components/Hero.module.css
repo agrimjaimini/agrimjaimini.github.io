@@ -35,125 +35,137 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.1), transparent 70%);
-    pointer-events: none;
-}
-
-.greeting {
-    font-family: var(--font-mono);
-    color: var(--accent);
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-sm);
-    letter-spacing: 0.05em;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
 .name {
-    font-family: var(--font-heading);
-    font-size: clamp(3rem, 8vw, 5rem);
-    font-weight: 300;
-    /* Thinner font */
-    line-height: 1.1;
-    margin-bottom: var(--spacing-sm);
-    background: linear-gradient(to right, #ffffff, #a1a1aa);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.04em;
+    background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.04em;
 }
 
 .role {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    color: var(--text-dim);
-    font-weight: 300;
-    /* Thinner font */
-    margin-bottom: var(--spacing-md);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .highlight {
     color: var(--accent);
-    font-weight: 600;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
 }
 
 .bio {
     font-size: 1.1rem;
     line-height: 1.6;
     color: var(--text-dim);
-    margin-bottom: var(--spacing-lg);
     max-width: 500px;
+    margin-bottom: 3rem;
 }
 
 .actions {
     display: flex;
-    gap: var(--spacing-sm);
+    gap: 1.5rem;
+}
+
+.magneticWrapper {
+    display: inline-block;
 }
 
 .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 1rem 2rem;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    border-radius: 100px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
 }
 
 .primary {
-    background: #ffffff;
-    color: #000000;
-    border: 1px solid #ffffff;
-    border-radius: 9999px;
-    /* Pill shape */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    background: var(--foreground);
+    color: var(--background);
+    border: 1px solid var(--foreground);
 }
 
 .primary:hover {
-    background: #e5e5e5;
-    color: #000000;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
 .secondary {
     background: transparent;
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 9999px;
-    /* Pill shape */
+    color: var(--foreground);
+    border: 1px solid var(--border);
     backdrop-filter: blur(10px);
 }
 
 .secondary:hover {
-    border-color: #ffffff;
     background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-2px);
+    border-color: var(--foreground);
 }
 
 .visual {
-    flex: 1;
+    position: relative;
+    height: 600px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    perspective: 1000px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .content {
-        flex-direction: column-reverse;
+        grid-template-columns: 1fr;
         text-align: center;
+        gap: 2rem;
     }
 
     .textStack {
-        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .role {
+        justify-content: center;
+    }
+
+    .bio {
+        margin: 0 auto 3rem;
     }
 
     .actions {
         justify-content: center;
     }
 
-    .bio {
-        margin-left: auto;
-        margin-right: auto;
+    .visual {
+        height: 400px;
     }
 }

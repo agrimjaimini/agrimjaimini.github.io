@@ -58,17 +58,20 @@ export default function Skills() {
                     {Object.entries(groupedSkills).map(([category, categorySkills], index) => (
                         <motion.div
                             key={index}
-                            className={`${styles.categoryCard} glass card-hover`}
+                            className={styles.categoryCard}
                             variants={itemVariants}
                         >
                             <h3 className={styles.categoryTitle}>{category}</h3>
                             <div className={styles.skillList}>
                                 {categorySkills.map((skill, i) => (
                                     <div key={i} className={styles.skillItem}>
-                                        <div className={styles.skillPill}>
+                                        <div
+                                            className={styles.skillPill}
+                                            style={{ '--delay': `${(i * 0.3 + index * 0.2) % 2}s` } as React.CSSProperties}
+                                        >
                                             {skill.name}
                                         </div>
-                                        <div className={`${styles.tooltip} glass`}>
+                                        <div className={styles.tooltip}>
                                             <span className={styles.tooltipTitle}>{skill.name}</span>
                                             <span className={styles.tooltipDesc}>{skill.description}</span>
                                             <span className={styles.tooltipUsed}>Used in: {skill.usedIn}</span>
