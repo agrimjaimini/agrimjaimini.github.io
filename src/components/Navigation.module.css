@@ -4,21 +4,25 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2rem;
     border-radius: 99px;
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: center;
     transition: all 0.3s ease;
+    /* Clean look - no background by default like Scale AI */
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid transparent;
 }
 
 .nav:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+    background: rgba(10, 10, 10, 0.8);
+    border-color: var(--border);
 }
 
 .link {
-    color: var(--text-dim);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -26,7 +30,7 @@
 }
 
 .link:hover {
-    color: var(--foreground);
+    color: var(--text-primary);
 }
 
 .link::after {
@@ -36,7 +40,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent);
+    background: var(--scale-purple);
     transition: width 0.3s ease;
 }
 

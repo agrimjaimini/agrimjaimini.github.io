@@ -6,6 +6,36 @@
     padding: var(--spacing-xl) var(--spacing-sm);
     position: relative;
     z-index: 1;
+    overflow: hidden;
+    /* Contain the glow */
+}
+
+/* Background Glow Orb */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(216, 180, 254, 0.15) 0%, rgba(165, 243, 252, 0.05) 40%, transparent 70%);
+    filter: blur(80px);
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulseGlow 10s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1) translate(0, 0);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.1) translate(20px, -20px);
+        opacity: 0.8;
+    }
 }
 
 .container {
@@ -15,131 +45,118 @@
 }
 
 .content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Equal split like Scale AI */
+    gap: 4rem;
+    /* Restored gap for proper spacing */
     align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-lg);
+    max-width: 1400px;
+    /* Restored max-width */
+    width: 100%;
+    margin: 0 auto;
 }
 
 .textStack {
     flex: 1;
-    max-width: 600px;
-    padding: 3rem;
+    max-width: 100%;
+    /* Allow full width of grid cell */
+    padding: 2.5rem;
+    /* Add padding for card look */
     border-radius: 24px;
+    /* Rounded corners */
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.02);
+    /* Very subtle background */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Subtle border */
+    backdrop-filter: blur(10px);
+    /* Glass effect */
 }
 
-.textStack::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-}
+/* ... (intermediate styles) ... */
 
 .name {
-    font-size: clamp(3rem, 6vw, 5rem);
-    font-weight: 700;
+    font-size: clamp(4rem, 6vw, 6rem);
+    /* Adjusted clamp for better scaling */
+    font-weight: 400;
     line-height: 1;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     letter-spacing: -0.04em;
-    background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
+    background: none;
+    -webkit-text-fill-color: initial;
 }
 
-.role {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
+.visual {
+    position: relative;
+    height: 600px;
+    /* Restored height */
     display: flex;
     align-items: center;
-    gap: 1rem;
-}
-
-.highlight {
-    color: var(--accent);
-    font-weight: 500;
-    position: relative;
-    display: inline-block;
-}
-
-.highlight::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
+    justify-content: center;
+    /* perspective: 1000px; - Removed to prevent conflict with Tesseract's internal perspective */
     width: 100%;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.5;
-}
-
-.bio {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--text-dim);
-    max-width: 500px;
-    margin-bottom: 3rem;
+    overflow: visible;
+    /* Ensure 3D elements aren't clipped */
 }
 
 .actions {
     display: flex;
     gap: 1.5rem;
-}
-
-.magneticWrapper {
-    display: inline-block;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2rem;
-    border-radius: 100px;
+    padding: 1rem 2.5rem;
+    border-radius: 99px;
     font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     font-size: 1rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    /* Ensure no underline */
 }
 
 .primary {
-    background: var(--foreground);
-    color: var(--background);
-    border: 1px solid var(--foreground);
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    /* Stronger initial glow */
+    font-weight: 600;
+    /* Bolder text */
 }
 
 .primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+    /* Intense glow on hover */
+    background: #ffffff;
 }
 
 .secondary {
-    background: transparent;
-    color: var(--foreground);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.08);
+    /* Slightly more visible glass */
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Distinct border */
     backdrop-filter: blur(10px);
 }
 
 .secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--foreground);
-}
-
-.visual {
-    position: relative;
-    height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1000px;
+    background: rgba(255, 255, 255, 0.15);
+    /* Lighten on hover */
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 @media (max-width: 1024px) {

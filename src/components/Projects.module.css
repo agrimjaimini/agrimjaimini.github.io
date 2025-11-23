@@ -14,16 +14,30 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
+    align-items: stretch;
+    /* Ensure equal height */
 }
 
 .card {
-    padding: var(--spacing-md);
-    border-radius: 12px;
+    padding: 2rem;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
 }
 
 .cardHeader {
@@ -47,13 +61,15 @@
 .link {
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--accent);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    transition: color 0.2s ease;
 }
 
 .link:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    color: var(--scale-purple);
 }
 
 .description {
@@ -72,9 +88,16 @@
 .tech {
     font-size: 0.75rem;
     font-family: var(--font-mono);
-    color: var(--accent-secondary);
-    background: rgba(37, 99, 235, 0.1);
-    padding: 0.25rem 0.75rem;
+    color: var(--scale-blue);
+    background: rgba(165, 243, 252, 0.05);
+    padding: 0.35rem 0.85rem;
     border-radius: 99px;
-    border: 1px solid rgba(37, 99, 235, 0.2);
+    border: 1px solid rgba(165, 243, 252, 0.15);
+    transition: all 0.3s ease;
+}
+
+.tech:hover {
+    background: rgba(165, 243, 252, 0.1);
+    border-color: rgba(165, 243, 252, 0.3);
+    transform: translateY(-1px);
 }
