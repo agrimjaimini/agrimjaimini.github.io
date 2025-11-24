@@ -33,31 +33,45 @@
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: var(--spacing-xs);
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "role date"
+        "company date";
+    gap: 0.25rem 1rem;
+    margin-bottom: 1.5rem;
+    /* Increased spacing */
+    align-items: center;
 }
 
 .role {
-    font-size: 1.25rem;
-    font-weight: 700;
+    grid-area: role;
+    font-size: 1.4rem;
+    /* Larger */
+    font-weight: 600;
     color: var(--foreground);
+    line-height: 1.2;
 }
 
 .company {
+    grid-area: company;
     color: var(--scale-purple);
     font-weight: 500;
-    font-size: 1.1rem;
-    letter-spacing: -0.01em;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    opacity: 0.9;
 }
 
 .duration {
+    grid-area: date;
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-dim);
+    text-align: right;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .location {
@@ -76,9 +90,11 @@
 
 .point {
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.7;
+    /* Improved readability */
     position: relative;
     padding-left: 1.5rem;
+    font-size: 1rem;
 }
 
 .point::before {
@@ -93,6 +109,17 @@
 
 @media (max-width: 600px) {
     .header {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "role"
+            "company"
+            "date";
+        gap: 0.5rem;
+    }
+
+    .duration {
+        text-align: left;
+        width: fit-content;
+        margin-top: 0.5rem;
     }
 }

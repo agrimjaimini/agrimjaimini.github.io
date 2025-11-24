@@ -19,9 +19,9 @@
 .card {
     padding: 2.5rem;
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
+    background: var(--glass-surface);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,15 +64,17 @@
 }
 
 .title {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 600;
     font-family: var(--font-heading);
+    letter-spacing: -0.02em;
 }
 
 .value {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--text-primary);
     font-family: var(--font-mono);
+    font-weight: 500;
 }
 
 .description {
