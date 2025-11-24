@@ -51,8 +51,7 @@ export default function Tesseract() {
                     <div className={`${styles.innerFace} ${styles.bottom}`} />
                 </div>
 
-                {/* Glowing Core */}
-                <div className={styles.core} />
+
             </motion.div>
         </div>
     );

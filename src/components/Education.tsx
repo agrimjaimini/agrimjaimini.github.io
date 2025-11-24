@@ -2,56 +2,15 @@
 import React from 'react';
 import styles from './Education.module.css';
 import { education } from '@/data/portfolioData';
-import { motion } from 'framer-motion';
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.5,
-            ease: [0.25, 0.46, 0.45, 0.94] as const
-        }
-    }
-};
 
 export default function Education() {
     return (
         <section id="education" className={styles.section}>
             <div className={styles.container}>
-                <motion.h2
-                    className="section-title"
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                >
-                    Education
-                </motion.h2>
-                <motion.div
-                    className={styles.list}
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px" }}
-                >
+                <h2 className="section-title">Education</h2>
+                <div className={styles.list}>
                     {education.map((edu, index) => (
-                        <motion.div
-                            key={index}
-                            className={`${styles.card} glass card-hover`}
-                            variants={itemVariants}
-                        >
+                        <div key={index} className={`${styles.card} glass card-hover`}>
                             <div className={styles.header}>
                                 <div>
                                     <h3 className={styles.school}>{edu.school}</h3>
@@ -73,9 +32,9 @@ export default function Education() {
                                     </div>
                                 </div>
                             )}
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

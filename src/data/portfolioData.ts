@@ -36,7 +36,7 @@ export interface Experience {
 export const experience: Experience[] = [
     {
         company: "Ripple Labs",
-        title: "Software Engineering Intern",
+        title: "Software Engineer Intern",
         duration: "Jul 2025 -- August 2025",
         location: "New York City, NY",
         points: [
@@ -49,7 +49,7 @@ export const experience: Experience[] = [
     },
     {
         company: "Texas Instruments",
-        title: "Machine Learning Engineering Intern",
+        title: "Machine Learning Engineer Intern",
         duration: "May 2025 -- Jul 2025",
         location: "Dallas, TX",
         points: [
@@ -68,9 +68,9 @@ export const experience: Experience[] = [
         ]
     },
     {
-        company: "Artemis Analytics (artemis.xyz)",
-        title: "Software Engineering Intern (Blockchain Data Analytics)",
-        duration: "Oct 2024 -- Mar 2025",
+        company: "Artemis Analytics",
+        title: "Software Engineer Intern",
+        duration: "Oct 2024 -- Jan 2025",
         location: "New York City, NY (Remote)",
         points: [
             "Engineered an interactive graph analytics dashboard for Ethereum transactions to visualize on-chain interactions utilizing NetworkX, PyVis, and Etherscan API. Applied real-time node and edge filtering to reduce graph-building latency by 70%",
