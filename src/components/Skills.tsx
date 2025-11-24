@@ -2,6 +2,7 @@
 import React from 'react';
 import styles from './Skills.module.css';
 import { skills } from '@/data/portfolioData';
+import { motion } from 'framer-motion';
 
 export default function Skills() {
     // Group skills by category
@@ -13,15 +14,41 @@ export default function Skills() {
         return acc;
     }, {} as Record<string, typeof skills[0][]>);
 
+    const container = {
+        hidden: {},
+        show: {
+            transition: {
+                staggerChildren: 0.08,
+                delayChildren: 0.1,
+            },
+        },
+    };
+
+    const card = {
+        hidden: { opacity: 0, y: 18 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: 'easeOut' },
+        },
+    };
+
     return (
         <section id="skills" className={styles.section}>
             <div className={styles.container}>
                 <h2 className="section-title">Skills</h2>
-                <div className={styles.grid}>
+                <motion.div
+                    className={styles.grid}
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {Object.entries(groupedSkills).map(([category, categorySkills], index) => (
-                        <div
+                        <motion.div
                             key={index}
                             className={styles.categoryCard}
+                            variants={card}
                         >
                             <h3 className={styles.categoryTitle}>{category}</h3>
                             <div className={styles.skillList}>
@@ -41,9 +68,9 @@ export default function Skills() {
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );
