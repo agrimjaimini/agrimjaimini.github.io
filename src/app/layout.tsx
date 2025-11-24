@@ -1,7 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
-import ScrollProgress from '@/components/ScrollProgress'
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -20,8 +19,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body>
-        <ScrollProgress />
-
         {children}
       </body>
     </html>

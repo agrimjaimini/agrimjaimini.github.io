@@ -2,9 +2,9 @@
 import React from 'react';
 import styles from './Education.module.css';
 import { education } from '@/data/portfolioData';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
-const container = {
+const container: Variants = {
     hidden: {},
     show: {
         transition: {
@@ -14,7 +14,7 @@ const container = {
     },
 };
 
-const card = {
+const card: Variants = {
     hidden: { opacity: 0, y: 22 },
     show: {
         opacity: 1,

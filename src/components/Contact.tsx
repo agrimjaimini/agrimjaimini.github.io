@@ -2,9 +2,9 @@
 import React from 'react';
 import styles from './Contact.module.css';
 import { contactMethods } from '@/data/portfolioData';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
-const grid = {
+const grid: Variants = {
     hidden: {},
     show: {
         transition: {
@@ -14,7 +14,7 @@ const grid = {
     },
 };
 
-const card = {
+const card: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: {
         opacity: 1,

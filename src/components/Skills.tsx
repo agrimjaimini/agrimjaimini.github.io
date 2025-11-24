@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './Skills.module.css';
 import { skills } from '@/data/portfolioData';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 export default function Skills() {
     // Group skills by category
@@ -14,7 +14,7 @@ export default function Skills() {
         return acc;
     }, {} as Record<string, typeof skills[0][]>);
 
-    const container = {
+    const container: Variants = {
         hidden: {},
         show: {
             transition: {
@@ -24,7 +24,7 @@ export default function Skills() {
         },
     };
 
-    const card = {
+    const card: Variants = {
         hidden: { opacity: 0, y: 18 },
         show: {
             opacity: 1,
