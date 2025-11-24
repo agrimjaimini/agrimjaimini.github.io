@@ -19,7 +19,7 @@ const card = {
     show: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.5, ease: 'easeOut' },
+        transition: { duration: 0.5, ease: "easeOut" },
     },
 };
 
@@ -58,6 +58,9 @@ export default function Contact() {
                     })}
                 </motion.div>
             </div>
-        </section>
+            <footer style={{ textAlign: 'center', padding: '1rem 0 0.5rem', color: 'var(--text-dim)', fontSize: '0.8rem', marginTop: 'auto', opacity: 0.6 }}>
+                <p style={{ margin: 0 }}>© {new Date().getFullYear()} Agrim Jaimini. Built with Next.js.</p>
+            </footer>
+        </section >
     );
 }

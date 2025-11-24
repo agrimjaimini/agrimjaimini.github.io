@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main>
+    <main className="main-scroll" id="main-scroll">
       <Navigation />
       <Hero />
       <Experience />
@@ -17,9 +17,7 @@ export default function Home() {
       <Education />
       <Contact />
 
-      <footer style={{ textAlign: 'center', padding: '2rem', color: '#666', fontSize: '0.9rem' }}>
-        <p>© {new Date().getFullYear()} Agrim Jaimini. Built with Next.js.</p>
-      </footer>
+
     </main>
   );
 }

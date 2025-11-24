@@ -1,39 +1,38 @@
 :root {
   /* Scale AI Inspired Palette */
-  --background: #0a0a0a;
-  /* Slightly lighter than pure black for Scale.ai aesthetic */
-  --surface: #0a0a0a;
-  --surface-glass: rgba(255, 255, 255, 0.015);
+  --background: #000000;
+  /* True Black */
+  --surface: #050505;
+  --surface-glass: rgba(255, 255, 255, 0.02);
 
-  /* Scale AI Gradients - Pastel Pink/Purple/Blue */
+  /* Scale AI Gradients - Refined */
   --scale-pink: #ffb7d6;
   --scale-purple: #d8b4fe;
   --scale-blue: #a5f3fc;
 
   --accent: #d8b4fe;
-  /* Default accent to purple */
   --accent-secondary: #a5f3fc;
   --accent-tertiary: #ffb7d6;
 
-  --accent-glow: rgba(216, 180, 254, 0.06);
+  --accent-glow: rgba(216, 180, 254, 0.08);
 
   --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
-  /* Cool gray */
-  --text-dim: #888e96;
+  --text-secondary: #a1a1aa;
+  /* Zinc 400 */
+  --text-dim: #71717a;
+  /* Zinc 500 */
 
-  --border: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(255, 255, 255, 0.2);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
 
-  /* Premium Glass Variables - Minimal Scale.ai Style */
-  --glass-surface: rgba(255, 255, 255, 0.02);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-highlight: rgba(255, 255, 255, 0.04);
-  --glass-hover: rgba(255, 255, 255, 0.03);
+  /* Premium Glass Variables */
+  --glass-surface: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.05);
 
   --font-sans: var(--font-inter);
   --font-heading: var(--font-inter);
-  /* Scale uses Inter for headings too */
   --font-mono: 'JetBrains Mono', monospace;
 
   --spacing-xs: 0.5rem;
@@ -56,8 +55,22 @@
   color: var(--background);
 }
 
-html {
-  scroll-behavior: smooth !important;
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.main-scroll {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  perspective: 1px;
+  transform-style: preserve-3d;
 }
 
 body {

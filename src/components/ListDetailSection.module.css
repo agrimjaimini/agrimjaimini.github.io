@@ -1,8 +1,16 @@
 .section {
-    padding: calc(var(--spacing-xl) * 0.35) 0 calc(var(--spacing-xl) * 0.45);
+    padding: var(--spacing-xl) 0;
     background: var(--background);
     position: relative;
     overflow: hidden;
+    scroll-margin-top: 0;
+    /* Handled by centering */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .section::after {
@@ -241,6 +249,7 @@
     flex-direction: column;
     gap: 0.6rem;
 }
+
 .tags {
     display: flex;
     flex-wrap: wrap;
@@ -283,6 +292,7 @@
 }
 
 @media (max-width: 960px) {
+
     .inner,
     .expanded {
         grid-template-columns: 1fr;

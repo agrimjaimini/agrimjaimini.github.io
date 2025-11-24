@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import styles from './Tesseract.module.css';
 
@@ -15,21 +15,40 @@ export default function Tesseract() {
     const rotateX = useSpring(useTransform(y, (value) => value * -0.5), springConfig);
     const rotateY = useSpring(useTransform(x, (value) => value * 0.5), springConfig);
 
-    const handlePan = (event: any, info: any) => {
-        // Increased sensitivity (1.5) for easier control
-        x.set(x.get() + info.delta.x * 1.5);
-        y.set(y.get() + info.delta.y * 1.5);
-    };
+    useEffect(() => {
+        const handlePointerMove = (event: PointerEvent) => {
+            const { innerWidth, innerHeight } = window;
+            const centerX = innerWidth / 2;
+            const centerY = innerHeight / 2;
+            const relX = event.clientX - centerX;
+            const relY = event.clientY - centerY;
+            const maxTilt = 80;
+
+            const nextX = Math.max(-maxTilt, Math.min(maxTilt, (relX / (innerWidth / 2)) * maxTilt));
+            const nextY = Math.max(-maxTilt, Math.min(maxTilt, (relY / (innerHeight / 2)) * maxTilt));
+
+            x.set(nextX);
+            y.set(nextY);
+        };
+
+        const handleLeave = () => {
+            x.set(0);
+            y.set(0);
+        };
+
+        window.addEventListener('pointermove', handlePointerMove);
+        window.addEventListener('pointerleave', handleLeave);
+        return () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('pointerleave', handleLeave);
+        };
+    }, [x, y]);
 
     return (
         <div className={styles.scene}>
             <motion.div
                 className={styles.cubeWrapper}
-                style={{ rotateX, rotateY, cursor: 'grab' }}
-                onPan={handlePan}
-                onPanStart={() => { document.body.style.cursor = 'grabbing'; }}
-                onPanEnd={() => { document.body.style.cursor = 'auto'; }}
-                whileTap={{ cursor: 'grabbing' }}
+                style={{ rotateX, rotateY, cursor: 'default' }}
             >
                 {/* Outer Cube */}
                 <div className={styles.outerCube}>

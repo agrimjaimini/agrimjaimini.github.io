@@ -1,24 +1,24 @@
 .nav {
     position: fixed;
-    top: 2rem;
+    top: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
-    padding: 0.75rem 2rem;
-    border-radius: 99px;
+    padding: 0.75rem 2.5rem;
+    border-radius: 100px;
     display: flex;
     gap: 2.5rem;
     align-items: center;
-    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    /* Clean look - no background by default like Scale AI */
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nav:hover {
-    background: rgba(10, 10, 10, 0.8);
-    border-color: var(--border);
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .link {
@@ -27,6 +27,8 @@
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
+    text-decoration: none;
+    letter-spacing: 0.02em;
 }
 
 .link:hover {
@@ -37,11 +39,13 @@
     content: '';
     position: absolute;
     bottom: -4px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
-    height: 2px;
-    background: var(--scale-purple);
+    height: 1px;
+    background: var(--text-primary);
     transition: width 0.3s ease;
+    opacity: 0.5;
 }
 
 .link:hover::after {
@@ -55,5 +59,6 @@
         width: 90%;
         justify-content: space-around;
         gap: 0;
+        padding: 1rem 1.5rem;
     }
 }
