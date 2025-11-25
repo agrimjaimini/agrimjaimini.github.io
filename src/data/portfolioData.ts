@@ -9,18 +9,21 @@ export interface Education {
 export const education: Education[] = [
     {
         school: "Cornell University",
-        degree: "Bachelor of Arts in Computer Science & Mathematics",
+        degree: "BS, Computer Science & Mathematics",
         duration: "Expected May 2027",
         gpa: "3.96",
         coursework: [
             "Data Structures and Object-Oriented Programming (Java)",
             "Functional Programming and Advanced Data Structure (OCaml)",
+            "Analysis of Algorithms",
             "Machine Learning",
             "Database Systems",
             "Discrete Math",
             "Linear Algebra",
             "Backend Development",
-            "Blockchain Technology"
+            "Blockchain Technology",
+            "Computer Architecture",
+            "Probability and Matrices in Computing"
         ]
     }
 ];
@@ -35,47 +38,44 @@ export interface Experience {
 
 export const experience: Experience[] = [
     {
-        company: "Ripple Labs",
+        company: "Ripple",
         title: "Software Engineer Intern",
-        duration: "Jul 2025 -- August 2025",
+        duration: "Jul 2025 – Aug 2025",
         location: "New York City, NY",
         points: [
-            "Built and demoed blockchain applications as part of the XRPL Student Builder Residency",
-            "Designed and implemented a feature bounty platform on the XRP Ledger to streamline funding for open-source development",
-            "Used native XRPL functions like EscrowCreate, EscrowFinish, and EscrowCancel to hold funds in escrow and release them only when code was merged",
-            "Built secure wallet interactions and on-chain logic to ensure transparent, automatic payment and refund handling",
-            "Enabled developers to link GitHub issues directly to escrows, making it easier for maintainers to highlight high-priority tasks and for contributors to trust payouts"
+            "Delivered end-to-end solution for BountyX funding platform built on XRP Ledger through XRPL Builder Residency, enabling secure on-chain payouts for open source contributions and 100+ bounty transactions",
+            "Architected REST microservices with FastAPI, PostgreSQL, and xrpl-py for bounty creation, claim validation, and automated settlement; integrated GitHub API to verify merged PRs and prevent fraudulent claims",
+            "Deployed on AWS EC2 with Docker, implementing CI/CD pipelines, comprehensive unit tests, and structured logging to ensure payout traceability and audit compliance for enterprise-grade financial operations"
         ]
     },
     {
         company: "Texas Instruments",
         title: "Machine Learning Engineer Intern",
-        duration: "May 2025 -- Jul 2025",
+        duration: "May 2025 – Jul 2025",
         location: "Dallas, TX",
         points: [
-            "Designed a scalable, event-driven ML infrastructure processing 1K+ sensor events/sec from TI’s IWRL6432 mmWave sensors; integrated time series feature engineering with deep learning to enable real-time inference (sub-1 second latency)",
-            "Developed an end-to-end fall and occupancy detection pipeline (93% accuracy) with AWS Lambda triggers, SageMaker-hosted models, and a Next.js frontend dashboard; containerized services on EC2 for 99% uptime via MLOps and CI/CD pipelines",
-            "Documented internal tooling for model versioning, containerized deployment on EC2, and API observability using Docker and FastAPI, improving system transparency"
-        ]
-    },
-    {
-        company: "Cornell University",
-        title: "Undergraduate Teaching Assistant",
-        duration: "May 2025 -- Present",
-        location: "Ithaca, NY",
-        points: [
-            "Facilitated help sessions and evaluated assignments for CS 2800, on topics such as discrete math, probability, and statistics"
+            "Designed and deployed modular ML pipeline processing 1M+ data points with event-driven architecture, AWS Lambda ingestion, FastAPI inference service, and Next.js monitoring dashboard; achieved 99% uptime through containerized deployment with Docker on AWS EC2 and CI/CD automation",
+            "Built scalable model versioning system with PostgreSQL enabling A/B testing across 10+ iterations, reducing deployment rollback time by 75% and improving experiment reproducibility for production ML systems",
+            "Trained PointNet deep learning model using PyTorch achieving 93% accuracy with <300ms inference latency; implemented synthetic data augmentation increasing training data by 5X to improve model robustness"
         ]
     },
     {
         company: "Artemis Analytics",
         title: "Software Engineer Intern",
-        duration: "Oct 2024 -- Jan 2025",
-        location: "New York City, NY (Remote)",
+        duration: "Oct 2024 – Jan 2025",
+        location: "Remote",
         points: [
-            "Engineered an interactive graph analytics dashboard for Ethereum transactions to visualize on-chain interactions utilizing NetworkX, PyVis, and Etherscan API. Applied real-time node and edge filtering to reduce graph-building latency by 70%",
-            "Developed low-latency anomaly detection pipelines using Louvain clustering and IsolationForest, enabling detection of suspicious behavior across the Ethereum network",
-            "Investigated metrics across 100+ smart contracts with $13M+ total gas usage and 700K+ daily active users to identify features driving transaction volume on Ethereum and Solana, including MEV arbitrage bots, to support automated labeling"
+            "Built Ethereum transaction dashboard with NetworkX and PyVis processing 1M+ daily transactions for real-time wallet-network exploration, fund-flow visualization, and volume-based filtering to support fraud investigation workflows",
+            "Integrated anomaly detection with Isolation Forest and Louvain community detection to identify suspicious wallets and cluster related addresses, improving fraud analysis precision and reducing manual investigation time"
+        ]
+    },
+    {
+        company: "Cornell University",
+        title: "Undergraduate Teaching Assistant",
+        duration: "May 2025 – Present",
+        location: "Ithaca, NY",
+        points: [
+            "CS 2800 (Discrete Mathematics and Probability)"
         ]
     }
 ];
@@ -91,9 +91,16 @@ export interface Project {
 
 export const projects: Project[] = [
     {
-        title: "Cortex",
-        description: "Developed a digital second brain application that clusters user-inputted notes based on semantic similarity. Leveraged a fine-tuned SentenceTransformer model for embeddings and implemented a dynamic clustering backend via K-Means in Python. Built an intuitive React interface to display clustered insights, and integrated MongoDB for scalable data storage. Designed with modularity for future support of videos and other diverse data types.",
-        tech: ["React", "Node.js", "MongoDB", "Python", "SentenceTransformers"],
+        title: "BugSense - ML-Powered Bug Triage",
+        description: "Built production ML system to automatically rank bug tickets by severity using text embeddings, duplicate signals, and component history; trained PyTorch and LightGBM models deployed on Google Kubernetes Engine. Engineered event-driven backend with Kafka for real-time ticket ingestion, Redis for sub-200ms caching, and REST APIs; integrated Next.js dashboard with transparent model explanations for engineering teams.",
+        tech: ["Next.js", "Node.js", "Kafka", "PostgreSQL", "Redis", "PyTorch", "Kubernetes", "GCP"],
+        date: "July 2025",
+        github: "https://github.com/agrimjaimini/bugsense"
+    },
+    {
+        title: "Cortex - AI Knowledge Management",
+        description: "Developed full-stack note-taking platform with semantic search processing 1,000+ documents using sentence-transformers embeddings and k-means clustering, achieving 95% search relevance through silhouette score optimization. Built React frontend and Express REST API backend enabling users to retrieve relevant notes across hundreds of documents without exact keyword matching, improving knowledge discovery efficiency.",
+        tech: ["Python", "React", "Node.js", "MongoDB", "sentence-transformers"],
         date: "July 2025",
         github: "https://github.com/agrimjaimini/cortex"
     },
