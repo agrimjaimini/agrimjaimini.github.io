@@ -16,39 +16,58 @@
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
     width: 100%;
-    /* Ensure content doesn't stretch too much vertically */
     flex-grow: 0;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--spacing-md);
+    gap: 1.5rem;
 }
 
 .card {
     padding: 2.5rem;
     border-radius: 24px;
     background: var(--glass-surface);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 1rem;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
-    color: var(--foreground);
+    color: var(--text-primary);
     position: relative;
     overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 80%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::after {
+    opacity: 1;
 }
 
 .card:hover {
-    transform: translateY(-1px);
-    background: var(--glass-hover);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--border-hover);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
 }
 
 .iconWrapper {
@@ -56,19 +75,20 @@
     height: 80px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 0.5rem;
-    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     color: var(--text-secondary);
 }
 
 .card:hover .iconWrapper {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: var(--text-primary);
+    background: var(--text-primary);
+    color: var(--background);
+    border-color: var(--text-primary);
+    transform: scale(1.1);
 }
 
 .title {
@@ -76,20 +96,18 @@
     font-weight: 600;
     font-family: var(--font-heading);
     letter-spacing: -0.02em;
+    color: var(--text-primary);
 }
 
 .value {
     font-size: 1rem;
-    color: var(--text-primary);
+    color: var(--accent);
     font-family: var(--font-mono);
     font-weight: 500;
 }
 
 .description {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    opacity: 0.8;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
-
-/* Dynamic Hover Colors (handled via inline styles or utility classes in JS, 
-   but we can add some defaults here) */

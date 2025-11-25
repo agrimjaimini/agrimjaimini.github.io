@@ -35,9 +35,14 @@ const detailVariants: Variants = {
     },
     exit: ({ exit }: AnimationDirections) => ({
         opacity: 0,
-        x: exit === 'right' ? 15 : -15,
-        scale: 0.995,
-        transition: { duration: 0.3, ease: "easeInOut" }, // Slightly slower, smoother exit
+        x: exit === 'right' ? 10 : -10,
+        scale: 0.98,
+        transition: {
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            mass: 1
+        },
     }),
 };
 

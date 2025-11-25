@@ -4,31 +4,35 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
-    padding: 0.75rem 2.5rem;
+    padding: 0.75rem 2rem;
     border-radius: 100px;
     display: flex;
-    gap: 2.5rem;
+    gap: 2rem;
     align-items: center;
-    transition: all 0.3s ease;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(5, 5, 5, 0.5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
 }
 
 .nav:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(5, 5, 5, 0.8);
     border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .link {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
     text-decoration: none;
     letter-spacing: 0.02em;
+    padding: 0.25rem 0;
 }
 
 .link:hover {
@@ -38,18 +42,19 @@
 .link::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
-    width: 0;
+    transform: translateX(-50%) scaleX(0);
+    width: 100%;
     height: 1px;
     background: var(--text-primary);
-    transition: width 0.3s ease;
-    opacity: 0.5;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 0.8;
+    transform-origin: center;
 }
 
 .link:hover::after {
-    width: 100%;
+    transform: translateX(-50%) scaleX(1);
 }
 
 @media (max-width: 600px) {
@@ -57,8 +62,14 @@
         top: auto;
         bottom: 2rem;
         width: 90%;
-        justify-content: space-around;
+        justify-content: space-between;
         gap: 0;
         padding: 1rem 1.5rem;
+        background: rgba(5, 5, 5, 0.8);
+        backdrop-filter: blur(20px);
+    }
+
+    .link {
+        font-size: 0.8rem;
     }
 }
