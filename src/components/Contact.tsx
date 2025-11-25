@@ -58,8 +58,47 @@ export default function Contact() {
                     })}
                 </motion.div>
             </div>
-            <footer style={{ textAlign: 'center', padding: '1rem 0 0.5rem', color: 'var(--text-dim)', fontSize: '0.8rem', marginTop: 'auto', opacity: 0.6 }}>
-                <p style={{ margin: 0 }}>© {new Date().getFullYear()} Agrim Jaimini. Built with Next.js.</p>
+            <footer className={styles.footer}>
+                <div className={styles.footerContent}>
+                    <div className={styles.footerLinks}>
+                        <a
+                            href="https://github.com/agrimjaimini"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.footerLink}
+                        >
+                            GitHub
+                        </a>
+                        <div className={styles.footerDivider}></div>
+                        <a
+                            href="https://linkedin.com/in/agrimjaimini"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.footerLink}
+                        >
+                            LinkedIn
+                        </a>
+                        <div className={styles.footerDivider}></div>
+                        <a
+                            href="https://t.me/agrimjaimini"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.footerLink}
+                        >
+                            Telegram
+                        </a>
+                        <div className={styles.footerDivider}></div>
+                        <a
+                            href="mailto:aj638@cornell.edu"
+                            className={styles.footerLink}
+                        >
+                            Email
+                        </a>
+                    </div>
+                    <p className={styles.footerText}>
+                        © {new Date().getFullYear()} <strong>Agrim Jaimini</strong> · Built with Next.js
+                    </p>
+                </div>
             </footer>
         </section >
     );
