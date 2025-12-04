@@ -55,8 +55,8 @@ export default function Projects() {
                     {projects.map((project, index) => {
                         const isHovered = hoveredIndex === index;
                         const isLastOdd = projects.length % 2 === 1 && index === projects.length - 1;
-                        const hasHighlights = project.highlights && project.highlights.length > 0;
-                        const highlightsToShow = hasHighlights ? project.highlights : [];
+                        const highlightsToShow = project.highlights ?? [];
+                        const hasHighlights = highlightsToShow.length > 0;
 
                         return (
                             <motion.article
