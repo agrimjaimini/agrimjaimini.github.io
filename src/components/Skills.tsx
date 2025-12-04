@@ -1,11 +1,30 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Skills.module.css';
 import { skills } from '@/data/portfolioData';
-import { motion, Variants } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+
+const categoryDescriptions: Record<string, string> = {
+    "Programming Languages": "Core languages for building scalable systems and applications",
+    "Web Development": "Modern frameworks and tools for full-stack development",
+    "AI/ML": "Machine learning frameworks and data science tools",
+    "Cloud & Infrastructure": "Cloud platforms for deploying production systems",
+    "DevOps & Tools": "Development operations and automation tooling",
+    "Blockchain & Web3": "Decentralized technologies and blockchain development",
+};
+
+const categoryOrder = [
+    "Programming Languages",
+    "Web Development",
+    "AI/ML",
+    "Cloud & Infrastructure",
+    "DevOps & Tools",
+    "Blockchain & Web3"
+];
 
 export default function Skills() {
-    // Group skills by category
+    const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
     const groupedSkills = skills.reduce((acc, skill) => {
         if (!acc[skill.category]) {
             acc[skill.category] = [];
@@ -14,63 +33,152 @@ export default function Skills() {
         return acc;
     }, {} as Record<string, typeof skills[0][]>);
 
-    const container: Variants = {
-        hidden: {},
+    const orderedCategories = categoryOrder.filter(cat => groupedSkills[cat]);
+
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
         show: {
+            opacity: 1,
             transition: {
-                staggerChildren: 0.08,
-                delayChildren: 0.1,
+                staggerChildren: 0.1,
+                delayChildren: 0.2,
             },
         },
     };
 
-    const card: Variants = {
-        hidden: { opacity: 0, y: 18 },
+    const itemVariants: Variants = {
+        hidden: { opacity: 0, y: 20 },
         show: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.5, ease: 'easeOut' },
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+        },
+    };
+
+    const skillsExpandVariants: Variants = {
+        hidden: {
+            opacity: 0,
+            height: 0,
+            transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] }
+        },
+        show: {
+            opacity: 1,
+            height: 'auto',
+            transition: {
+                duration: 0.4,
+                ease: [0.16, 1, 0.3, 1],
+                staggerChildren: 0.03,
+                delayChildren: 0.1
+            }
+        },
+    };
+
+    const skillPillVariants: Variants = {
+        hidden: { opacity: 0, scale: 0.8, y: 10 },
+        show: {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
         },
     };
 
     return (
         <section id="skills" className={styles.section}>
             <div className={styles.container}>
-                <span className="section-eyebrow">03 — Expertise</span>
-                <h2 className="section-title">Skills</h2>
                 <motion.div
-                    className={styles.grid}
-                    variants={container}
+                    className={styles.header}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <span className={styles.eyebrow}>Technical Stack</span>
+                    <h2 className={styles.title}>Skills & Expertise</h2>
+                    <p className={styles.subtitle}>
+                        Full-stack development with specialization in AI/ML systems,
+                        cloud infrastructure, and blockchain technology.
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    className={styles.categoriesGrid}
+                    variants={containerVariants}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
                 >
-                    {Object.entries(groupedSkills).map(([category, categorySkills], index) => (
-                        <motion.div
-                            key={index}
-                            className={styles.categoryCard}
-                            variants={card}
-                        >
-                            <h3 className={styles.categoryTitle}>{category}</h3>
-                            <div className={styles.skillList}>
-                                {categorySkills.map((skill, i) => (
-                                    <div key={i} className={styles.skillItem}>
-                                        <div
-                                            className={styles.skillPill}
-                                            style={{ '--delay': `${(i * 0.3 + index * 0.2) % 2}s` } as React.CSSProperties}
-                                        >
-                                            {skill.name}
-                                        </div>
-                                        <div className={styles.tooltip}>
-                                            <span className={styles.tooltipTitle}>{skill.name}</span>
-                                            <span className={styles.tooltipDesc}>{skill.description}</span>
-                                            <span className={styles.tooltipUsed}>Used in: {skill.usedIn}</span>
+                    {orderedCategories.map((category, index) => {
+                        const categorySkills = groupedSkills[category];
+                        const isActive = activeCategory === category;
+
+                        return (
+                            <motion.div
+                                key={category}
+                                className={styles.categoryRow}
+                                variants={itemVariants}
+                            >
+                                <button
+                                    className={`${styles.categoryHeader} ${isActive ? styles.active : ''}`}
+                                    onClick={() => setActiveCategory(isActive ? null : category)}
+                                    type="button"
+                                >
+                                    <div className={styles.categoryLeft}>
+                                        <span className={styles.categoryIndex}>
+                                            {String(index + 1).padStart(2, '0')}
+                                        </span>
+                                        <div className={styles.categoryInfo}>
+                                            <h3 className={styles.categoryTitle}>{category}</h3>
+                                            <p className={styles.categoryDescription}>
+                                                {categoryDescriptions[category]}
+                                            </p>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
+                                    <div className={styles.categoryRight}>
+                                        <span className={styles.skillCount}>
+                                            {categorySkills.length} skills
+                                        </span>
+                                        <motion.div
+                                            className={styles.expandIcon}
+                                            animate={{ rotate: isActive ? 45 : 0 }}
+                                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                            </svg>
+                                        </motion.div>
+                                    </div>
+                                </button>
+
+                                <AnimatePresence>
+                                    {isActive && (
+                                        <motion.div
+                                            className={styles.skillsExpanded}
+                                            variants={skillsExpandVariants}
+                                            initial="hidden"
+                                            animate="show"
+                                            exit="hidden"
+                                        >
+                                            <motion.div className={styles.skillsGrid}>
+                                                {categorySkills.map((skill, i) => (
+                                                    <motion.div
+                                                        key={skill.name}
+                                                        className={styles.skillCard}
+                                                        variants={skillPillVariants}
+                                                    >
+                                                        <span className={styles.skillName}>{skill.name}</span>
+                                                        <span className={styles.skillUsed}>{skill.usedIn}</span>
+                                                    </motion.div>
+                                                ))}
+                                            </motion.div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                <div className={styles.divider} />
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
             </div>
         </section>

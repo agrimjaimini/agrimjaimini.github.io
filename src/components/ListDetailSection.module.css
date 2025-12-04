@@ -65,7 +65,10 @@
     background: transparent;
     color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+        background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
 }
@@ -265,7 +268,9 @@
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.02);
     font-family: var(--font-mono);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+        background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tag:hover {
@@ -289,7 +294,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+        background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .iconButton:hover {

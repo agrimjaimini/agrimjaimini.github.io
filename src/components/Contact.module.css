@@ -2,6 +2,7 @@
     padding: var(--section-padding-y) 0 0 0;
     position: relative;
     z-index: 1;
+    overflow: hidden;
     scroll-margin-top: 0;
     min-height: 100vh;
     display: flex;
@@ -9,155 +10,179 @@
     justify-content: center;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    background: var(--background);
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
     width: 100%;
     flex-grow: 0;
 }
 
-.ctaSection {
+.header {
     text-align: center;
     margin-bottom: 4rem;
 }
 
-.ctaTitle {
-    font-family: var(--font-heading);
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.title {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 200;
     letter-spacing: -0.03em;
     color: var(--text-primary);
-    margin-bottom: 1rem;
+    margin: 0 0 1.25rem 0;
     line-height: 1.2;
 }
 
-.ctaHighlight {
+.highlight {
     color: var(--accent);
 }
 
-.ctaSubtitle {
-    font-size: 1rem;
+.subtitle {
+    font-size: 1.125rem;
     color: var(--text-secondary);
     max-width: 480px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .card {
-    padding: 2rem;
-    border-radius: 20px;
-    background: var(--glass-surface);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(16px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.75rem;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
     text-decoration: none;
     color: var(--text-primary);
-    position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-}
-
-.card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 1px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-}
-
-.card:hover::after {
-    opacity: 1;
+    border-radius: 12px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover {
-    transform: translateY(-1px);
+    transform: translateY(-4px);
+}
+
+.cardInner {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    transition:
+        background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cardInner {
     background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-hover);
+}
+
+.cardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .iconWrapper {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0.25rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
     color: var(--text-secondary);
+    transition:
+        background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover .iconWrapper {
-    background: var(--text-primary);
+    background: var(--accent);
+    border-color: var(--accent);
     color: var(--background);
-    border-color: var(--text-primary);
-    transform: scale(1.05);
 }
 
-.title {
+.arrowIcon {
+    color: var(--text-dim);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition:
+        opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .arrowIcon {
+    opacity: 1;
+    transform: translate(0, 0);
+    color: var(--accent);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cardTitle {
     font-size: 1rem;
     font-weight: 500;
-    font-family: var(--font-heading);
-    letter-spacing: -0.01em;
     color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
 }
 
-.value {
-    font-size: 0.85rem;
+.card:hover .cardTitle {
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-weight: 500;
 }
 
-.description {
+.cardValue {
     font-size: 0.8rem;
     color: var(--text-secondary);
-    line-height: 1.5;
+    font-family: var(--font-mono);
 }
 
 .footer {
     margin-top: auto;
-    padding: 5rem 0 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
-    position: relative;
+    padding: 4rem 0 2.5rem;
+    border-top: 1px solid var(--border);
 }
 
 .footerContent {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
 }
 
 .footerLinks {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
 }
 
@@ -174,10 +199,11 @@
     color: var(--text-primary);
 }
 
-.footerDivider {
-    width: 1px;
-    height: 14px;
-    background: var(--border);
+.footerDot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--text-dim);
 }
 
 .footerText {
@@ -185,25 +211,40 @@
     font-size: 0.75rem;
     text-align: center;
     letter-spacing: -0.01em;
-    opacity: 0.7;
-}
-
-.footerText strong {
-    color: var(--text-secondary);
-    font-weight: 400;
 }
 
 @media (max-width: 768px) {
+    .header {
+        margin-bottom: 3rem;
+    }
+
     .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .cardInner {
+        padding: 1.25rem;
+    }
+
+    .iconWrapper {
+        width: 38px;
+        height: 38px;
     }
 
     .footerLinks {
-        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 1rem;
     }
 
-    .footerDivider {
+    .footerDot {
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
     }
 }

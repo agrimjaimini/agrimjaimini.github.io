@@ -3,23 +3,25 @@ import React from 'react';
 import styles from './Contact.module.css';
 import { contactMethods } from '@/data/portfolioData';
 import { motion, Variants } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
-const grid: Variants = {
-    hidden: {},
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
     show: {
+        opacity: 1,
         transition: {
-            staggerChildren: 0.08,
-            delayChildren: 0.1,
+            staggerChildren: 0.1,
+            delayChildren: 0.2,
         },
     },
 };
 
-const card: Variants = {
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.5, ease: "easeOut" },
+        transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
     },
 };
 
@@ -27,18 +29,25 @@ export default function Contact() {
     return (
         <section id="contact" className={styles.section}>
             <div className={styles.container}>
-                <div className={styles.ctaSection}>
-                    <span className="section-eyebrow">05 — Contact</span>
-                    <h2 className={styles.ctaTitle}>
-                        Let&apos;s build something <span className={styles.ctaHighlight}>extraordinary</span>
+                <motion.div
+                    className={styles.header}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <span className={styles.eyebrow}>Get In Touch</span>
+                    <h2 className={styles.title}>
+                        Let&apos;s build something <span className={styles.highlight}>extraordinary</span>
                     </h2>
-                    <p className={styles.ctaSubtitle}>
+                    <p className={styles.subtitle}>
                         Open to opportunities in AI/ML, blockchain, and full-stack development.
                     </p>
-                </div>
+                </motion.div>
+
                 <motion.div
                     className={styles.grid}
-                    variants={grid}
+                    variants={containerVariants}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
@@ -52,20 +61,27 @@ export default function Contact() {
                                 href={method.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`${styles.card} glass`}
-                                variants={card}
+                                className={styles.card}
+                                variants={itemVariants}
                             >
-                                <div className={styles.iconWrapper}>
-                                    <Icon size={30} strokeWidth={1.5} />
+                                <div className={styles.cardInner}>
+                                    <div className={styles.cardTop}>
+                                        <div className={styles.iconWrapper}>
+                                            <Icon size={22} strokeWidth={1.5} />
+                                        </div>
+                                        <ArrowUpRight size={16} className={styles.arrowIcon} />
+                                    </div>
+                                    <div className={styles.cardContent}>
+                                        <h3 className={styles.cardTitle}>{method.title}</h3>
+                                        <span className={styles.cardValue}>{method.value}</span>
+                                    </div>
                                 </div>
-                                <h3 className={styles.title}>{method.title}</h3>
-                                <span className={styles.value}>{method.value}</span>
-                                <p className={styles.description}>{method.description}</p>
                             </motion.a>
                         );
                     })}
                 </motion.div>
             </div>
+
             <footer className={styles.footer}>
                 <div className={styles.footerContent}>
                     <div className={styles.footerLinks}>
@@ -77,7 +93,7 @@ export default function Contact() {
                         >
                             GitHub
                         </a>
-                        <div className={styles.footerDivider}></div>
+                        <span className={styles.footerDot} />
                         <a
                             href="https://linkedin.com/in/agrimjaimini"
                             target="_blank"
@@ -86,7 +102,7 @@ export default function Contact() {
                         >
                             LinkedIn
                         </a>
-                        <div className={styles.footerDivider}></div>
+                        <span className={styles.footerDot} />
                         <a
                             href="https://t.me/agrimjaimini"
                             target="_blank"
@@ -95,7 +111,7 @@ export default function Contact() {
                         >
                             Telegram
                         </a>
-                        <div className={styles.footerDivider}></div>
+                        <span className={styles.footerDot} />
                         <a
                             href="mailto:aj638@cornell.edu"
                             className={styles.footerLink}
@@ -104,10 +120,10 @@ export default function Contact() {
                         </a>
                     </div>
                     <p className={styles.footerText}>
-                        © {new Date().getFullYear()} <strong>Agrim Jaimini</strong> · Built with Next.js
+                        © {new Date().getFullYear()} Agrim Jaimini · Built with Next.js
                     </p>
                 </div>
             </footer>
-        </section >
+        </section>
     );
 }

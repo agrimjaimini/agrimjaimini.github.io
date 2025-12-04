@@ -190,7 +190,11 @@ p {
 }
 
 .card-hover {
-  transition: all 0.5s var(--ease-out-expo);
+  transition:
+    background 0.5s var(--ease-out-expo),
+    border-color 0.5s var(--ease-out-expo),
+    box-shadow 0.5s var(--ease-out-expo),
+    transform 0.5s var(--ease-out-expo);
 }
 
 .card-hover:hover {
