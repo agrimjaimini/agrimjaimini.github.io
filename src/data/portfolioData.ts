@@ -87,40 +87,66 @@ export interface Project {
     date?: string;
     github?: string;
     demo?: string;
+    highlights?: string[];
 }
 
 export const projects: Project[] = [
     {
         title: "BugSense - ML-Powered Bug Triage",
-        description: "Built production ML system to automatically rank bug tickets by severity using text embeddings, duplicate signals, and component history; trained PyTorch and LightGBM models deployed on Google Kubernetes Engine. Engineered event-driven backend with Kafka for real-time ticket ingestion, Redis for sub-200ms caching, and REST APIs; integrated Next.js dashboard with transparent model explanations for engineering teams.",
+        description: "Production ML triage engine that ranks bug tickets by severity using embeddings, duplicate detection, and component history. Event-driven ingest on Kafka with Redis caching; PyTorch + LightGBM on GKE behind explainable REST APIs and a Next.js dashboard.",
+        highlights: [
+            "Ranked tickets by severity using embeddings, duplicate signals, and component history with PyTorch + LightGBM on GKE",
+            "Event-driven ingestion with Kafka plus Redis caching for sub-200ms reads and explainable REST endpoints",
+            "Next.js dashboard surfacing severity, duplicates, and model explanations for engineering teams"
+        ],
         tech: ["Next.js", "Node.js", "Kafka", "PostgreSQL", "Redis", "PyTorch", "Kubernetes", "GCP"],
         date: "July 2025",
         github: "https://github.com/agrimjaimini/bugsense"
     },
     {
         title: "Cortex - AI Knowledge Management",
-        description: "Developed full-stack note-taking platform with semantic search processing 1,000+ documents using sentence-transformers embeddings and k-means clustering, achieving 95% search relevance through silhouette score optimization. Built React frontend and Express REST API backend enabling users to retrieve relevant notes across hundreds of documents without exact keyword matching, improving knowledge discovery efficiency.",
+        description: "Semantic knowledge workspace with embedding search across 1k+ docs using sentence-transformers and k-means clustering. React + Express stack surfaces clustered topics and relevance; tuned via silhouette scores to reach 95% relevance.",
+        highlights: [
+            "Semantic search across 1k+ documents with sentence-transformers embeddings and k-means clustering (95% relevance)",
+            "React + Express full stack with embedding-powered retrieval and topic grouping",
+            "Iterated clustering via silhouette score tuning to accelerate knowledge discovery"
+        ],
         tech: ["Python", "React", "Node.js", "MongoDB", "sentence-transformers"],
         date: "July 2025",
         github: "https://github.com/agrimjaimini/cortex"
     },
     {
         title: "OCaml-Git",
-        description: "Architected a Git-like version control system in OCaml supporting staging, branching, and remote push/pull; utilized test-driven development and unit testing via OUnit. Implemented content-addressable storage and snapshotting via digest-based hashing to enable O(1) lookups of file contents (blobs), directory trees, and commits, while practicing Agile Scrum methodologies.",
+        description: "OCaml-built Git-style VCS with staging, branching, and remote push/pull. Content-addressable storage with digest hashing for O(1) lookups; hardened via TDD with OUnit.",
+        highlights: [
+            "Built OCaml Git-like VCS with staging, branching, and remote push/pull support",
+            "Implemented content-addressable storage with digest hashing for O(1) lookups of blobs, trees, and commits",
+            "Practiced TDD with OUnit and Agile workflows for reliability"
+        ],
         tech: ["OCaml", "OUnit", "Unix"],
         date: "May 2025",
         github: "https://github.com/agrimjaimini/ocamlgit"
     },
     {
         title: "NBA Magic 8 Ball",
-        description: "Constructed and trained an NLP-powered semantic search engine matching NBA-related queries to players using web-scraped social media data and fine-tuned HuggingFace sentence transformer-based model embeddings. Built a full-stack application with a React.js frontend and Flask REST API backend to serve real-time query results using cosine similarity over aggregated player comment vectors.",
+        description: "NLP semantic search for NBA players powered by fine-tuned sentence-transformers on scraped social data. Flask API serves cosine-similarity results; React UI delivers real-time answers.",
+        highlights: [
+            "Fine-tuned HuggingFace sentence transformers on scraped NBA social data for semantic player search",
+            "Served cosine-similarity results through Flask API backed by aggregated comment embeddings",
+            "React frontend delivering real-time query responses with intuitive UX"
+        ],
         tech: ["Python", "Flask", "React", "Natural Language Processing (NLP)"],
         date: "Mar 2025",
         github: "https://github.com/agrimjaimini/nba-magic-8-ball"
     },
     {
         title: "WikiRacer",
-        description: "Engineered an efficient solver for the WikiRacer game, which finds the shortest hyperlink path between two Wikipedia pages using an A* algorithm. Parsed live Wikipedia content using Wikipedia API and implemented heuristics to prioritize semantically relevant links, significantly improving traversal speed and accuracy.",
+        description: "A* solver that finds the shortest hyperlink path between Wikipedia pages. Streams live pages via Wikipedia API and applies heuristics to prioritize relevant links for faster traversal.",
+        highlights: [
+            "Solved WikiRacer shortest-path between Wikipedia pages using A* search",
+            "Parsed live content via Wikipedia API with heuristics to prioritize relevant links",
+            "Optimized traversal speed and accuracy with informed path scoring"
+        ],
         tech: ["Python", "BeautifulSoup", "Web Scraping", "Algorithms"],
         date: "Feb 2025",
         github: "https://github.com/agrimjaimini/wikiracer"

@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import styles from './Projects.module.css';
 import { projects } from '@/data/portfolioData';
 import { motion, Variants } from 'framer-motion';
-import { ExternalLink, Github, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ExternalLink, Github, ArrowUpRight } from 'lucide-react';
 
 export default function Projects() {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -54,13 +53,15 @@ export default function Projects() {
                     viewport={{ once: true, amount: 0.1 }}
                 >
                     {projects.map((project, index) => {
-                        const isExpanded = expandedIndex === index;
                         const isHovered = hoveredIndex === index;
+                        const isLastOdd = projects.length % 2 === 1 && index === projects.length - 1;
+                        const hasHighlights = project.highlights && project.highlights.length > 0;
+                        const highlightsToShow = hasHighlights ? project.highlights : [];
 
                         return (
                             <motion.article
                                 key={project.title}
-                                className={`${styles.projectCard} ${isExpanded ? styles.expanded : ''}`}
+                                className={`${styles.projectCard} ${isLastOdd ? styles.centered : ''}`}
                                 variants={cardVariants}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
@@ -103,26 +104,16 @@ export default function Projects() {
                                             <span className={styles.projectDate}>{project.date}</span>
                                         )}
 
-                                        <p className={styles.projectDescription}>
-                                            {isExpanded
-                                                ? project.description
-                                                : project.description.slice(0, 160) + (project.description.length > 160 ? '...' : '')
-                                            }
-                                        </p>
-
-                                        {project.description.length > 160 && (
-                                            <button
-                                                className={styles.expandButton}
-                                                onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                                                type="button"
-                                            >
-                                                {isExpanded ? 'Show less' : 'Read more'}
-                                                <ChevronDown
-                                                    size={14}
-                                                    className={`${styles.expandIconSvg} ${isExpanded ? styles.rotated : ''}`}
-                                                />
-                                            </button>
+                                        {hasHighlights && (
+                                            <ul className={styles.bulletList}>
+                                                {highlightsToShow.map((item) => (
+                                                    <li key={item} className={styles.bulletItem}>
+                                                        {item}
+                                                    </li>
+                                                ))}
+                                            </ul>
                                         )}
+
                                     </div>
 
                                     <div className={styles.cardFooter}>
@@ -155,6 +146,7 @@ export default function Projects() {
                                             <ArrowUpRight size={14} />
                                         </motion.a>
                                     </div>
+
                                 </div>
 
                                 <div className={styles.cardGlow} />
