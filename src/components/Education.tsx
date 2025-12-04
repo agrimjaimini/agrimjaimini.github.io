@@ -27,6 +27,7 @@ export default function Education() {
     return (
         <section id="education" className={styles.section}>
             <div className={styles.container}>
+                <span className="section-eyebrow">04 — Education</span>
                 <h2 className="section-title">Education</h2>
                 <motion.div
                     className={styles.list}

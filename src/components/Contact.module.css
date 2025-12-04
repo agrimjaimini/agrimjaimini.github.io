@@ -1,5 +1,5 @@
 .section {
-    padding: var(--spacing-xl) 0 0 0;
+    padding: var(--section-padding-y) 0 0 0;
     position: relative;
     z-index: 1;
     scroll-margin-top: 0;
@@ -19,6 +19,33 @@
     flex-grow: 0;
 }
 
+.ctaSection {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.ctaTitle {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 200;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.ctaHighlight {
+    color: var(--accent);
+}
+
+.ctaSubtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -26,17 +53,17 @@
 }
 
 .card {
-    padding: 2.5rem;
-    border-radius: 24px;
+    padding: 2rem;
+    border-radius: 20px;
     background: var(--glass-surface);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(16px);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1rem;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    gap: 0.75rem;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     color: var(--text-primary);
     position: relative;
@@ -48,9 +75,9 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 1px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 80%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -64,23 +91,22 @@
 }
 
 .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     background: rgba(255, 255, 255, 0.03);
-    border-color: var(--border-hover);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .iconWrapper {
-    width: 80px;
-    height: 80px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0.5rem;
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 0.25rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     color: var(--text-secondary);
 }
 
@@ -88,34 +114,34 @@
     background: var(--text-primary);
     color: var(--background);
     border-color: var(--text-primary);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 500;
     font-family: var(--font-heading);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
 }
 
 .value {
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: var(--accent);
     font-family: var(--font-mono);
     font-weight: 500;
 }
 
 .description {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
     line-height: 1.5;
 }
 
 .footer {
     margin-top: auto;
-    padding: var(--spacing-lg) 0 var(--spacing-md);
-    border-top: 1px solid var(--border-light);
+    padding: 5rem 0 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
     position: relative;
 }
 
@@ -131,37 +157,40 @@
 
 .footerLinks {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
 }
 
 .footerLink {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
 }
 
 .footerLink:hover {
-    color: var(--accent);
+    color: var(--text-primary);
 }
 
 .footerDivider {
     width: 1px;
-    height: 16px;
+    height: 14px;
     background: var(--border);
 }
 
 .footerText {
     color: var(--text-dim);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     text-align: center;
     letter-spacing: -0.01em;
+    opacity: 0.7;
 }
 
 .footerText strong {
     color: var(--text-secondary);
-    font-weight: 500;
+    font-weight: 400;
 }
 
 @media (max-width: 768px) {

@@ -1,5 +1,5 @@
 .section {
-    padding: var(--spacing-xl) 0;
+    padding: var(--section-padding-y) 0;
     background: var(--background);
     position: relative;
     overflow: hidden;
@@ -16,7 +16,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(100% 100% at 50% 0%, rgba(196, 144, 254, 0.03), transparent 60%);
+    background: radial-gradient(ellipse 80% 50% at 80% 20%, rgba(196, 144, 254, 0.04), transparent 60%);
     pointer-events: none;
 }
 
@@ -59,26 +59,26 @@
 .listItem {
     width: 100%;
     text-align: left;
-    padding: 1.25rem 1.5rem;
-    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
     border: 1px solid transparent;
     background: transparent;
     color: var(--text-primary);
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
 }
 
 .listItem:hover {
-    background: var(--glass-surface);
-    border-color: var(--glass-border);
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.06);
 }
 
 .active {
-    background: var(--glass-surface);
-    border-color: var(--accent);
-    box-shadow: 0 0 30px -10px rgba(196, 144, 254, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(196, 144, 254, 0.3);
+    box-shadow: 0 0 40px -15px rgba(196, 144, 254, 0.2);
 }
 
 .active .listPrimary {
@@ -86,27 +86,27 @@
 }
 
 .listPrimary {
-    font-size: 1.1rem;
+    font-size: 1rem;
     letter-spacing: -0.01em;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--text-primary);
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
     margin-bottom: 0.25rem;
 }
 
 .listSecondary {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.4;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
 .listMeta {
     margin-top: 0.5rem;
     color: var(--text-dim);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-family: var(--font-mono);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
 }
 
 .rightCol {
@@ -131,13 +131,16 @@
 .detailCard {
     position: relative;
     inset: auto;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(10, 10, 10, 0.6);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    padding: 3rem;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(8, 8, 8, 0.7);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    box-shadow:
+        0 32px 64px -16px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 0 1px rgba(0, 0, 0, 0.3);
+    padding: 3.5rem;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -150,9 +153,9 @@
     content: "";
     position: absolute;
     inset: -1px;
-    border-radius: 24px;
+    border-radius: 28px;
     padding: 1px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 60%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 30%, transparent 60%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -180,24 +183,24 @@
 
 .detailEyebrow {
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-wider);
     color: var(--accent);
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.7rem;
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
 .detailTitle {
-    font-size: 2rem;
-    font-weight: 500;
-    letter-spacing: -0.03em;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
 }
 
 .detailRole {
     color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .badgeRow {
@@ -255,13 +258,19 @@
 }
 
 .tag {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
-    padding: 0.25rem 0.75rem;
+    padding: 0.25rem 0.7rem;
     border-radius: 100px;
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.02);
     font-family: var(--font-mono);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tag:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .linkRow {
@@ -280,13 +289,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .iconButton:hover {
     background: var(--text-primary);
     color: var(--background);
     border-color: var(--text-primary);
+    transform: scale(1.05);
 }
 
 @media (max-width: 960px) {

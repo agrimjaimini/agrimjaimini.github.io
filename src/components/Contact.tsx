@@ -27,7 +27,15 @@ export default function Contact() {
     return (
         <section id="contact" className={styles.section}>
             <div className={styles.container}>
-                <h2 className="section-title">Get in Touch</h2>
+                <div className={styles.ctaSection}>
+                    <span className="section-eyebrow">05 — Contact</span>
+                    <h2 className={styles.ctaTitle}>
+                        Let&apos;s build something <span className={styles.ctaHighlight}>extraordinary</span>
+                    </h2>
+                    <p className={styles.ctaSubtitle}>
+                        Open to opportunities in AI/ML, blockchain, and full-stack development.
+                    </p>
+                </div>
                 <motion.div
                     className={styles.grid}
                     variants={grid}

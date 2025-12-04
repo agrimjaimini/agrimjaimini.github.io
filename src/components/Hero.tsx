@@ -1,8 +1,10 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import styles from './Hero.module.css';
 import { motion } from 'framer-motion';
 import Tesseract from './Tesseract';
+
+const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const MagneticButton = ({ children, className, href }: { children: React.ReactNode, className: string, href: string }) => {
     return (
@@ -23,24 +25,32 @@ export default function Hero() {
             <div className={styles.container}>
                 <div className={styles.content}>
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 1, ease: easeOutExpo }}
                         className={styles.textStack}
                     >
                         <motion.h1
                             className={styles.name}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
+                            transition={{ delay: 0.3, duration: 1, ease: easeOutExpo }}
                         >
                             AGRIM JAIMINI
                         </motion.h1>
+                        <motion.p
+                            className={styles.tagline}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4, duration: 0.9, ease: easeOutExpo }}
+                        >
+                            Crafting elegant systems at scale
+                        </motion.p>
                         <motion.h3
                             className={styles.role}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
+                            transition={{ delay: 0.5, duration: 0.9, ease: easeOutExpo }}
                         >
                             Software Engineer <span className={styles.highlight}>AI & Data</span>
                         </motion.h3>
@@ -48,7 +58,7 @@ export default function Hero() {
                             className={styles.bio}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.8 }}
+                            transition={{ delay: 0.6, duration: 0.9, ease: easeOutExpo }}
                         >
                             Building high-performance systems and scalable infrastructure.
                             Fellow at Ripple & ML Engineer at Texas Instruments.
@@ -58,7 +68,7 @@ export default function Hero() {
                             className={styles.actions}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5, duration: 0.8 }}
+                            transition={{ delay: 0.7, duration: 0.9, ease: easeOutExpo }}
                         >
                             <MagneticButton href="#projects" className={`${styles.button} ${styles.primary}`}>
                                 View Work
@@ -70,9 +80,9 @@ export default function Hero() {
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                        transition={{ duration: 1.2, delay: 0.3, ease: easeOutExpo }}
                         className={styles.visual}
                         style={{ transformStyle: 'preserve-3d' }}
                     >

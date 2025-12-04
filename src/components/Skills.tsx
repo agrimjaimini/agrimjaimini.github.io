@@ -36,6 +36,7 @@ export default function Skills() {
     return (
         <section id="skills" className={styles.section}>
             <div className={styles.container}>
+                <span className="section-eyebrow">03 — Expertise</span>
                 <h2 className="section-title">Skills</h2>
                 <motion.div
                     className={styles.grid}

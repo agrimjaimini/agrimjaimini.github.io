@@ -19,29 +19,30 @@ interface AnimationDirections {
 const detailVariants: Variants = {
     initial: ({ enter }: AnimationDirections) => ({
         opacity: 0,
-        x: enter === 'right' ? 15 : -15, // Even smaller distance
-        scale: 0.995,
+        x: enter === 'right' ? 20 : -20,
+        scale: 0.98,
+        filter: 'blur(4px)',
     }),
     animate: {
         opacity: 1,
         x: 0,
         scale: 1,
+        filter: 'blur(0px)',
         transition: {
             type: "spring",
-            stiffness: 100, // Even more relaxed
-            damping: 20,
-            mass: 1
+            stiffness: 80,
+            damping: 18,
+            mass: 1.2
         },
     },
     exit: ({ exit }: AnimationDirections) => ({
         opacity: 0,
-        x: exit === 'right' ? 10 : -10,
-        scale: 0.98,
+        x: exit === 'right' ? 12 : -12,
+        scale: 0.96,
+        filter: 'blur(2px)',
         transition: {
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-            mass: 1
+            duration: 0.25,
+            ease: [0.4, 0, 1, 1]
         },
     }),
 };
@@ -73,10 +74,13 @@ export default function ListDetailSection({ type, title, description }: ListDeta
             <ProjectDetail item={item as ProjectItem} />
         );
 
+    const eyebrowLabel = type === 'experience' ? '01 — Work' : '02 — Projects';
+
     return (
         <section id={type} className={styles.section} aria-label={title}>
             <div className={styles.inner} style={{ gridTemplateColumns: columns }}>
                 <div className={styles.leftCol}>
+                    <span className="section-eyebrow">{eyebrowLabel}</span>
                     <h2 className={`${styles.title} section-title`}>{title}</h2>
                     {description && <p className={styles.description}>{description}</p>}
 
