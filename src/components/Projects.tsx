@@ -57,6 +57,7 @@ export default function Projects() {
                         const isLastOdd = projects.length % 2 === 1 && index === projects.length - 1;
                         const highlightsToShow = project.highlights ?? [];
                         const hasHighlights = highlightsToShow.length > 0;
+                        const projectLink = project.demo || project.github;
 
                         return (
                             <motion.article
@@ -130,21 +131,23 @@ export default function Projects() {
                                             )}
                                         </div>
 
-                                        <motion.a
-                                            href={project.demo || project.github}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={styles.viewLink}
-                                            initial={{ opacity: 0, x: -8 }}
-                                            animate={{
-                                                opacity: isHovered ? 1 : 0,
-                                                x: isHovered ? 0 : -8
-                                            }}
-                                            transition={{ duration: 0.25 }}
-                                        >
-                                            View
-                                            <ArrowUpRight size={14} />
-                                        </motion.a>
+                                        {projectLink && (
+                                            <motion.a
+                                                href={projectLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={styles.viewLink}
+                                                initial={{ opacity: 0, x: -8 }}
+                                                animate={{
+                                                    opacity: isHovered ? 1 : 0,
+                                                    x: isHovered ? 0 : -8
+                                                }}
+                                                transition={{ duration: 0.25 }}
+                                            >
+                                                View
+                                                <ArrowUpRight size={14} />
+                                            </motion.a>
+                                        )}
                                     </div>
 
                                 </div>

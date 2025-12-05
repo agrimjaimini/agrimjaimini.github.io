@@ -92,6 +92,17 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        title: "DPO Alignment Stack",
+        description: "Built Direct Preference Optimization training stack on Anthropic HH preferences with SFT pretraining and DPO fine-tuning loops using custom PyTorch trainers. Added mixed-precision/bfloat16, gradient checkpointing, and tokenizer/model consistency guards for stable, memory-efficient Mistral 7B runs. Delivered Colab-ready configs with CLI overrides plus evaluation for preference accuracy, reward margin, perplexity, and qualitative generations in a YAML-driven A100 workflow.",
+        highlights: [
+            "Engineered preprocessing for prompt/chosen/rejected triples with preference dataloaders and DPO loss computation",
+            "Custom SFT + DPO PyTorch trainers with bfloat16, gradient checkpointing, and tokenizer/model consistency checks",
+            "Colab-friendly configs and evaluation suite covering preference accuracy, reward margin, perplexity, and sample generations"
+        ],
+        tech: ["PyTorch", "Direct Preference Optimization (DPO)", "Hugging Face Transformers", "bfloat16", "Gradient Checkpointing", "Google Colab", "YAML"],
+        date: "Aug 2025"
+    },
+    {
         title: "BugSense - ML-Powered Bug Triage",
         description: "Production ML triage engine that ranks bug tickets by severity using embeddings, duplicate detection, and component history. Event-driven ingest on Kafka with Redis caching; PyTorch + LightGBM on GKE behind explainable REST APIs and a Next.js dashboard.",
         highlights: [
