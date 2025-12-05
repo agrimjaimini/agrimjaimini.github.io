@@ -247,4 +247,46 @@
     .grid {
         grid-template-columns: 1fr;
     }
+
+    .cardInner {
+        padding: 1.125rem;
+    }
+
+    .cardTitle {
+        font-size: 0.9rem;
+    }
+
+    .cardValue {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .header {
+        margin-bottom: 2.5rem;
+    }
+
+    .title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .footer {
+        padding: 3rem 0 2rem;
+    }
+
+    .footerLinks {
+        gap: 0.75rem;
+    }
+
+    .footerLink {
+        font-size: 0.75rem;
+    }
 }

@@ -115,6 +115,8 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Noise Texture */
@@ -245,4 +247,33 @@ p {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --spacing-sm: 0.875rem;
+    --section-padding-y: clamp(4rem, 10vh, 6rem);
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
 }

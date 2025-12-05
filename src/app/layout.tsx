@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk, Playfair_Display } from 'next/font/google'
 
 
@@ -19,6 +19,12 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: 'Agrim Jaimini | Software Engineer',
   description: 'Portfolio of Agrim Jaimini, a Software Engineer specializing in Blockchain and AI.',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 }
 
 export default function RootLayout({
