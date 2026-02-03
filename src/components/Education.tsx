@@ -20,7 +20,7 @@ export default function Education() {
     };
 
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 15 },
         show: {
             opacity: 1,
             y: 0,
@@ -60,10 +60,10 @@ export default function Education() {
             <div className={styles.container}>
                 <motion.div
                     className={styles.header}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <span className={styles.eyebrow}>Background</span>
                     <h2 className={styles.title}>Education</h2>

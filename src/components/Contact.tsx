@@ -17,7 +17,7 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 12 },
     show: {
         opacity: 1,
         y: 0,
@@ -31,10 +31,10 @@ export default function Contact() {
             <div className={styles.container}>
                 <motion.div
                     className={styles.header}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <span className={styles.eyebrow}>Get In Touch</span>
                     <h2 className={styles.title}>

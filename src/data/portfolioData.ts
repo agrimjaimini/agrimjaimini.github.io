@@ -11,7 +11,7 @@ export const education: Education[] = [
         school: "Cornell University",
         degree: "BS, Computer Science & Mathematics",
         duration: "Expected May 2027",
-        gpa: "3.96",
+        gpa: "4.04",
         coursework: [
             "Data Structures and Object-Oriented Programming (Java)",
             "Functional Programming and Advanced Data Structure (OCaml)",
@@ -23,7 +23,7 @@ export const education: Education[] = [
             "Backend Development",
             "Blockchain Technology",
             "Computer Architecture",
-            "Probability and Matrices in Computing"
+            "Probability, Vectors, and Matrices in Computing"
         ]
     }
 ];
@@ -37,6 +37,15 @@ export interface Experience {
 }
 
 export const experience: Experience[] = [
+    {
+        company: "Coinbase",
+        title: "Incoming Software Engineer Intern",
+        duration: "Jun 2026 – Aug 2026",
+        location: "San Francisco, CA",
+        points: [
+            "Incoming intern on the Platform Product Group, working on core infrastructure and services that power Coinbase's trading platform serving millions of users globally"
+        ]
+    },
     {
         company: "Ripple",
         title: "Software Engineer Intern",

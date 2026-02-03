@@ -20,7 +20,7 @@ export default function Projects() {
     };
 
     const cardVariants: Variants = {
-        hidden: { opacity: 0, y: 40 },
+        hidden: { opacity: 0, y: 16 },
         show: {
             opacity: 1,
             y: 0,
@@ -33,10 +33,10 @@ export default function Projects() {
             <div className={styles.container}>
                 <motion.div
                     className={styles.header}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <span className={styles.eyebrow}>Featured Work</span>
                     <h2 className={styles.title}>Projects</h2>

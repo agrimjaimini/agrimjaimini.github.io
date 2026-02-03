@@ -47,7 +47,7 @@ export default function Skills() {
     };
 
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, y: 12 },
         show: {
             opacity: 1,
             y: 0,
@@ -74,7 +74,7 @@ export default function Skills() {
     };
 
     const skillPillVariants: Variants = {
-        hidden: { opacity: 0, scale: 0.8, y: 10 },
+        hidden: { opacity: 0, scale: 0.8, y: 6 },
         show: {
             opacity: 1,
             scale: 1,
@@ -88,10 +88,10 @@ export default function Skills() {
             <div className={styles.container}>
                 <motion.div
                     className={styles.header}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <span className={styles.eyebrow}>Technical Stack</span>
                     <h2 className={styles.title}>Skills & Expertise</h2>

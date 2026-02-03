@@ -88,7 +88,7 @@
 
 .timelineDot.active {
     background: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(196, 144, 254, 0.3);
+    box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .timelineLine {
@@ -110,9 +110,9 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 1.25rem 1.5rem;
-    background-color: rgba(10, 10, 10, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    background-color: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
     cursor: pointer;
     transition:
         background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -124,13 +124,13 @@
 }
 
 .experienceHeader:hover {
-    background-color: rgba(20, 20, 20, 0.9);
-    border-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(15, 15, 15, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .experienceHeader.expanded {
-    background-color: rgba(20, 20, 20, 0.9);
-    border-color: rgba(196, 144, 254, 0.3);
+    background-color: rgba(15, 15, 15, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -149,11 +149,11 @@
 }
 
 .company {
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: 1.125rem;
+    font-weight: 400;
     color: var(--text-primary);
     margin: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
     transition: color 0.3s ease;
 }
 
@@ -217,10 +217,10 @@
 
 .experienceDetails {
     overflow: hidden;
-    background-color: rgba(10, 10, 10, 0.6);
-    border: 1px solid rgba(196, 144, 254, 0.3);
+    background-color: rgba(10, 10, 10, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-top: none;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0 0 10px 10px;
 }
 
 .points {
@@ -233,9 +233,10 @@
 }
 
 .point {
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.65;
+    font-size: 0.875rem;
+    font-weight: 400;
     position: relative;
     padding-left: 1.25rem;
 }
