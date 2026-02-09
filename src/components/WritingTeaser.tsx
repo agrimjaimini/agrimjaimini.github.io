@@ -23,7 +23,7 @@ export default function WritingTeaser() {
                     </p>
                     <Link href="/writing" className={styles.link}>
                         <span>Read my writing</span>
-                        <ArrowRight size={18} />
+                        <ArrowRight size={16} />
                     </Link>
                 </motion.div>
             </div>
