@@ -26,6 +26,9 @@
   gap: 0.5rem;
   font-variant-numeric: tabular-nums;
   min-height: 1.65rem;
+  /* Reserve room for "12:00 AM" so the clock doesn't shift the line when it mounts */
+  min-width: calc(8ch + 0.5rem + 5px);
+  justify-content: flex-end;
 }
 
 .live {
