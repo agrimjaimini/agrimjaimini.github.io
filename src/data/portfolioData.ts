@@ -205,19 +205,6 @@ export const projects: Project[] = [
     }
 ];
 
-export interface ToolGroup {
-    category: string;
-    items: string[];
-}
-
-export const toolkit: ToolGroup[] = [
-    { category: "Languages", items: ["Python", "TypeScript", "Go", "Rust", "C/C++", "Java", "OCaml", "SQL"] },
-    { category: "ML", items: ["PyTorch", "Hugging Face Transformers", "scikit-learn", "NumPy", "Pandas", "sentence-transformers"] },
-    { category: "Infrastructure", items: ["Docker", "Kubernetes", "Kafka", "Redis", "PostgreSQL", "MongoDB", "Datadog"] },
-    { category: "Cloud", items: ["AWS Lambda", "AWS EC2", "AWS SageMaker", "AWS DynamoDB", "GCP Cloud Run", "GCP Compute Engine"] },
-    { category: "Web", items: ["React", "Next.js", "Node.js", "FastAPI", "Flask"] },
-];
-
 export interface NowItem {
     label: string;
     title: string;

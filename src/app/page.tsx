@@ -10,7 +10,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
 import { EMAIL } from "@/lib/contact";
-import { education, experience, now, toolkit } from "@/data/portfolioData";
+import { education, experience, now } from "@/data/portfolioData";
 import listStyles from "@/components/List.module.css";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
@@ -154,20 +154,6 @@ export default function Home() {
               note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
             },
           ]}
-        />
-      </Section>
-
-      <Section title="Toolkit" index={5} list>
-        <Disclosure
-          items={toolkit.map(({ category, items }) => ({
-            key: category,
-            title: category,
-            sub: items.slice(0, 4).join(", "),
-            meta: items.length > 4 ? `+${items.length - 4}` : undefined,
-            points: items,
-            columns: true,
-            preview: true,
-          }))}
         />
       </Section>
 
