@@ -17,7 +17,7 @@ Open http://localhost:3000.
 npm run build
 ```
 
-The static site is written to `out/`. Pushing to `main` runs `.github/workflows/deploy.yml`, which builds and deploys to GitHub Pages.
+The static site is written to `out/`. Pushing to `main` triggers a Cloudflare Workers build (`npm run build`, then `wrangler deploy` with `wrangler.jsonc`), which serves agrimjaimini.com. `.github/workflows/deploy.yml` only keeps agrimjaimini.github.io redirecting to the custom domain.
 
 ## Where things live
 

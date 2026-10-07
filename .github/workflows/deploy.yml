@@ -1,9 +1,15 @@
-name: Deploy to GitHub Pages
+# The site is built and served by Cloudflare (see wrangler.jsonc) at agrimjaimini.com.
+# This workflow only keeps agrimjaimini.github.io pointing there: it publishes a tiny
+# page that forwards every path to the same path on the custom domain. It runs when
+# this file changes (or by hand), not on every push.
+name: Redirect GitHub Pages to agrimjaimini.com
 
 on:
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/deploy.yml
   workflow_dispatch:
 
 permissions:
@@ -19,25 +25,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build with Next.js
-        run: npm run build
+      - name: Write redirect page
+        run: |
+          mkdir -p site
+          cat > site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <title>Agrim Jaimini</title>
+            <link rel="canonical" href="https://agrimjaimini.com/">
+            <meta http-equiv="refresh" content="0; url=https://agrimjaimini.com/">
+            <script>location.replace('https://agrimjaimini.com' + location.pathname + location.search + location.hash)</script>
+          </head>
+          <body>Moved to <a href="https://agrimjaimini.com/">agrimjaimini.com</a>.</body>
+          </html>
+          HTML
+          # GitHub Pages serves 404.html for every unknown path, so deep links redirect too
+          cp site/index.html site/404.html
+          touch site/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./site
 
   deploy:
     environment:
