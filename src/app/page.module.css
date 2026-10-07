@@ -63,31 +63,6 @@
   transition: color 0.4s ease;
 }
 
-/* Wide screens: section labels hang in the margin as quiet notes,
-   and the one for the section being read lights up */
-@media (min-width: 1100px) {
-  /* In the margin they act as quiet notes, lighting up for the current section */
-  .heading {
-    color: var(--text-dim);
-  }
-
-  .section[data-active] .heading {
-    color: var(--text-primary);
-  }
-
-  .heading {
-    position: absolute;
-    top: calc(var(--pad) * 0.6);
-    right: calc(100% - var(--pad) + 40px);
-    margin: 0;
-    white-space: nowrap;
-  }
-
-  .listSection .heading {
-    top: calc(var(--pad) * 0.6 + 10px);
-  }
-}
-
 /* Now */
 /* Same title column as the lists above, so values share one vertical line */
 .nowRow {

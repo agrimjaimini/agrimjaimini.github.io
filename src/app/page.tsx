@@ -2,7 +2,6 @@ import React from "react";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import PostList from "@/components/PostList";
-import SectionSpy from "@/components/SectionSpy";
 import IsingField from "@/components/IsingField";
 import Morph from "@/components/Morph";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -75,7 +74,6 @@ export default function Home() {
 
   return (
     <main className="frame">
-      <SectionSpy />
 
       <header className={`cell ${styles.header} enter`}>
         <h1 className={styles.name}>Agrim Jaimini</h1>

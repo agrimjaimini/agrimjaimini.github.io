@@ -38,7 +38,6 @@ interface IsingFieldProps {
 export default function IsingField({ linked = true, fixedC, intro = true, control = false }: IsingFieldProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
-    const stepsRef = useRef<HTMLSpanElement>(null);
     const acceptRef = useRef<HTMLSpanElement>(null);
     // A value set with the slider wins over the automatic drift until reset
     const manualRef = useRef<number | null>(null);
@@ -63,7 +62,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         let sweepDebt = 0;
         let c = C_CRITICAL;
         let lastC = C_CRITICAL;
-        let steps = 0; // time step t: total proposals made
         let proposed = 0; // proposals since the last readout
         let accepted = 0;
         let acceptance = 0;
@@ -148,7 +146,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             return Math.max(0.02, local);
         };
 
-        // One sweep = |V(G)| steps of the chain
         // Run `count` steps of the chain (|V(G)| steps make one sweep)
         const run = (count: number, t: number) => {
             for (let k = 0; k < count; k++) {
@@ -175,7 +172,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                 }
                 // 3. Else, remain at x
             }
-            steps += count;
         };
         const sweep = (t: number) => run(x.length, t);
 
@@ -211,9 +207,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             ctx.globalAlpha = 1;
         };
 
-        const compact = (n: number) =>
-            n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(0)}k` : String(n);
-
         const updateReadout = () => {
             if (proposed > 0) {
                 acceptance = accepted / proposed;
@@ -224,7 +217,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             lastC = c;
             if (cRef.current) cRef.current.textContent = `c ${c.toFixed(3)} ${trend}`;
 
-            if (stepsRef.current) stepsRef.current.textContent = `t ${compact(steps)}`;
             if (acceptRef.current) acceptRef.current.textContent = `accept ${(acceptance * 100).toFixed(0)}%`;
         };
 
@@ -371,7 +363,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             <figcaption className={styles.label}>
                 {linked ? (
                     <Link href="/writing/ising-model" className={styles.figLink}>
-                        Fig. 1 <span aria-hidden>→</span>
+                        Fig. 1
                     </Link>
                 ) : (
                     <span>Fig. 1</span>
@@ -380,7 +372,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             </figcaption>
             <div className={styles.stats} aria-hidden>
                 <span ref={cRef}>c {C_CRITICAL.toFixed(3)}</span>
-                <span ref={stepsRef} className={styles.extra}>t 0</span>
                 <span ref={acceptRef}>accept 0%</span>
             </div>
         </figure>

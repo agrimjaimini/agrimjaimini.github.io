@@ -8,6 +8,12 @@
   .list {
     margin: 0 -10px;
   }
+
+  /* No hover on phones, and an open row shows itself, so drop the +/− slot
+     and let the meta column sit flush with the right edge */
+  .toggle {
+    display: none;
+  }
 }
 
 /* Dim siblings while one row is hovered */
