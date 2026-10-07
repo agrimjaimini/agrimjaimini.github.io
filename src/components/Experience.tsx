@@ -1,157 +1,66 @@
 "use client";
 import React, { useState } from 'react';
-import styles from './Experience.module.css';
+import { AnimatePresence, motion } from 'framer-motion';
 import { experience } from '@/data/portfolioData';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { MapPin, ChevronDown } from 'lucide-react';
+import styles from './List.module.css';
+
+const year = (duration: string) => {
+    const [start, end] = duration.split('–').map((s) => s.trim());
+    const startYear = start.slice(-4);
+    const endYear = end === 'Present' ? 'Now' : end.slice(-4);
+    return startYear === endYear ? startYear : `${startYear} – ${endYear}`;
+};
 
 export default function Experience() {
-    const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
-
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2,
-            },
-        },
-    };
-
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 15 },
-        show: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-        },
-    };
-
-    const detailVariants: Variants = {
-        hidden: {
-            opacity: 0,
-            height: 0,
-            transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] }
-        },
-        show: {
-            opacity: 1,
-            height: 'auto',
-            transition: {
-                duration: 0.4,
-                ease: [0.16, 1, 0.3, 1],
-                staggerChildren: 0.05,
-                delayChildren: 0.1
-            }
-        },
-    };
-
-    const pointVariants: Variants = {
-        hidden: { opacity: 0, x: -6 },
-        show: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
-        },
-    };
+    const [open, setOpen] = useState<number | null>(null);
 
     return (
-        <section id="experience" className={styles.section}>
-            <div className={styles.container}>
-                <motion.div
-                    className={styles.header}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <span className={styles.eyebrow}>Career</span>
-                    <h2 className={styles.title}>Experience</h2>
-                    <p className={styles.subtitle}>
-                        Building production systems across ML infrastructure, blockchain analytics, and distributed systems.
-                    </p>
-                </motion.div>
-
-                <motion.div
-                    className={styles.timeline}
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, amount: 0.1 }}
-                >
-                    {experience.map((exp, index) => {
-                        const isExpanded = expandedIndex === index;
-
-                        return (
-                            <motion.div
-                                key={`${exp.company}-${index}`}
-                                className={styles.experienceItem}
-                                variants={itemVariants}
-                            >
-                                <div className={styles.timelineMarker}>
-                                    <div className={`${styles.timelineDot} ${isExpanded ? styles.active : ''}`} />
-                                    {index < experience.length - 1 && <div className={styles.timelineLine} />}
-                                </div>
-
-                                <div className={styles.experienceContent}>
-                                    <button
-                                        className={`${styles.experienceHeader} ${isExpanded ? styles.expanded : ''}`}
-                                        onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                                        type="button"
-                                    >
-                                        <div className={styles.headerMain}>
-                                            <div className={styles.companyInfo}>
-                                                <h3 className={styles.company}>{exp.company}</h3>
-                                                <span className={styles.role}>{exp.title}</span>
-                                            </div>
-                                            <div className={styles.headerMeta}>
-                                                <span className={styles.duration}>{exp.duration}</span>
-                                                {exp.location && (
-                                                    <span className={styles.location}>
-                                                        <MapPin size={12} />
-                                                        {exp.location}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <motion.div
-                                            className={styles.expandIcon}
-                                            animate={{ rotate: isExpanded ? 180 : 0 }}
-                                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                                        >
-                                            <ChevronDown size={18} />
-                                        </motion.div>
-                                    </button>
-
-                                    <AnimatePresence>
-                                        {isExpanded && (
-                                            <motion.div
-                                                className={styles.experienceDetails}
-                                                variants={detailVariants}
-                                                initial="hidden"
-                                                animate="show"
-                                                exit="hidden"
-                                            >
-                                                <ul className={styles.points}>
-                                                    {exp.points.map((point, i) => (
-                                                        <motion.li
-                                                            key={i}
-                                                            className={styles.point}
-                                                            variants={pointVariants}
-                                                        >
-                                                            {point}
-                                                        </motion.li>
-                                                    ))}
-                                                </ul>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </motion.div>
-            </div>
-        </section>
+        <ul className={styles.list}>
+            {experience.map((job, i) => {
+                const isOpen = open === i;
+                return (
+                    <li key={`${job.company}-${job.title}`} className={styles.item}>
+                        <button
+                            className={styles.row}
+                            onClick={() => setOpen(isOpen ? null : i)}
+                            aria-expanded={isOpen}
+                        >
+                            <span className={styles.main}>
+                                <span className={styles.title}>{job.company}</span>
+                                <span className={styles.sub}>{job.title}</span>
+                            </span>
+                            <span className={styles.leader} aria-hidden />
+                            <span className={styles.meta}>
+                                {year(job.duration)}
+                                <span className={styles.toggle} aria-hidden>{isOpen ? '−' : '+'}</span>
+                            </span>
+                        </button>
+                        <AnimatePresence initial={false}>
+                            {isOpen && (
+                                <motion.div
+                                    className={styles.detail}
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                >
+                                    <div className={styles.detailInner}>
+                                        <ul>
+                                            {job.points.map((point, j) => (
+                                                <li key={j}>{point}</li>
+                                            ))}
+                                        </ul>
+                                        <p className={styles.tags}>
+                                            {job.duration}
+                                            {job.location && ` · ${job.location}`}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </li>
+                );
+            })}
+        </ul>
     );
 }

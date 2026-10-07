@@ -1,6 +1,4 @@
-import Navigation from "@/components/Navigation";
-import PageTransition from "@/components/PageTransition";
-import WritingScrollProgress from "@/components/WritingScrollProgress";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function WritingLayout({
   children,
@@ -8,14 +6,12 @@ export default function WritingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <WritingScrollProgress />
-      <Navigation />
-      <main className="writing-page">
-        <PageTransition>
-          {children}
-        </PageTransition>
-      </main>
-    </>
+    <main className="frame">
+      <div className="cell writing">{children}</div>
+      <footer className="cell mono writing-footer">
+        <span>© {new Date().getFullYear()} Agrim Jaimini</span>
+        <ThemeToggle />
+      </footer>
+    </main>
   );
 }

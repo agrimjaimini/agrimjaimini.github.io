@@ -1,0 +1,80 @@
+.term {
+  position: relative;
+  color: var(--text-primary);
+  text-decoration: underline dotted;
+  text-decoration-color: var(--text-dim);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: default;
+  outline: none;
+  transition: text-decoration-color 0.2s;
+}
+
+.term:hover,
+.term:focus-visible {
+  text-decoration-color: var(--accent);
+}
+
+.card {
+  position: absolute;
+  left: -12px;
+  bottom: calc(100% + 10px);
+  z-index: 5;
+  width: max-content;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--background);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -8px rgba(0, 0, 0, 0.12);
+  font-size: 13.5px;
+  line-height: 1.5;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px) scale(0.98);
+  transform-origin: bottom left;
+  transition: opacity 0.18s ease, transform 0.3s var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .term:hover .card {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.08s;
+  }
+}
+
+.term:focus-visible .card {
+  opacity: 1;
+  transform: none;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.title {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.meta {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.line {
+  color: var(--text-secondary);
+}
+
+@media (hover: none) {
+  .card {
+    display: none;
+  }
+}

@@ -39,7 +39,7 @@ export const MDXComponents = {
     <blockquote className={styles.blockquote} {...props} />
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => {
-    const { children, className } = props;
+    const { className } = props;
     const isInline = !className;
 
     if (isInline) {

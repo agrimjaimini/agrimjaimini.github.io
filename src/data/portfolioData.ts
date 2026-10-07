@@ -39,11 +39,13 @@ export interface Experience {
 export const experience: Experience[] = [
     {
         company: "Coinbase",
-        title: "Incoming Software Engineer Intern",
-        duration: "Jun 2026 – Aug 2026",
+        title: "Software Engineer Intern",
+        duration: "May 2026 – Aug 2026",
         location: "San Francisco, CA",
         points: [
-            "Incoming intern on the Platform Product Group, working on core infrastructure and services that power Coinbase's trading platform serving millions of users globally"
+            "Built a generalized GitHub API proxy in Go as shared developer infrastructure, unifying high-concurrency GitHub access behind a single internal API for autonomous CI systems and company-wide tooling",
+            "Engineered a Redis cache keyed on ETags and conditional requests to absorb high-concurrency agent traffic, keeping agents under GitHub's primary rate limits where naive per-agent access would exhaust them",
+            "Added Datadog metrics, dashboards, and error-rate alerting to track proxy health and per-agent traffic"
         ]
     },
     {
@@ -77,20 +79,12 @@ export const experience: Experience[] = [
             "Built Ethereum transaction dashboard with NetworkX and PyVis processing 1M+ daily transactions for real-time wallet-network exploration, fund-flow visualization, and volume-based filtering to support fraud investigation workflows",
             "Integrated anomaly detection with Isolation Forest and Louvain community detection to identify suspicious wallets and cluster related addresses, improving fraud analysis precision and reducing manual investigation time"
         ]
-    },
-    {
-        company: "Cornell University",
-        title: "Undergraduate Teaching Assistant",
-        duration: "May 2025 – Present",
-        location: "Ithaca, NY",
-        points: [
-            "CS 2800 (Discrete Mathematics and Probability)"
-        ]
     }
 ];
 
 export interface Project {
     title: string;
+    summary: string;
     description: string;
     tech: string[];
     date?: string;
@@ -101,7 +95,40 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        title: "Trace-Accel",
+        summary: "Transformer inference accelerator simulator",
+        description: "Trace-driven Rust simulator modeling transformer inference (prefill/decode) on configurable hardware, estimating latency from compute and bandwidth costs to classify workloads as compute- or memory-bound.",
+        highlights: [
+            "Built a trace-driven Rust simulator modeling transformer inference (prefill/decode) on configurable hardware, estimating latency from compute and bandwidth costs to classify workloads as compute- or memory-bound",
+            "Added parameter sweeps, plots, and CI regression tests to compare hardware configurations (compute throughput, memory bandwidth, interconnect) and quantify their impact on end-to-end inference latency"
+        ],
+        tech: ["Rust", "Python"],
+        date: "2026"
+    },
+    {
+        title: "Trellis",
+        summary: "Multi-agent orchestration runtime",
+        description: "Runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends.",
+        highlights: [
+            "Built a runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends",
+            "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion into each agent's prompt; exposed agent tooling over an MCP server consumed directly by Claude Code"
+        ],
+        tech: ["Python", "TypeScript", "Next.js", "SQLite", "MCP"],
+        date: "2026"
+    },
+    {
+        title: "Lore",
+        summary: "Shared memory marketplace for AI agents",
+        description: "Shared research-memory layer where AI agents cache and resell deep-research results, paying per retrieval via x402 machine-to-machine micropayments.",
+        highlights: [
+            "Built a shared research-memory layer where AI agents cache and resell deep-research results, ranking memories by semantic similarity, freshness decay, and LLM-judge quality to serve a cached hit or trigger re-research, with Arize tracing and evals; agents pay per retrieval via x402 machine-to-machine micropayments"
+        ],
+        tech: ["TypeScript", "Next.js", "Vercel AI SDK", "pgvector", "Arize"],
+        date: "2026"
+    },
+    {
         title: "DPO Alignment Stack",
+        summary: "Preference-tuning Mistral 7B with SFT + DPO",
         description: "Built Direct Preference Optimization training stack on Anthropic HH preferences with SFT pretraining and DPO fine-tuning loops using custom PyTorch trainers. Added mixed-precision/bfloat16, gradient checkpointing, and tokenizer/model consistency guards for stable, memory-efficient Mistral 7B runs. Delivered Colab-ready configs with CLI overrides plus evaluation for preference accuracy, reward margin, perplexity, and qualitative generations in a YAML-driven A100 workflow.",
         highlights: [
             "Engineered preprocessing for prompt/chosen/rejected triples with preference dataloaders and DPO loss computation",
@@ -112,7 +139,8 @@ export const projects: Project[] = [
         date: "Aug 2025"
     },
     {
-        title: "BugSense - ML-Powered Bug Triage",
+        title: "BugSense",
+        summary: "ML-powered bug triage on Kafka, PyTorch, and GKE",
         description: "Production ML triage engine that ranks bug tickets by severity using embeddings, duplicate detection, and component history. Event-driven ingest on Kafka with Redis caching; PyTorch + LightGBM on GKE behind explainable REST APIs and a Next.js dashboard.",
         highlights: [
             "Ranked tickets by severity using embeddings, duplicate signals, and component history with PyTorch + LightGBM on GKE",
@@ -124,7 +152,8 @@ export const projects: Project[] = [
         github: "https://github.com/agrimjaimini/bugsense"
     },
     {
-        title: "Cortex - AI Knowledge Management",
+        title: "Cortex",
+        summary: "Semantic knowledge workspace with embedding search",
         description: "Semantic knowledge workspace with embedding search across 1k+ docs using sentence-transformers and k-means clustering. React + Express stack surfaces clustered topics and relevance; tuned via silhouette scores to reach 95% relevance.",
         highlights: [
             "Semantic search across 1k+ documents with sentence-transformers embeddings and k-means clustering (95% relevance)",
@@ -137,6 +166,7 @@ export const projects: Project[] = [
     },
     {
         title: "OCaml-Git",
+        summary: "A Git-style version control system written in OCaml",
         description: "OCaml-built Git-style VCS with staging, branching, and remote push/pull. Content-addressable storage with digest hashing for O(1) lookups; hardened via TDD with OUnit.",
         highlights: [
             "Built OCaml Git-like VCS with staging, branching, and remote push/pull support",
@@ -149,6 +179,7 @@ export const projects: Project[] = [
     },
     {
         title: "NBA Magic 8 Ball",
+        summary: "Semantic search over NBA players with fine-tuned transformers",
         description: "NLP semantic search for NBA players powered by fine-tuned sentence-transformers on scraped social data. Flask API serves cosine-similarity results; React UI delivers real-time answers.",
         highlights: [
             "Fine-tuned HuggingFace sentence transformers on scraped NBA social data for semantic player search",
@@ -161,6 +192,7 @@ export const projects: Project[] = [
     },
     {
         title: "WikiRacer",
+        summary: "A* search for the shortest path between Wikipedia pages",
         description: "A* solver that finds the shortest hyperlink path between Wikipedia pages. Streams live pages via Wikipedia API and applies heuristics to prioritize relevant links for faster traversal.",
         highlights: [
             "Solved WikiRacer shortest-path between Wikipedia pages using A* search",
@@ -168,7 +200,7 @@ export const projects: Project[] = [
             "Optimized traversal speed and accuracy with informed path scoring"
         ],
         tech: ["Python", "BeautifulSoup", "Web Scraping", "Algorithms"],
-        date: "Feb 2025",
+        date: "Feb 2024",
         github: "https://github.com/agrimjaimini/wikiracer"
     }
 ];
@@ -189,6 +221,8 @@ export const skills: Skill[] = [
     { name: "SQL", description: "Relational database query language.", category: "Programming Languages", usedIn: "Data analysis, database management, blockchain transaction queries" },
     { name: "HTML/CSS", description: "Web markup and styling languages.", category: "Programming Languages", usedIn: "Web development, responsive design, UI styling" },
     { name: "Bash", description: "Unix shell scripting language.", category: "Programming Languages", usedIn: "DevOps automation, system administration, deployment scripts" },
+    { name: "Go", description: "Statically typed systems language.", category: "Programming Languages", usedIn: "GitHub API proxy at Coinbase" },
+    { name: "Rust", description: "Memory-safe systems language.", category: "Programming Languages", usedIn: "Trace-Accel inference simulator" },
 
     { name: "React", description: "JavaScript UI library.", category: "Web Development", usedIn: "Cortex app, portfolio, NBA Magic 8 Ball frontend, web applications" },
     { name: "Next.js", description: "React framework for production.", category: "Web Development", usedIn: "ML dashboard frontend at Texas Instruments" },
@@ -226,20 +260,9 @@ export const skills: Skill[] = [
     { name: "Lwt", description: "OCaml concurrency library.", category: "DevOps & Tools", usedIn: "OCaml-Git version control system, concurrent operations" },
     { name: "JUnit", description: "Java unit testing framework.", category: "DevOps & Tools", usedIn: "Java project testing, test-driven development" },
     { name: "OUnit", description: "OCaml unit testing framework.", category: "DevOps & Tools", usedIn: "OCaml-Git test-driven development, quality assurance" },
+    { name: "Redis", description: "In-memory data store.", category: "DevOps & Tools", usedIn: "ETag-keyed caching for the GitHub proxy at Coinbase" },
+    { name: "Datadog", description: "Observability platform.", category: "DevOps & Tools", usedIn: "Proxy metrics, dashboards, and alerting at Coinbase" },
 
-    { name: "Ethereum", description: "Smart contract platform and blockchain ecosystem.", category: "Blockchain & Web3", usedIn: "Blockchain analytics and transaction analysis at Artemis" },
-    { name: "Solana", description: "High-performance blockchain platform for DeFi and NFTs.", category: "Blockchain & Web3", usedIn: "Cross-chain analytics and user behavior analysis" },
-    { name: "XRP Ledger (XRPL)", description: "Blockchain platform for payments and DeFi applications.", category: "Blockchain & Web3", usedIn: "Feature bounty platform development at Ripple" },
-    { name: "Smart Contracts", description: "Self-executing contracts with blockchain-based logic.", category: "Blockchain & Web3", usedIn: "Escrow system implementation and contract analysis" },
-    { name: "DeFi Protocols", description: "Decentralized finance applications and protocols.", category: "Blockchain & Web3", usedIn: "Bounty platform and DeFi analytics" },
-    { name: "Web3.js", description: "JavaScript library for Ethereum blockchain interaction.", category: "Blockchain & Web3", usedIn: "Ethereum blockchain integration and dApp development" },
-    { name: "XRPL SDK", description: "Software development kit for XRP Ledger integration.", category: "Blockchain & Web3", usedIn: "XRPL escrow functions and wallet integration" },
-    { name: "Etherscan API", description: "Ethereum blockchain explorer and analytics API.", category: "Blockchain & Web3", usedIn: "Transaction data retrieval and analytics at Artemis" },
-    { name: "Blockchain Analytics", description: "Analysis and visualization of on-chain data.", category: "Blockchain & Web3", usedIn: "Ethereum/Solana transaction analysis and anomaly detection" },
-    { name: "MEV & Gas Optimization", description: "Blockchain arbitrage strategies and efficient smart contract execution.", category: "Blockchain & Web3", usedIn: "MEV bot analysis and gas usage optimization" },
-    { name: "Wallet Integration", description: "Secure integration with cryptocurrency wallets.", category: "Blockchain & Web3", usedIn: "Secure wallet interactions in bounty platform" },
-    { name: "Escrow Systems", description: "Trustless fund holding and release mechanisms.", category: "Blockchain & Web3", usedIn: "XRPL escrow functions for bounty platform" },
-    { name: "Escrow Systems", description: "Trustless fund holding and release mechanisms.", category: "Blockchain & Web3", usedIn: "XRPL escrow functions for bounty platform" },
 ];
 
 import { Mail, Linkedin, MessageCircle, Calendar } from 'lucide-react';
