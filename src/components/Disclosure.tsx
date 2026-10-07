@@ -24,19 +24,19 @@ export interface DisclosureItem {
 export default function Disclosure({ items, limit }: { items: DisclosureItem[]; limit?: number }) {
     const [open, setOpen] = useState<string | null>(null);
     const [showAll, setShowAll] = useState(false);
-    const visible = limit && !showAll ? items.slice(0, limit) : items;
-    const hidden = items.length - visible.length;
+    const hidden = limit && !showAll ? Math.max(0, items.length - limit) : 0;
 
     return (
         <ul className={styles.list}>
-            {visible.map((item, i) => {
+            {items.map((item, i) => {
                 const isOpen = open === item.key;
-                const revealed = limit !== undefined && i >= limit;
+                const extra = limit !== undefined && i >= limit;
+                // Extra rows stay hidden until "N more" is clicked
                 return (
                     <li
                         key={item.key}
-                        className={`${styles.item} ${revealed ? 'enter' : ''}`}
-                        style={revealed ? ({ '--i': i - limit } as React.CSSProperties) : undefined}
+                        className={`${styles.item} ${extra ? (showAll ? 'enter' : styles.overflow) : ''}`}
+                        style={extra ? ({ '--i': i - limit } as React.CSSProperties) : undefined}
                     >
                         <button
                             className={styles.row}
@@ -82,7 +82,7 @@ export default function Disclosure({ items, limit }: { items: DisclosureItem[]; 
                 );
             })}
             {hidden > 0 && (
-                <li className={styles.item}>
+                <li className={`${styles.item} ${styles.moreItem}`}>
                     <button className={`${styles.row} ${styles.more}`} onClick={() => setShowAll(true)}>
                         <span className={styles.main}>
                             <span className={styles.sub}>{hidden} more</span>

@@ -172,3 +172,36 @@
     padding-top: calc(var(--pad) + 1.5rem);
   }
 }
+
+@media print {
+  .header {
+    padding-top: 0;
+  }
+
+  .name {
+    font-size: 14pt;
+  }
+
+  .time {
+    display: none;
+  }
+
+  .intro {
+    gap: 0.4rem;
+    padding-bottom: 6px;
+  }
+
+  .section {
+    padding: 6px 0;
+  }
+
+  .heading,
+  .listSection .heading {
+    position: static !important;
+    margin-bottom: 2px;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    break-after: avoid;
+  }
+}

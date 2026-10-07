@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import Script from 'next/script'
+import ConsoleNote from '@/components/ConsoleNote'
 
 // Switzer (Fontshare, free license), self-hosted so the site doesn't depend on their CDN
 const switzer = localFont({
@@ -63,6 +64,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <ConsoleNote />
         {/* Umami analytics: cookieless; production builds only */}
         {process.env.NODE_ENV === 'production' && (
           <Script

@@ -15,10 +15,11 @@ import listStyles from "@/components/List.module.css";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
 
+// `print` is what the printed résumé shows after each link
 const links = [
-  { label: "GitHub", href: "https://github.com/agrimjaimini" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/agrimjaimini" },
-  { label: "Email", href: `mailto:${EMAIL}` },
+  { label: "GitHub", href: "https://github.com/agrimjaimini", print: "github.com/agrimjaimini" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/agrimjaimini", print: "linkedin.com/in/agrimjaimini" },
+  { label: "Email", href: `mailto:${EMAIL}`, print: EMAIL },
 ];
 
 const years = (duration: string) => {
@@ -43,9 +44,26 @@ function Company({ name, children }: { name: string; children?: React.ReactNode 
 
 const delay = (i: number) => ({ "--i": i }) as React.CSSProperties;
 
-function Section({ title, index, list, children }: { title: string; index: number; list?: boolean; children: React.ReactNode }) {
+function Section({
+  title,
+  index,
+  list,
+  screenOnly,
+  children,
+}: {
+  title: string;
+  index: number;
+  list?: boolean;
+  /** Leave this section out of the printed résumé. */
+  screenOnly?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <section className={`cell ${styles.section} ${list ? styles.listSection : ""} enter`} style={delay(index + 2)}>
+    <section
+      data-section={title.toLowerCase()}
+      className={`cell ${styles.section} ${list ? styles.listSection : ""} ${screenOnly ? "screen-only" : ""} enter`}
+      style={delay(index + 2)}
+    >
       <h2 className={styles.heading}>{title}</h2>
       {children}
     </section>
@@ -71,7 +89,7 @@ export default function Home() {
         </p>
       </header>
 
-      <div className={`cell ruled ${styles.visual} enter`} style={delay(1)}>
+      <div className={`cell ruled screen-only ${styles.visual} enter`} style={delay(1)}>
         <Morph name="fig-1">
           <IsingField />
         </Morph>
@@ -102,6 +120,7 @@ export default function Home() {
               key={l.label}
               href={l.href}
               className="link"
+              data-print={l.print}
               {...(l.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
               {l.label}
@@ -119,12 +138,12 @@ export default function Home() {
       </Section>
 
       {posts.length > 0 && (
-        <Section title="Writing" index={3} list>
+        <Section title="Writing" index={3} list screenOnly>
           <PostList posts={posts} />
         </Section>
       )}
 
-      <Section title="Now" index={4} list>
+      <Section title="Now" index={4} list screenOnly>
         <ul className={`${listStyles.list} ${listStyles.static}`}>
           {now.items.map((item) => (
             <li key={item.label} className={listStyles.item}>
@@ -157,7 +176,7 @@ export default function Home() {
         />
       </Section>
 
-      <Section title="Contact" index={6}>
+      <Section title="Contact" index={6} screenOnly>
         <p>
           The best way to reach me is{" "}
           <a href={`mailto:${EMAIL}`} className="link">{EMAIL}</a>. You can also
@@ -168,7 +187,7 @@ export default function Home() {
         </p>
       </Section>
 
-      <footer className={`cell ${styles.footer}`}>
+      <footer className={`cell screen-only ${styles.footer}`}>
         <span>© {new Date().getFullYear()} Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />

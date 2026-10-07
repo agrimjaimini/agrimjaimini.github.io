@@ -89,3 +89,9 @@
     display: none;
   }
 }
+
+@media print {
+  .card {
+    display: none !important;
+  }
+}

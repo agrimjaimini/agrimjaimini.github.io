@@ -59,6 +59,10 @@
   text-overflow: ellipsis;
 }
 
+.overflow {
+  display: none;
+}
+
 .more .sub {
   color: var(--text-dim);
   transition: color 0.2s;
@@ -309,5 +313,75 @@
 
   .row {
     justify-content: space-between;
+  }
+}
+
+@media print {
+  .list {
+    margin: 0;
+  }
+
+  .item,
+  .list:hover > .item {
+    opacity: 1 !important;
+  }
+
+  /* Entries may split across pages, but a title stays with its first bullet
+     and no single bullet is cut in half */
+  .row {
+    padding: 3px 0;
+    break-after: avoid;
+  }
+
+  .detailInner li,
+  .tags {
+    break-inside: avoid;
+  }
+
+  .detail {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .detailInner {
+    padding: 0 0 6px !important;
+  }
+
+  .detailInner ul {
+    gap: 2px;
+  }
+
+  .tags {
+    margin-top: 3px;
+  }
+
+  .detail li,
+  .detail .tags {
+    animation: none !important;
+  }
+
+  .moreItem,
+  .toggle,
+  .leader {
+    display: none !important;
+  }
+
+  /* Coursework prints as one comma-separated line */
+  .detailInner ul.columns {
+    display: block;
+  }
+
+  .columns li {
+    display: inline;
+    padding-left: 0;
+  }
+
+  .columns li::before {
+    content: none;
+  }
+
+  .columns li:not(:last-child)::after {
+    content: ', ';
   }
 }

@@ -272,3 +272,70 @@ html {
     animation: none;
   }
 }
+
+/* ---------- Print: the homepage becomes a one-page résumé ---------- */
+@page {
+  margin: 0.6in;
+}
+
+@media print {
+  :root,
+  :root[data-theme='dark'],
+  :root:not([data-theme='light']) {
+    --background: #fff !important;
+    --text-primary: #000 !important;
+    --text-secondary: #333 !important;
+    --text-dim: #666 !important;
+    --border: #ddd !important;
+    --border-hover: #bbb !important;
+    --text-size: 10pt !important;
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+
+  .screen-only {
+    display: none !important;
+  }
+
+  .enter,
+  section.enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Résumé order: Education right after the intro, then the rest */
+  .frame {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame > section {
+    order: 2;
+  }
+
+  .frame > section[data-section='education'] {
+    order: 1;
+  }
+
+  .cell {
+    padding: 0 0 12px;
+  }
+
+  /* Links print as plain text followed by where they go */
+  .link {
+    background: none;
+    white-space: normal;
+  }
+
+  .link[data-print]::after {
+    content: ' ' attr(data-print);
+    color: var(--text-dim);
+  }
+}
