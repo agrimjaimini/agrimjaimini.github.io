@@ -322,6 +322,6 @@ export const now: { updated: string; items: NowItem[] } = {
     items: [
         { label: "Reading", title: "Dune", by: "Frank Herbert" },
         { label: "Watching", title: "Slow Horses" },
-        { label: "Listening", title: "The Deep Three Podcast" },
+        { label: "Listening", title: "The Deep 3" },
     ],
 };
