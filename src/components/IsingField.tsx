@@ -219,8 +219,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             const trend = c > lastC + 0.0004 ? '↑' : c < lastC - 0.0004 ? '↓' : ' ';
             lastC = c;
             if (cRef.current) cRef.current.textContent = `c ${c.toFixed(3)} ${trend}`;
-            // In auto mode the slider follows the drifting c
-            if (sliderRef.current && manualRef.current === null) sliderRef.current.value = String(c);
+
             if (stepsRef.current) stepsRef.current.textContent = `t ${compact(steps)}`;
             if (acceptRef.current) acceptRef.current.textContent = `accept ${(acceptance * 100).toFixed(0)}%`;
         };
@@ -239,6 +238,8 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             }
             pointer.strength += ((pointer.x > -1e3 ? 1 : 0) - pointer.strength) * 0.06;
             c = globalC(t);
+            // In auto mode the slider follows the drifting c, every frame so it glides
+            if (sliderRef.current && manualRef.current === null) sliderRef.current.value = String(c);
 
             // Spread the work evenly across frames so the grid evolves a little
             // every frame instead of lurching once per sweep
@@ -322,7 +323,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                         type="range"
                         min={0.2}
                         max={0.8}
-                        step={0.005}
+                        step="any"
                         ref={sliderRef}
                         defaultValue={C_CRITICAL}
                         onChange={(e) => {
