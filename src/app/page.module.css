@@ -59,7 +59,7 @@
   flex-direction: column;
   gap: 1rem;
   /* Match the rhythm between sections */
-  padding-bottom: calc(var(--pad) * 0.7);
+  padding-bottom: var(--pad);
 }
 
 /* The opening sentence leads: a touch larger, in full ink */
@@ -83,22 +83,29 @@
 }
 
 /* Sections */
+/* Generous room between sections, so each one stands on its own */
 .section {
-  padding-top: calc(var(--pad) * 0.7);
-  padding-bottom: calc(var(--pad) * 0.7);
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
 }
 
+/* Headings in ink, content in gray: the page's outline reads at a glance */
 .heading {
   margin-bottom: 0.75rem;
   font-size: 15px;
   font-weight: 400;
-  color: var(--text-dim);
+  color: var(--text-primary);
   transition: color 0.4s ease;
 }
 
 /* Wide screens: section labels hang in the margin as quiet notes,
    and the one for the section being read lights up */
 @media (min-width: 1100px) {
+  /* In the margin they act as quiet notes, lighting up for the current section */
+  .heading {
+    color: var(--text-dim);
+  }
+
   .section[data-active] .heading {
     color: var(--text-primary);
   }
