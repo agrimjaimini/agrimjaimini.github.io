@@ -94,12 +94,20 @@
   background-image: radial-gradient(circle, var(--text-dim) 0.6px, transparent 0.9px);
   background-size: 5px 1px;
   background-repeat: repeat-x;
-  opacity: 0.45;
-  transition: opacity 0.25s;
+  /* Hidden at rest: whitespace already pairs title and year. On hover the
+     dotted line draws in from the title, marking the row being read. */
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: opacity 0.25s ease, clip-path 0.45s var(--ease-out-expo);
+}
+
+.row:hover .leader,
+.row[aria-expanded='true'] .leader {
+  opacity: 0.9;
+  clip-path: inset(0 0 0 0);
 }
 
 .row:hover .leader {
-  opacity: 0.9;
   animation: march 1.2s linear infinite;
 }
 

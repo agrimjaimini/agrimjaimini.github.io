@@ -1,9 +1,11 @@
 .term {
   position: relative;
   white-space: nowrap;
+  /* No underline at rest: underlines on this site mean "link". Terms read as
+     emphasized text and reveal a dotted underline (and their card) on hover. */
   color: var(--text-primary);
   text-decoration: underline dotted;
-  text-decoration-color: var(--border-hover);
+  text-decoration-color: transparent;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
   cursor: default;
@@ -13,7 +15,7 @@
 
 .term:hover,
 .term:focus-visible {
-  text-decoration-color: var(--accent);
+  text-decoration-color: var(--text-dim);
 }
 
 .card {
