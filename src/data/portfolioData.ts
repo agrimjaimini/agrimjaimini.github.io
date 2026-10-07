@@ -309,3 +309,19 @@ export const contactMethods = [
         borderColor: "hover:border-green-500/50"
     }
 ];
+
+export interface NowItem {
+    label: string;
+    title: string;
+    by?: string;
+}
+
+/** The "Now" section. Edit freely, and bump `updated` when you do. */
+export const now: { updated: string; items: NowItem[] } = {
+    updated: "Oct 2026",
+    items: [
+        { label: "Reading", title: "Dune", by: "Frank Herbert" },
+        { label: "Watching", title: "Slow Horses" },
+        { label: "Listening", title: "The Deep Three Podcast" },
+    ],
+};

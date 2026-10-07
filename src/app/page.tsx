@@ -10,7 +10,8 @@ import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
 import { EMAIL } from "@/lib/contact";
-import { education, experience, skills } from "@/data/portfolioData";
+import { education, experience, now, skills } from "@/data/portfolioData";
+import listStyles from "@/components/List.module.css";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
 
@@ -138,6 +139,23 @@ export default function Home() {
           <PostList posts={posts} />
         </Section>
       )}
+
+      <Section title="Now" index={4} list>
+        <ul className={`${listStyles.list} ${listStyles.static}`}>
+          {now.items.map((item) => (
+            <li key={item.label} className={listStyles.item}>
+              <div className={listStyles.row}>
+                <span className={listStyles.main}>
+                  <span className={styles.nowLabel}>{item.label}</span>
+                  <span className={listStyles.title}>{item.title}</span>
+                  {item.by && <span className={listStyles.sub}>{item.by}</span>}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className={`mono ${styles.updated}`}>Updated {now.updated}</p>
+      </Section>
 
       <Section title="Education" index={4} list>
         <Disclosure

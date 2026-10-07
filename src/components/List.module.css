@@ -70,6 +70,17 @@
   color: var(--text-primary);
 }
 
+/* Non-interactive lists: no hover affordances */
+.static .row:hover {
+  background: none;
+}
+
+@media (hover: hover) {
+  .static:hover > .item {
+    opacity: 1;
+  }
+}
+
 /* Previews of the detail fade out once the row is open */
 .preview {
   transition: opacity 0.25s ease;

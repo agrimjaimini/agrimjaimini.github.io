@@ -99,6 +99,24 @@
   }
 }
 
+/* Now */
+.nowLabel {
+  flex-shrink: 0;
+  width: 84px;
+  color: var(--text-dim);
+}
+
+.updated {
+  margin-top: 0.75rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 520px) {
+  .nowLabel {
+    width: auto;
+  }
+}
+
 /* Footer */
 .footer {
   margin-top: calc(var(--pad) * 1.5);
