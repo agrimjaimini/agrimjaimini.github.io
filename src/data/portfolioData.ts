@@ -10,7 +10,7 @@ export const education: Education[] = [
     {
         school: "Cornell University",
         degree: "BS, Computer Science & Mathematics",
-        duration: "Expected May 2027",
+        duration: "Expected May 2028",
         gpa: "4.04",
         coursework: [
             "Data Structures and Object-Oriented Programming (Java)",
