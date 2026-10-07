@@ -7,9 +7,7 @@
   --border-light: #f1f1ef;
   --border-hover: #d4d4d1;
   --hover: rgba(0, 0, 0, 0.025);
-  --accent-light: #8c8279;
-  --accent-dark: #b3a89d;
-  --accent: var(--accent-light);
+  --accent: var(--text-primary);
   --on-accent: #fff;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -38,7 +36,6 @@
     --border-light: #171717;
     --border-hover: #333;
     --hover: rgba(255, 255, 255, 0.03);
-    --accent: var(--accent-dark);
     --on-accent: #0d0d0d;
     color-scheme: dark;
   }
@@ -53,7 +50,6 @@
   --border-light: #171717;
   --border-hover: #333;
   --hover: rgba(255, 255, 255, 0.03);
-  --accent: var(--accent-dark);
   --on-accent: #0d0d0d;
   color-scheme: dark;
 }

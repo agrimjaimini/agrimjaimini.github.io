@@ -6,7 +6,6 @@ import LocalTime from "@/components/LocalTime";
 import SectionSpy from "@/components/SectionSpy";
 import SignalField from "@/components/SignalField";
 import ThemeToggle from "@/components/ThemeToggle";
-import AccentPicker from "@/components/AccentPicker";
 import Term from "@/components/Term";
 import { EMAIL } from "@/lib/contact";
 import { education, experience, skills } from "@/data/portfolioData";
@@ -73,7 +72,6 @@ export default function Home() {
   return (
     <main className="frame">
       <SectionSpy />
-      {process.env.NODE_ENV === "development" && <AccentPicker />}
 
       <header className={`cell ${styles.header} enter`}>
         <div>
@@ -154,10 +152,15 @@ export default function Home() {
           <p>
             {school.degree.replace("BS, ", "B.S. ")}
             {school.gpa && ` · ${school.gpa} GPA`}
+            {school.coursework && (
+              <>
+                {" · "}
+                <Term title="Coursework" lines={school.coursework} wide>
+                  Coursework
+                </Term>
+              </>
+            )}
           </p>
-          {school.coursework && (
-            <p className={styles.coursework}>{school.coursework.join(", ")}</p>
-          )}
         </div>
       </Section>
 

@@ -53,6 +53,11 @@
   transform: none;
 }
 
+.wide {
+  max-width: 340px;
+  gap: 3px;
+}
+
 .head {
   display: flex;
   justify-content: space-between;

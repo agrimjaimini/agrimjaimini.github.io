@@ -122,12 +122,6 @@
   color: var(--text-dim);
 }
 
-.coursework {
-  margin-top: 0.6rem;
-  font-size: 13.5px;
-  color: var(--text-dim);
-}
-
 /* Toolkit */
 .toolkit {
   display: flex;

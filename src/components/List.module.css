@@ -70,6 +70,20 @@
 
 .row:hover .leader {
   opacity: 0.9;
+  animation: march 1.2s linear infinite;
+}
+
+/* Dots drift toward the meta column while the row is hovered */
+@keyframes march {
+  to {
+    background-position: 5px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row:hover .leader {
+    animation: none;
+  }
 }
 
 .meta {
