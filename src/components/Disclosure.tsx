@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import styles from './List.module.css';
 
 export interface DisclosureItem {
@@ -52,40 +51,31 @@ export default function Disclosure({ items, limit }: { items: DisclosureItem[]; 
                             <span className={`${styles.meta} ${item.preview ? styles.preview : ''}`}>{item.meta}</span>
                             <span className={styles.toggle} aria-hidden>{isOpen ? '−' : '+'}</span>
                         </button>
-                        <AnimatePresence initial={false}>
-                            {isOpen && (
-                                <motion.div
-                                    className={styles.detail}
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                >
-                                    <div className={styles.detailInner}>
-                                        <ul className={item.columns ? styles.columns : undefined}>
-                                            {item.points.map((point, j) => (
-                                                <li key={j}>{point}</li>
-                                            ))}
-                                        </ul>
-                                        {(item.note || item.link) && (
-                                            <p className={styles.tags}>
-                                                {item.note}
-                                                {item.link && (
-                                                    <a
-                                                        href={item.link.href}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className={styles.detailLink}
-                                                    >
-                                                        {item.link.label} ↗
-                                                    </a>
-                                                )}
-                                            </p>
+                        {/* Height animates via a 0fr → 1fr grid row; content stays mounted */}
+                        <div className={styles.detail} data-open={isOpen} aria-hidden={!isOpen}>
+                            <div className={styles.detailInner}>
+                                <ul className={item.columns ? styles.columns : undefined}>
+                                    {item.points.map((point, j) => (
+                                        <li key={j}>{point}</li>
+                                    ))}
+                                </ul>
+                                {(item.note || item.link) && (
+                                    <p className={styles.tags}>
+                                        {item.note}
+                                        {item.link && (
+                                            <a
+                                                href={item.link.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={styles.detailLink}
+                                            >
+                                                {item.link.label} ↗
+                                            </a>
                                         )}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                                    </p>
+                                )}
+                            </div>
+                        </div>
                     </li>
                 );
             })}

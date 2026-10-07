@@ -126,11 +126,34 @@
 }
 
 .detail {
-  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s var(--ease-out-expo), opacity 0.3s ease, visibility 0.4s;
+  visibility: hidden;
+}
+
+.detail[data-open='true'] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
 }
 
 .detailInner {
-  padding: 2px 10px 14px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.detail[data-open='true'] .detailInner {
+  padding-top: 2px;
+  padding-bottom: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail {
+    transition: none;
+  }
 }
 
 .detailInner ul {

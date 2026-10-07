@@ -1,27 +1,21 @@
-# Writing Directory
+# Writing
 
-Add your `.mdx` blog posts here.
-
-## File Naming
-
-- Regular posts: `my-post-title.mdx`
-- Hidden/placeholder posts: `_filename.mdx` (will be filtered out from UI)
+Each `.mdx` file here becomes a post at `/writing/<filename>`.
 
 ## Frontmatter
 
 ```yaml
 ---
-title: "Your Post Title"
-date: "2026-02-09"
-excerpt: "A brief description of your post (150-200 characters)"
-tags: ["tag1", "tag2"]
-featured: false
-hidden: false  # Set to true to hide from UI
+title: "Post title"
+date: "2026-10-06"          # YYYY-MM-DD
+excerpt: "One or two sentences, used in link previews."
+tags: ["optional"]
+hidden: true                 # optional: builds the page but leaves it out of lists
 ---
 ```
 
-## Notes
+## In a post
 
-- `_placeholder.mdx` is a build-time placeholder that allows static export to work
-- It's hidden from the UI and can be ignored
-- When you add real posts, the placeholder will remain hidden
+- Math: `$inline$` and `$$display$$` (KaTeX)
+- Figures: `<IsingField />` embeds the live Ising model with a `c` slider
+- Literal braces in text must be escaped (`\{`, `\}`), since MDX treats `{}` as code

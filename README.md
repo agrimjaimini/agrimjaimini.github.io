@@ -1,63 +1,28 @@
-# Portfolio
+# agrimjaimini.github.io
 
-A modern, responsive portfolio website built with Next.js 16 and React 19.
+Personal site of Agrim Jaimini. Built with Next.js (static export) and deployed to GitHub Pages.
 
-## Live Demo
-
-Visit the live site at: https://agrimjaimini.github.io/
-
-## Features
-
-- Modern UI with smooth animations using Framer Motion
-- Fully responsive design
-- Static site generation for optimal performance
-- Deployed on GitHub Pages
-
-## Getting Started
-
-First, install the dependencies:
+## Develop
 
 ```bash
 npm install
-```
-
-Then run the development server:
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying files in the `src/app` directory. The page auto-updates as you edit the file.
+Open http://localhost:3000.
 
 ## Build
-
-To create a production build:
 
 ```bash
 npm run build
 ```
 
-This will generate a static export in the `out` directory.
+The static site is written to `out/`. Pushing to `main` runs `.github/workflows/deploy.yml`, which builds and deploys to GitHub Pages.
 
-## Deployment
+## Where things live
 
-This project is configured for automatic deployment to GitHub Pages. When you push to the `main` branch, GitHub Actions will automatically build and deploy your site.
-
-### Setup GitHub Pages (First Time)
-
-1. Go to your repository settings on GitHub
-2. Navigate to **Settings > Pages**
-3. Under **Source**, select **GitHub Actions**
-4. Push your code to the `main` branch
-
-The site will be available at: `https://agrimjaimini.github.io/`
-
-## Technologies
-
-- [Next.js 16](https://nextjs.org/) - React framework with App Router
-- [React 19](https://react.dev/) - UI library
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Framer Motion](https://www.framer.com/motion/) - Animation library
-- [Lucide React](https://lucide.dev/) - Icon library
+- `src/data/portfolioData.ts`: experience, projects, education, and the "Now" section
+- `content/writing/*.mdx`: posts (see `content/writing/README.md`)
+- `src/components/IsingField.tsx`: Fig. 1, an Ising model sampled with Metropolis–Hastings
+- `src/app/fonts/`: self-hosted Switzer (Fontshare); Geist Mono comes from `next/font/google`
+- Analytics: Umami, loaded in production builds only (`src/app/layout.tsx`)

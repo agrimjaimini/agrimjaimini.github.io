@@ -97,6 +97,76 @@
   }
 }
 
+/* Optional c slider (used in the write-up) */
+.control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 12px var(--pad) 0;
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  color: var(--text-dim);
+}
+
+.controlLabel {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.slider {
+  flex: 1;
+  height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--border-hover);
+}
+
+.slider::-moz-range-track {
+  height: 1px;
+  background: var(--border-hover);
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  transition: transform 0.2s var(--ease-out-expo);
+}
+
+.slider::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border: none;
+  border-radius: 50%;
+  background: var(--text-primary);
+}
+
+.slider:active::-webkit-slider-thumb {
+  transform: scale(1.25);
+}
+
+.controlHint {
+  min-width: 9ch;
+  text-align: right;
+}
+
+.reset {
+  font: inherit;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-hover);
+  text-underline-offset: 3px;
+}
+
 /* As the figure scrolls away it gently fades and settles */
 @supports (animation-timeline: view()) {
   .canvas {

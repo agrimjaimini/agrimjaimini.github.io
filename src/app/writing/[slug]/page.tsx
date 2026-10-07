@@ -35,6 +35,21 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/writing/${slug}` },
+    openGraph: {
+      type: 'article',
+      title: post.title,
+      description: post.excerpt,
+      url: `/writing/${slug}`,
+      publishedTime: post.date,
+      images: ['/og.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: ['/og.png'],
+    },
   };
 }
 

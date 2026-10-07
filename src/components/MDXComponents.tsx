@@ -8,7 +8,7 @@ export const MDXComponents = {
   IsingField: () => (
     <Morph name="fig-1">
       <div className={styles.figure}>
-        <IsingField linked={false} intro={false} />
+        <IsingField linked={false} intro={false} control />
       </div>
     </Morph>
   ),

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import styles from './IsingField.module.css';
 
@@ -28,13 +28,19 @@ interface IsingFieldProps {
     fixedC?: number;
     /** Sweep the dots in from the center on load (off when morphing in from another page). */
     intro?: boolean;
+    /** Show a slider that lets the reader set c by hand. */
+    control?: boolean;
 }
 
-export default function IsingField({ linked = true, fixedC, intro = true }: IsingFieldProps) {
+export default function IsingField({ linked = true, fixedC, intro = true, control = false }: IsingFieldProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
     const stepsRef = useRef<HTMLSpanElement>(null);
     const acceptRef = useRef<HTMLSpanElement>(null);
+    // A value set with the slider wins over the automatic drift until reset
+    const manualRef = useRef<number | null>(null);
+    const sliderRef = useRef<HTMLInputElement>(null);
+    const [manual, setManual] = useState<number | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -115,6 +121,7 @@ export default function IsingField({ linked = true, fixedC, intro = true }: Isin
 
         const globalC = (t: number) => {
             if (fixedC !== undefined) return fixedC;
+            if (manualRef.current !== null) return manualRef.current;
             const s = Math.sin((t / CYCLE) * Math.PI * 2);
             const shaped = Math.sign(s) * Math.pow(Math.abs(s), 1.6);
             return C_CRITICAL + dailyOffset(t) + shaped * (shaped > 0 ? 0.18 : 0.08);
@@ -208,6 +215,8 @@ export default function IsingField({ linked = true, fixedC, intro = true }: Isin
             const trend = c > lastC + 0.0004 ? '↑' : c < lastC - 0.0004 ? '↓' : ' ';
             lastC = c;
             if (cRef.current) cRef.current.textContent = `c ${c.toFixed(3)} ${trend}`;
+            // In auto mode the slider follows the drifting c
+            if (sliderRef.current && manualRef.current === null) sliderRef.current.value = String(c);
             if (stepsRef.current) stepsRef.current.textContent = `t ${compact(steps)}`;
             if (acceptRef.current) acceptRef.current.textContent = `accept ${(acceptance * 100).toFixed(0)}%`;
         };
@@ -297,6 +306,44 @@ export default function IsingField({ linked = true, fixedC, intro = true }: Isin
     return (
         <figure className={styles.figure}>
             <canvas ref={canvasRef} className={styles.canvas} aria-hidden />
+            {control && (
+                <div className={styles.control}>
+                    <label className={styles.controlLabel} htmlFor="ising-c">
+                        c
+                    </label>
+                    <input
+                        id="ising-c"
+                        className={styles.slider}
+                        type="range"
+                        min={0.2}
+                        max={0.8}
+                        step={0.005}
+                        ref={sliderRef}
+                        defaultValue={C_CRITICAL}
+                        onChange={(e) => {
+                            const value = Number(e.target.value);
+                            manualRef.current = value;
+                            setManual(value);
+                        }}
+                        aria-label="Inverse temperature c"
+                    />
+                    <span className={styles.controlHint}>
+                        {manual === null ? (
+                            'drag to set'
+                        ) : (
+                            <button
+                                className={styles.reset}
+                                onClick={() => {
+                                    manualRef.current = null;
+                                    setManual(null);
+                                }}
+                            >
+                                auto
+                            </button>
+                        )}
+                    </span>
+                </div>
+            )}
             <figcaption className={styles.label}>
                 {linked ? (
                     <Link href="/writing/ising-model" className={styles.figLink}>
