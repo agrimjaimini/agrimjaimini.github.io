@@ -32,9 +32,11 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'Agrim Jaimini',
     type: 'website',
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Agrim Jaimini' }],
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['/og.png'],
   },
 }
 
