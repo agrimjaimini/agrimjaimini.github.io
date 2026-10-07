@@ -18,16 +18,27 @@ export interface DisclosureItem {
     link?: { href: string; label: string };
 }
 
-/** A list of rows that expand in place to show detail. One open at a time. */
-export default function Disclosure({ items }: { items: DisclosureItem[] }) {
+/**
+ * A list of rows that expand in place to show detail. One open at a time.
+ * With `limit`, only the first rows show until "N more" is clicked.
+ */
+export default function Disclosure({ items, limit }: { items: DisclosureItem[]; limit?: number }) {
     const [open, setOpen] = useState<string | null>(null);
+    const [showAll, setShowAll] = useState(false);
+    const visible = limit && !showAll ? items.slice(0, limit) : items;
+    const hidden = items.length - visible.length;
 
     return (
         <ul className={styles.list}>
-            {items.map((item) => {
+            {visible.map((item, i) => {
                 const isOpen = open === item.key;
+                const revealed = limit !== undefined && i >= limit;
                 return (
-                    <li key={item.key} className={styles.item}>
+                    <li
+                        key={item.key}
+                        className={`${styles.item} ${revealed ? 'enter' : ''}`}
+                        style={revealed ? ({ '--i': i - limit } as React.CSSProperties) : undefined}
+                    >
                         <button
                             className={styles.row}
                             onClick={() => setOpen(isOpen ? null : item.key)}
@@ -78,6 +89,17 @@ export default function Disclosure({ items }: { items: DisclosureItem[] }) {
                     </li>
                 );
             })}
+            {hidden > 0 && (
+                <li className={styles.item}>
+                    <button className={`${styles.row} ${styles.more}`} onClick={() => setShowAll(true)}>
+                        <span className={styles.main}>
+                            <span className={styles.sub}>{hidden} more</span>
+                        </span>
+                        <span className={styles.leader} aria-hidden />
+                        <span className={styles.toggle} aria-hidden>+</span>
+                    </button>
+                </li>
+            )}
         </ul>
     );
 }

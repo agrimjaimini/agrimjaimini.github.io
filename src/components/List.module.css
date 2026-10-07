@@ -61,6 +61,15 @@
   text-overflow: ellipsis;
 }
 
+.more .sub {
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+
+.more:hover .sub {
+  color: var(--text-primary);
+}
+
 /* Previews of the detail fade out once the row is open */
 .preview {
   transition: opacity 0.25s ease;

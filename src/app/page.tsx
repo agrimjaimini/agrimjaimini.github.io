@@ -76,12 +76,9 @@ export default function Home() {
       <SectionSpy />
 
       <header className={`cell ${styles.header} enter`}>
-        <div>
-          <h1 className={styles.name}>Agrim Jaimini</h1>
-          <p className={styles.role}>Engineer · Researcher · Builder</p>
-        </div>
+        <h1 className={styles.name}>Agrim Jaimini</h1>
         <p className={`mono ${styles.place}`}>
-          <span>Ithaca, NY</span>
+          Ithaca, NY
           <span className={styles.time}>
             <span className={styles.live} aria-hidden />
             <LocalTime timeZone="America/New_York" />

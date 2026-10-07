@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     default: 'Agrim Jaimini',
     template: '%s — Agrim Jaimini',
   },
-  description: 'Engineer, researcher, and builder working on ML systems and the infrastructure behind them. CS & Math at Cornell.',
+  description: 'Building machine learning systems and the infrastructure behind them. CS & Math at Cornell.',
   openGraph: {
     title: 'Agrim Jaimini',
-    description: 'Engineer, researcher, and builder. CS & Math at Cornell.',
+    description: 'ML systems and the infrastructure behind them. CS & Math at Cornell.',
     url: '/',
     siteName: 'Agrim Jaimini',
     type: 'website',

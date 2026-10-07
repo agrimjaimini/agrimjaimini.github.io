@@ -5,6 +5,7 @@ import Disclosure from './Disclosure';
 export default function Projects() {
     return (
         <Disclosure
+            limit={6}
             items={projects.map((project) => {
                 const href = project.github ?? project.demo;
                 return {
