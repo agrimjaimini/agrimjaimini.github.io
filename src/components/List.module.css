@@ -204,6 +204,7 @@
 
 @media (max-width: 520px) {
   .main {
+    flex: 1;
     flex-direction: column;
     gap: 0;
   }
