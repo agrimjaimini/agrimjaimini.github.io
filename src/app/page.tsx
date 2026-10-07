@@ -2,7 +2,6 @@ import React from "react";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import PostList from "@/components/PostList";
-import LocalTime from "@/components/LocalTime";
 import SectionSpy from "@/components/SectionSpy";
 import IsingField from "@/components/IsingField";
 import Morph from "@/components/Morph";
@@ -80,13 +79,6 @@ export default function Home() {
 
       <header className={`cell ${styles.header} enter`}>
         <h1 className={styles.name}>Agrim Jaimini</h1>
-        <p className={`mono ${styles.place}`}>
-          Ithaca, NY
-          <span className={styles.time}>
-            <span className={styles.live} aria-hidden />
-            <LocalTime timeZone="America/New_York" />
-          </span>
-        </p>
       </header>
 
       <div className={`cell ruled screen-only ${styles.visual} enter`} style={delay(1)}>
