@@ -139,9 +139,11 @@ export default function Home() {
         <Projects />
       </Section>
 
-      <Section title="Writing" index={3} list={posts.length > 0}>
-        <PostList posts={posts} />
-      </Section>
+      {posts.length > 0 && (
+        <Section title="Writing" index={3} list>
+          <PostList posts={posts} />
+        </Section>
+      )}
 
       <Section title="Education" index={4}>
         <div className={styles.edu}>
@@ -182,7 +184,7 @@ export default function Home() {
       </Section>
 
       <footer className={`cell mono ${styles.footer}`}>
-        <span>© {new Date().getFullYear()} Agrim Jaimini</span>
+        <span>© {new Date().getFullYear()} Agrim Jaimini · Set in Inter &amp; Geist Mono</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />
           <a href="#" className={styles.footerLink}>Back to top ↑</a>

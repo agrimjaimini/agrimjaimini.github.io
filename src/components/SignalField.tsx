@@ -11,6 +11,7 @@ const RADIUS = 1.1;
  */
 export default function SignalField() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const readoutRef = useRef<HTMLSpanElement>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -89,14 +90,22 @@ export default function SignalField() {
             if (visible) raf = requestAnimationFrame(loop);
         };
 
+        const readout = readoutRef.current;
         const onMove = (e: PointerEvent) => {
             const rect = canvas.getBoundingClientRect();
             pointer.x = e.clientX - rect.left;
             pointer.y = e.clientY - rect.top;
+            if (readout) {
+                const x = Math.round(pointer.x / GAP).toString().padStart(2, '0');
+                const y = Math.round(pointer.y / GAP).toString().padStart(2, '0');
+                readout.textContent = `x ${x}  y ${y}`;
+                readout.dataset.visible = 'true';
+            }
         };
         const onLeave = () => {
             pointer.x = -1e4;
             pointer.y = -1e4;
+            if (readout) readout.dataset.visible = 'false';
         };
 
         readColors();
@@ -128,5 +137,11 @@ export default function SignalField() {
         };
     }, []);
 
-    return <canvas ref={canvasRef} className={styles.canvas} aria-hidden />;
+    return (
+        <div className={styles.wrap}>
+            <canvas ref={canvasRef} className={styles.canvas} aria-hidden />
+            {/* Cursor position in grid units, like an instrument readout */}
+            <span ref={readoutRef} className={styles.readout} data-visible="false" aria-hidden />
+        </div>
+    );
 }
