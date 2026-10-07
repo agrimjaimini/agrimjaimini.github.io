@@ -2,7 +2,7 @@
   --background: #fbfbfa;
   --text-primary: #141414;
   --text-secondary: #6b6b6b;
-  --text-dim: #a3a3a3;
+  --text-dim: #8f8f8f;
   --border: #e9e9e7;
   --border-light: #f1f1ef;
   --border-hover: #d4d4d1;
@@ -19,7 +19,7 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Frame geometry */
-  --frame: 720px;
+  --frame: 680px;
   --pad: 40px;
 
   color-scheme: light;
@@ -31,7 +31,7 @@
     --background: #0d0d0d;
     --text-primary: #ededed;
     --text-secondary: #999;
-    --text-dim: #5c5c5c;
+    --text-dim: #6b6b6b;
     --border: #1e1e1e;
     --border-light: #171717;
     --border-hover: #333;
@@ -45,7 +45,7 @@
   --background: #0d0d0d;
   --text-primary: #ededed;
   --text-secondary: #999;
-  --text-dim: #5c5c5c;
+  --text-dim: #6b6b6b;
   --border: #1e1e1e;
   --border-light: #171717;
   --border-hover: #333;
@@ -78,7 +78,9 @@ body {
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.65;
-  letter-spacing: -0.008em;
+  letter-spacing: -0.004em;
+  font-kerning: normal;
+  hanging-punctuation: first;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -111,6 +113,7 @@ h6 {
   font-size: inherit;
   font-weight: 500;
   letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
 }
 
 p {

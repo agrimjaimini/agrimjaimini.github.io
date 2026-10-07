@@ -91,11 +91,33 @@ export default function IsingField({ linked = true, fixedC, intro = true }: Isin
         };
 
         // c lingers near the critical point, with brief, gentle visits to either side
+        // Ithaca's clock sets the baseline: coldest (most ordered) near 3 a.m.,
+        // warmest near 3 p.m. Refreshed once a minute.
+        const ithacaHour = () => {
+            const parts = new Intl.DateTimeFormat('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hourCycle: 'h23',
+                timeZone: 'America/New_York',
+            }).formatToParts(new Date());
+            const get = (type: string) => Number(parts.find((p) => p.type === type)?.value ?? 0);
+            return get('hour') + get('minute') / 60;
+        };
+        let daily = 0;
+        let dailyCheckedAt = -Infinity;
+        const dailyOffset = (t: number) => {
+            if (t - dailyCheckedAt > 60) {
+                dailyCheckedAt = t;
+                daily = 0.05 * Math.cos(((ithacaHour() - 3) / 24) * Math.PI * 2);
+            }
+            return daily;
+        };
+
         const globalC = (t: number) => {
             if (fixedC !== undefined) return fixedC;
             const s = Math.sin((t / CYCLE) * Math.PI * 2);
             const shaped = Math.sign(s) * Math.pow(Math.abs(s), 1.6);
-            return C_CRITICAL + shaped * (shaped > 0 ? 0.18 : 0.08);
+            return C_CRITICAL + dailyOffset(t) + shaped * (shaped > 0 ? 0.18 : 0.08);
         };
 
         // The cursor heats (lowers c); a click cools (raises c) around it

@@ -68,8 +68,8 @@
 
 /* Sections */
 .section {
-  padding-top: calc(var(--pad) * 0.6);
-  padding-bottom: calc(var(--pad) * 0.6);
+  padding-top: calc(var(--pad) * 0.7);
+  padding-bottom: calc(var(--pad) * 0.7);
 }
 
 .heading {
