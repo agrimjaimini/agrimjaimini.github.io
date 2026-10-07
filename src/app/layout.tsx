@@ -1,11 +1,7 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Geist_Mono } from 'next/font/google'
+import { Geist_Mono } from 'next/font/google'
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
 const geistMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-geist-mono',
@@ -36,8 +32,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={geistMono.variable} suppressHydrationWarning>
       <head>
+        {/* Switzer is served by Fontshare (not on Google Fonts) */}
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" />
         {/* Apply a saved theme before first paint to avoid a flash */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

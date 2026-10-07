@@ -104,24 +104,6 @@
   }
 }
 
-/* Education */
-.edu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.eduRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-}
-
-.eduRow :global(.mono) {
-  color: var(--text-dim);
-}
-
 /* Toolkit */
 .toolkit {
   display: flex;

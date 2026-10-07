@@ -4,9 +4,10 @@ import Projects from "@/components/Projects";
 import PostList from "@/components/PostList";
 import LocalTime from "@/components/LocalTime";
 import SectionSpy from "@/components/SectionSpy";
-import SignalField from "@/components/SignalField";
+import IsingField from "@/components/IsingField";
 import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
+import Disclosure from "@/components/Disclosure";
 import { EMAIL } from "@/lib/contact";
 import { education, experience, skills } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/writing";
@@ -88,7 +89,7 @@ export default function Home() {
       </header>
 
       <div className={`cell ruled ${styles.visual} enter`} style={delay(1)}>
-        <SignalField />
+        <IsingField />
       </div>
 
       <div className={`cell ${styles.intro} enter`} style={delay(2)}>
@@ -143,25 +144,20 @@ export default function Home() {
         </Section>
       )}
 
-      <Section title="Education" index={4}>
-        <div className={styles.edu}>
-          <div className={styles.eduRow}>
-            <span className={styles.em}>{school.school}</span>
-            <span className="mono">{school.duration.replace("Expected ", "")}</span>
-          </div>
-          <p>
-            {school.degree.replace("BS, ", "B.S. ")}
-            {school.gpa && ` · ${school.gpa} GPA`}
-            {school.coursework && (
-              <>
-                {" · "}
-                <Term title="Coursework" lines={school.coursework} wide>
-                  Coursework
-                </Term>
-              </>
-            )}
-          </p>
-        </div>
+      <Section title="Education" index={4} list>
+        <Disclosure
+          items={[
+            {
+              key: school.school,
+              title: school.school,
+              sub: school.degree.replace("BS, ", "B.S. "),
+              meta: school.duration.replace("Expected ", "").slice(-4),
+              points: school.coursework ?? [],
+              columns: true,
+              note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
+            },
+          ]}
+        />
       </Section>
 
       <Section title="Toolkit" index={5}>
@@ -187,7 +183,7 @@ export default function Home() {
       </Section>
 
       <footer className={`cell mono ${styles.footer}`}>
-        <span>© {new Date().getFullYear()} Agrim Jaimini · Set in Inter &amp; Geist Mono</span>
+        <span>© {new Date().getFullYear()} Agrim Jaimini · Set in Switzer &amp; Geist Mono</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />
           <a href="#" className={styles.footerLink}>Back to top ↑</a>
