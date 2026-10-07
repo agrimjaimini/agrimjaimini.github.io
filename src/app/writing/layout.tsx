@@ -8,7 +8,7 @@ export default function WritingLayout({
   return (
     <main className="frame">
       <div className="cell writing">{children}</div>
-      <footer className="cell mono writing-footer">
+      <footer className="cell writing-footer">
         <span>© {new Date().getFullYear()} Agrim Jaimini</span>
         <ThemeToggle />
       </footer>

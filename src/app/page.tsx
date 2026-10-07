@@ -77,7 +77,7 @@ export default function Home() {
       <header className={`cell ${styles.header} enter`}>
         <div>
           <h1 className={styles.name}>Agrim Jaimini</h1>
-          <p className={styles.role}>Software Engineer</p>
+          <p className={styles.role}>Engineer · Researcher · Builder</p>
         </div>
         <p className={`mono ${styles.place}`}>
           <span>Ithaca, NY</span>
@@ -94,8 +94,8 @@ export default function Home() {
 
       <div className={`cell ${styles.intro} enter`} style={delay(2)}>
         <p>
-          I build machine learning systems and the infrastructure that keeps them
-          fast and reliable. I study Computer Science and Mathematics at{" "}
+          I build machine learning systems and the infrastructure behind them,
+          and study Computer Science and Mathematics at{" "}
           <Term
             title="Cornell University"
             meta={school.duration.replace("Expected ", "")}
@@ -106,15 +106,10 @@ export default function Home() {
           .
         </p>
         <p>
-          This past summer I built shared developer infrastructure at{" "}
-          <Company name="Coinbase" />: a GitHub API proxy that keeps CI systems
-          under rate limits. Before that, I built on-chain payouts at{" "}
-          <Company name="Ripple" />, ML pipelines at <Company name="Texas Instruments" />,
-          and blockchain analytics at <Company name="Artemis Analytics">Artemis</Company>.
-        </p>
-        <p>
-          Lately I&apos;ve been building tools for AI agents: orchestration
-          runtimes, shared memory, and inference simulators.
+          Previously at <Company name="Coinbase" />, <Company name="Ripple" />,{" "}
+          <Company name="Texas Instruments" />, and{" "}
+          <Company name="Artemis Analytics">Artemis</Company>. Lately, building
+          tools for LLM inference and AI agents.
         </p>
         <nav className={styles.links} aria-label="Elsewhere">
           {links.map((l) => (
@@ -182,8 +177,8 @@ export default function Home() {
         </p>
       </Section>
 
-      <footer className={`cell mono ${styles.footer}`}>
-        <span>© {new Date().getFullYear()} Agrim Jaimini · Set in Switzer &amp; Geist Mono</span>
+      <footer className={`cell ${styles.footer}`}>
+        <span>© {new Date().getFullYear()} Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />
           <a href="#" className={styles.footerLink}>Back to top ↑</a>

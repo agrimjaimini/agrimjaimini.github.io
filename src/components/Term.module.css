@@ -61,6 +61,16 @@
   gap: 3px;
 }
 
+@media (min-width: 1100px) {
+  .beside {
+    top: -11px;
+    bottom: auto;
+    left: calc(100% + 16px);
+    transform: translateX(-4px) scale(0.98);
+    transform-origin: top left;
+  }
+}
+
 .head {
   display: flex;
   justify-content: space-between;

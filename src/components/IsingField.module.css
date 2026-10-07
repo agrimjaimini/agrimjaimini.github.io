@@ -36,15 +36,8 @@
   white-space: pre;
 }
 
-.phase,
-.spark {
+.extra {
   display: none;
-}
-
-.spark {
-  width: 84px;
-  height: 22px;
-  margin-top: 8px;
 }
 
 /* Wide screens: annotations hang in the margins, like a figure in a paper */
@@ -72,12 +65,7 @@
     right: auto;
   }
 
-  .phase {
-    display: block;
-    color: var(--text-secondary);
-  }
-
-  .spark {
+  .extra {
     display: block;
   }
 }

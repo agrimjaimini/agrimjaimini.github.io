@@ -201,6 +201,7 @@ p {
   justify-content: space-between;
   padding-top: 1.25rem;
   padding-bottom: 3rem;
+  font-size: 13.5px;
   color: var(--text-dim);
 }
 

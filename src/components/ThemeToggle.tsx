@@ -2,9 +2,6 @@
 import { useSyncExternalStore } from 'react';
 
 type Theme = 'auto' | 'light' | 'dark';
-
-/** Fired on window after the theme changes; detail.dark is the resolved scheme. */
-export const THEME_EVENT = 'themechange';
 const order: Theme[] = ['auto', 'light', 'dark'];
 const listeners = new Set<() => void>();
 
@@ -28,9 +25,6 @@ function apply(theme: Theme) {
     } catch {}
     window.setTimeout(() => root.classList.remove('theme-transition'), 350);
     listeners.forEach((l) => l());
-
-    const dark = theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    window.dispatchEvent(new CustomEvent(THEME_EVENT, { detail: { dark } }));
 }
 
 const subscribe = (l: () => void) => {
