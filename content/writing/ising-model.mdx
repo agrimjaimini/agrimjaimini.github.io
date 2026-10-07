@@ -8,33 +8,25 @@ hidden: true
 
 {/*
   DRAFT: reachable from Fig. 1 but not listed under Writing.
-  Set `hidden: false` above when it's ready, and fill in the last section.
+  Set `hidden: false` above when it's ready.
 */}
 
 <IsingField />
 
-Every dot is a vertex of a grid graph labeled +1 (bright) or −1 (faint). The grid is a live Markov chain.
+The grid at the top of my homepage is a live Markov chain. It comes from a lecture in CS 4850, Mathematical Foundations for the Information Age, that stuck with me long after the semester ended.
 
-## The problem
+## The idea
 
-We want to sample from π(x) = w(x) / Z, where w(x) = exp(c · Σ x(u)x(v)) over the edges and c is the inverse temperature. Z sums over 2ⁿ states, so computing it is hopeless.
+Each dot is a vertex labeled +1 (bright) or −1 (faint), and neighbors like to agree. A labeling x gets weight w(x) = exp(c · Σ x(u)x(v)) over the edges, where c is the inverse temperature. We want to sample from π = w / Z, but Z sums over 2ⁿ states. You can't compute it.
 
-## The trick
+The trick is to never compute it. Pick a random vertex, propose flipping it, and accept with probability min\{1, w(y) / w(x)\}. Z cancels in the ratio, and the flip only depends on that vertex's four neighbors. Run the chain long enough and its state is a sample from π.
 
-Metropolis–Hastings with Glauber dynamics:
+Near c ≈ 0.44 something sudden happens: noise snaps into large aligned domains. Hover over the grid to melt them, or click to cool a spot.
 
-1. Pick a random vertex r and propose flipping it.
-2. Accept with probability min\{1, w(y) / w(x)\}.
-3. Otherwise, stay put.
+## Why I liked it
 
-Only the ratio matters, so Z cancels. For one flip it depends on r's neighbors alone: exp(c · (y(r) − x(r)) · Σ x(v)). The chain is reversible with respect to π, so π is its stationary distribution.
+{/* These are first-pass guesses at your reasons. Rewrite them so they're true to you. */}
 
-## What you're seeing
+4850 was the class where math I'd learned in isolation, like linear algebra, probability, and graphs, started showing up in the same place. This lecture is the cleanest example. A three-line algorithm, a proof that fits on a page, and out comes a phase transition.
 
-Near c ≈ 0.44 the grid shifts from noise to aligned domains, a phase transition. Hover to lower c and melt them; click to raise it.
-
-## On CS 4850
-
-{/* TODO: in your own words. What drew you to the class, and why this lecture stuck. */}
-
-*Coming soon.*
+It also changed how I think about my own work. When an LLM samples a token at temperature T, it's drawing from the same exp(−E / T) shape as this grid. Sampling from a distribution you can't normalize isn't just a classroom problem. It's at the heart of a lot of modern ML.
