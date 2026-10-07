@@ -22,10 +22,9 @@
 
 .time {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 0.5rem;
   font-variant-numeric: tabular-nums;
-  min-height: 1.65rem;
 }
 
 /* Two-digit hours make every time exactly 8ch in mono, so reserving that
@@ -34,11 +33,15 @@
   min-width: 8ch;
 }
 
+/* Centered on the digits' height (cap height ≈ 0.7em), not the line box,
+   so it sits optically in the middle of "12:06 PM" */
 .live {
+  align-self: baseline;
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--accent);
+  transform: translateY(calc(-0.35em + 2.5px));
   animation: breathe 3s ease-in-out infinite;
 }
 
