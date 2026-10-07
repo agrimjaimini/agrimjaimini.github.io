@@ -224,9 +224,12 @@ p {
   animation-timing-function: var(--ease-out-expo);
 }
 
+/* No whole-page crossfade: its additive blend makes overlapping text glow.
+   Only named elements morph; the rest of the page uses its own entrance. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.3s;
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {

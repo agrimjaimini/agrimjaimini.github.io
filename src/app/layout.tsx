@@ -10,11 +10,22 @@ const geistMono = Geist_Mono({
 const themeScript = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://agrimjaimini.github.io'),
   title: {
     default: 'Agrim Jaimini',
     template: '%s — Agrim Jaimini',
   },
-  description: 'Software engineer building ML systems and the infrastructure behind them. CS & Math at Cornell.',
+  description: 'Engineer, researcher, and builder working on ML systems and the infrastructure behind them. CS & Math at Cornell.',
+  openGraph: {
+    title: 'Agrim Jaimini',
+    description: 'Engineer, researcher, and builder. CS & Math at Cornell.',
+    url: '/',
+    siteName: 'Agrim Jaimini',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
 }
 
 export const viewport: Viewport = {

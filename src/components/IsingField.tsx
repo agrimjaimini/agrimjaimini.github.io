@@ -21,8 +21,16 @@ const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
  * (K_xy = 1/|V(G)|), and Metropolis–Hastings accepts with probability
  * min{1, w(y)/w(x)} = min{1, exp(c · (y(r) − x(r)) · Σ_{(r,v)∈∂r} x(v))}.
  */
-/** `linked` points the caption at the write-up; turn it off when embedded in that post. */
-export default function IsingField({ linked = true }: { linked?: boolean }) {
+interface IsingFieldProps {
+    /** Point the caption at the write-up; turn off when embedded in that post. */
+    linked?: boolean;
+    /** Hold c fixed instead of drifting it across the critical point. */
+    fixedC?: number;
+    /** Sweep the dots in from the center on load (off when morphing in from another page). */
+    intro?: boolean;
+}
+
+export default function IsingField({ linked = true, fixedC, intro = true }: IsingFieldProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
     const stepsRef = useRef<HTMLSpanElement>(null);
@@ -84,6 +92,7 @@ export default function IsingField({ linked = true }: { linked?: boolean }) {
 
         // c lingers near the critical point, with brief, gentle visits to either side
         const globalC = (t: number) => {
+            if (fixedC !== undefined) return fixedC;
             const s = Math.sin((t / CYCLE) * Math.PI * 2);
             const shaped = Math.sign(s) * Math.pow(Math.abs(s), 1.6);
             return C_CRITICAL + shaped * (shaped > 0 ? 0.18 : 0.08);
@@ -183,7 +192,7 @@ export default function IsingField({ linked = true }: { linked?: boolean }) {
 
         const loop = (now: number) => {
             const t = now / 1000;
-            if (bootStart === null) bootStart = t;
+            if (bootStart === null) bootStart = intro ? t : -Infinity;
             const dt = Math.min(0.05, last ? t - last : 0);
             last = t;
             frame++;
@@ -261,7 +270,7 @@ export default function IsingField({ linked = true }: { linked?: boolean }) {
             canvas.removeEventListener('pointerleave', onLeave);
             canvas.removeEventListener('pointerdown', onDown);
         };
-    }, []);
+    }, [fixedC, intro]);
 
     return (
         <figure className={styles.figure}>

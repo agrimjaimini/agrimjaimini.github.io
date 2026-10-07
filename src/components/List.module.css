@@ -61,6 +61,15 @@
   text-overflow: ellipsis;
 }
 
+/* Previews of the detail fade out once the row is open */
+.preview {
+  transition: opacity 0.25s ease;
+}
+
+.row[aria-expanded='true'] .preview {
+  opacity: 0;
+}
+
 /* Dotted leader joining a row's title to its meta, like a table of contents */
 .leader {
   flex: 1 1 1.5rem;

@@ -11,6 +11,8 @@ export interface DisclosureItem {
     points: string[];
     /** Render points as a compact two-column list (e.g. coursework). */
     columns?: boolean;
+    /** The sub and meta preview the points; hide them while the row is open. */
+    preview?: boolean;
     /** Small mono line under the points, e.g. dates or the stack. */
     note?: string;
     link?: { href: string; label: string };
@@ -33,10 +35,10 @@ export default function Disclosure({ items }: { items: DisclosureItem[] }) {
                         >
                             <span className={styles.main}>
                                 <span className={styles.title}>{item.title}</span>
-                                <span className={styles.sub}>{item.sub}</span>
+                                <span className={`${styles.sub} ${item.preview ? styles.preview : ''}`}>{item.sub}</span>
                             </span>
                             <span className={styles.leader} aria-hidden />
-                            <span className={styles.meta}>{item.meta}</span>
+                            <span className={`${styles.meta} ${item.preview ? styles.preview : ''}`}>{item.meta}</span>
                             <span className={styles.toggle} aria-hidden>{isOpen ? '−' : '+'}</span>
                         </button>
                         <AnimatePresence initial={false}>

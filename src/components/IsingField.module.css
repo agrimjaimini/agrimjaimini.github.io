@@ -96,3 +96,25 @@
     height: 130px;
   }
 }
+
+/* As the figure scrolls away it gently fades and settles */
+@supports (animation-timeline: view()) {
+  .canvas {
+    animation: settle linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
+  }
+
+  @keyframes settle {
+    to {
+      opacity: 0.2;
+      transform: scale(0.985);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    animation: none;
+  }
+}

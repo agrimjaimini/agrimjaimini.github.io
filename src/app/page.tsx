@@ -167,6 +167,7 @@ export default function Home() {
             meta: names.length > 4 ? `+${names.length - 4}` : undefined,
             points: names,
             columns: true,
+            preview: true,
           }))}
         />
       </Section>
