@@ -10,6 +10,9 @@ const C_CRITICAL = Math.log(1 + Math.SQRT2) / 2;
 const CYCLE = 54; // seconds for one sweep of c through the critical point and back
 const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
 const BOOT_SPEED = 900; // px per second for the load-in sweep
+const SLIDER_MIN = 0.2;
+const SLIDER_MAX = 0.8;
+const THUMB = 11; // px, matches .thumb and the native thumb in IsingField.module.css
 const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
 
 /**
@@ -40,6 +43,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
     // A value set with the slider wins over the automatic drift until reset
     const manualRef = useRef<number | null>(null);
     const sliderRef = useRef<HTMLInputElement>(null);
+    const thumbRef = useRef<HTMLSpanElement>(null);
     const [manual, setManual] = useState<number | null>(null);
 
     useEffect(() => {
@@ -238,8 +242,15 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             }
             pointer.strength += ((pointer.x > -1e3 ? 1 : 0) - pointer.strength) * 0.06;
             c = globalC(t);
-            // In auto mode the slider follows the drifting c, every frame so it glides
-            if (sliderRef.current && manualRef.current === null) sliderRef.current.value = String(c);
+            // Keep the slider on the current c; the drawn thumb moves every frame
+            const slider = sliderRef.current;
+            const thumb = thumbRef.current;
+            if (slider && thumb) {
+                if (manualRef.current === null) slider.value = String(c);
+                const frac = (c - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN);
+                // Same geometry as the native thumb: its center travels from r to width − r
+                thumb.style.transform = `translate3d(${frac * (slider.clientWidth - THUMB)}px, -50%, 0)`;
+            }
 
             // Spread the work evenly across frames so the grid evolves a little
             // every frame instead of lurching once per sweep
@@ -317,22 +328,29 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                     <label className={styles.controlLabel} htmlFor="ising-c">
                         c
                     </label>
-                    <input
-                        id="ising-c"
-                        className={styles.slider}
-                        type="range"
-                        min={0.2}
-                        max={0.8}
-                        step="any"
-                        ref={sliderRef}
-                        defaultValue={C_CRITICAL}
-                        onChange={(e) => {
-                            const value = Number(e.target.value);
-                            manualRef.current = value;
-                            setManual(value);
-                        }}
-                        aria-label="Inverse temperature c"
-                    />
+                    {/* The native range input handles dragging, keys, and screen readers;
+                        it's transparent, and the visible thumb is drawn with a sub-pixel
+                        transform so it glides instead of hopping pixel to pixel. */}
+                    <span className={styles.sliderWrap}>
+                        <span className={styles.track} aria-hidden />
+                        <span ref={thumbRef} className={styles.thumb} aria-hidden />
+                        <input
+                            id="ising-c"
+                            className={styles.slider}
+                            type="range"
+                            min={SLIDER_MIN}
+                            max={SLIDER_MAX}
+                            step="any"
+                            ref={sliderRef}
+                            defaultValue={C_CRITICAL}
+                            onChange={(e) => {
+                                const value = Number(e.target.value);
+                                manualRef.current = value;
+                                setManual(value);
+                            }}
+                            aria-label="Inverse temperature c"
+                        />
+                    </span>
                     <span className={styles.controlHint}>
                         {manual === null ? (
                             'drag to set'
