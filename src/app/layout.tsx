@@ -63,11 +63,11 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        {/* Cloudflare Web Analytics: cookieless; production builds only */}
+        {/* Umami analytics: cookieless; production builds only */}
         {process.env.NODE_ENV === 'production' && (
           <Script
-            src="https://static.cloudflareinsights.com/beacon.min.js"
-            data-cf-beacon='{"token": "ec586b2ae691444bba336fc231b59fe8"}'
+            src="https://cloud.umami.is/script.js"
+            data-website-id="a376fd57-d8a4-4690-aac4-b9dad145932e"
             strategy="afterInteractive"
           />
         )}
