@@ -1,0 +1,40 @@
+---
+title: "Fig. 1: The Ising model"
+date: "2026-10-06"
+excerpt: "The simulation on my homepage, and the CS 4850 lecture it comes from."
+tags: ["math", "mcmc", "cs4850"]
+hidden: true
+---
+
+{/*
+  DRAFT: reachable from Fig. 1 but not listed under Writing.
+  Set `hidden: false` above when it's ready, and fill in the last section.
+*/}
+
+<IsingField />
+
+Every dot is a vertex of a grid graph labeled +1 (bright) or −1 (faint). The grid is a live Markov chain.
+
+## The problem
+
+We want to sample from π(x) = w(x) / Z, where w(x) = exp(c · Σ x(u)x(v)) over the edges and c is the inverse temperature. Z sums over 2ⁿ states, so computing it is hopeless.
+
+## The trick
+
+Metropolis–Hastings with Glauber dynamics:
+
+1. Pick a random vertex r and propose flipping it.
+2. Accept with probability min\{1, w(y) / w(x)\}.
+3. Otherwise, stay put.
+
+Only the ratio matters, so Z cancels. For one flip it depends on r's neighbors alone: exp(c · (y(r) − x(r)) · Σ x(v)). The chain is reversible with respect to π, so π is its stationary distribution.
+
+## What you're seeing
+
+Near c ≈ 0.44 the grid shifts from noise to aligned domains, a phase transition. Hover to lower c and melt them; click to raise it.
+
+## On CS 4850
+
+{/* TODO: in your own words. What drew you to the class, and why this lecture stuck. */}
+
+*Coming soon.*

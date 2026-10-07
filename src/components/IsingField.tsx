@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from 'react';
-import Term from './Term';
+import Link from 'next/link';
 import styles from './IsingField.module.css';
 
 const GAP = 10;
@@ -21,7 +21,8 @@ const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
  * (K_xy = 1/|V(G)|), and Metropolis–Hastings accepts with probability
  * min{1, w(y)/w(x)} = min{1, exp(c · (y(r) − x(r)) · Σ_{(r,v)∈∂r} x(v))}.
  */
-export default function IsingField() {
+/** `linked` points the caption at the write-up; turn it off when embedded in that post. */
+export default function IsingField({ linked = true }: { linked?: boolean }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
     const stepsRef = useRef<HTMLSpanElement>(null);
@@ -266,20 +267,13 @@ export default function IsingField() {
         <figure className={styles.figure}>
             <canvas ref={canvasRef} className={styles.canvas} aria-hidden />
             <figcaption className={styles.label}>
-                <Term
-                    title="Ising model, sampled by MCMC"
-                    meta="CS 4850"
-                    wide
-                    beside
-                    lines={[
-                        'A state x : V(G) → {±1} labels every vertex of the grid. Bright is +1, faint is −1.',
-                        'Its weight is w(x) = exp(c · Σ x(u)x(v)) over the edges, with c the inverse temperature. Z is intractable, so we sample π = w/Z with a Markov chain.',
-                        'Glauber dynamics: propose relabeling one random vertex r, then accept with probability min{1, w(y)/w(x)} (Metropolis–Hastings). Else, stay at x.',
-                        'c drifts through ≈ 0.44, where noise gives way to aligned domains. Your cursor lowers c; a click raises it.',
-                    ]}
-                >
-                    Fig. 1
-                </Term>
+                {linked ? (
+                    <Link href="/writing/ising-model" className={styles.figLink}>
+                        Fig. 1 <span aria-hidden>→</span>
+                    </Link>
+                ) : (
+                    <span>Fig. 1</span>
+                )}
                 <span className={styles.subtitle}>Ising model</span>
             </figcaption>
             <div className={styles.stats} aria-hidden>

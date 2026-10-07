@@ -130,3 +130,11 @@
 .tr:last-child .td {
   border-bottom: none;
 }
+
+/* Embedded figures run edge to edge of the article, framed by hairlines */
+.figure {
+  --pad: 0px;
+  margin: 2rem 0 2.25rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}

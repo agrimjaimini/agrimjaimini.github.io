@@ -40,6 +40,27 @@
   display: none;
 }
 
+.figLink {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-hover);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+
+.figLink span {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.figLink:hover {
+  text-decoration-color: var(--text-primary);
+}
+
+.figLink:hover span {
+  transform: translateX(2px);
+}
+
 /* Wide screens: annotations hang in the margins, like a figure in a paper */
 @media (min-width: 1100px) {
   .label,
