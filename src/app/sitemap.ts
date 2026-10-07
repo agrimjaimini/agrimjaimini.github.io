@@ -3,7 +3,7 @@ import { getAllPosts } from '@/lib/writing';
 
 export const dynamic = 'force-static';
 
-const SITE = 'https://agrimjaimini.github.io';
+const SITE = 'https://agrimjaimini.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts().map((post) => ({

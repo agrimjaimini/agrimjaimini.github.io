@@ -1,6 +1,6 @@
-# agrimjaimini.github.io
+# agrimjaimini.com
 
-Personal site of Agrim Jaimini. Built with Next.js (static export) and deployed to GitHub Pages.
+Personal site of Agrim Jaimini. Built with Next.js (static export) and deployed to GitHub Pages from this repo (agrimjaimini.github.io), served at the custom domain agrimjaimini.com.
 
 ## Develop
 

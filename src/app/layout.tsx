@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 const themeScript = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://agrimjaimini.github.io'),
+  metadataBase: new URL('https://agrimjaimini.com'),
   title: {
     default: 'Agrim Jaimini',
     template: '%s — Agrim Jaimini',
