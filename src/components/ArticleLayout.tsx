@@ -13,8 +13,10 @@ interface ArticleLayoutProps {
 }
 
 export default function ArticleLayout({ title, slug, date, readTime, children }: ArticleLayoutProps) {
+  // A plain wrapper: Next focuses a page's first element after navigating, and
+  // Safari draws a focus ring if that's a link (here, the back link).
   return (
-    <>
+    <div>
       <Link href="/writing" className={`${styles.back} enter`}>← Writing</Link>
       <header className={`${styles.header} enter`} style={{ '--i': 1 } as React.CSSProperties}>
         <Morph name={`post-${slug}`}>
@@ -28,6 +30,6 @@ export default function ArticleLayout({ title, slug, date, readTime, children }:
       <article className="enter" style={{ '--i': 2 } as React.CSSProperties}>
         {children}
       </article>
-    </>
+    </div>
   );
 }
