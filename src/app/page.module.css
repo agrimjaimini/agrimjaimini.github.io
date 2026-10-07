@@ -5,6 +5,8 @@
   align-items: baseline;
   gap: 1rem;
   padding-top: calc(var(--pad) + 2.5rem);
+  /* The name leads straight into the introduction */
+  padding-bottom: 0;
 }
 
 .name {
@@ -14,8 +16,14 @@
 }
 
 /* Signal field strip */
+/* Fig. 1 lives inside the column like any other block; its caption insets to 0 */
 .visual {
-  padding: 0;
+  padding-top: 0;
+  padding-bottom: var(--pad);
+}
+
+.visual figure {
+  --pad: 0px;
 }
 
 /* Intro */
@@ -23,6 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding-top: 1.5rem;
   /* Match the rhythm between sections */
   padding-bottom: var(--pad);
 }

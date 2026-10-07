@@ -79,13 +79,7 @@ export default function Home() {
         <h1 className={styles.name}>Agrim Jaimini</h1>
       </header>
 
-      <div className={`cell ruled screen-only ${styles.visual} enter`} style={delay(1)}>
-        <Morph name="fig-1">
-          <IsingField />
-        </Morph>
-      </div>
-
-      <div className={`cell ${styles.intro} enter`} style={delay(2)}>
+      <div className={`cell ${styles.intro} enter`} style={delay(1)}>
         <p className={styles.lead}>
           I build machine learning systems and the infrastructure behind them,
           and study Computer Science and Mathematics at{" "}
@@ -117,6 +111,13 @@ export default function Home() {
             </a>
           ))}
         </nav>
+      </div>
+
+      {/* The figure sits in the text column, after the introduction */}
+      <div className={`cell screen-only ${styles.visual} enter`} style={delay(2)}>
+        <Morph name="fig-1">
+          <IsingField />
+        </Morph>
       </div>
 
       <Section title="Experience" index={1} list>
