@@ -21,13 +21,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* The caption snaps to the page's title column, like the rows below */
+/* "Fig. 1" and its title read together as one caption */
 .label {
-  display: grid;
-  grid-template-columns: 9.5rem auto;
-  column-gap: 0.75rem;
+  display: flex;
   align-items: baseline;
-  justify-content: start;
+  gap: 0.75rem;
   padding: 10px var(--pad) 12px;
 }
 
@@ -50,14 +48,6 @@
 
 .figLink:hover {
   text-decoration-color: var(--text-primary);
-}
-
-/* Phones: rows stack instead of using the title column, so the caption does too */
-@media (max-width: 520px) {
-  .label {
-    display: flex;
-    gap: 0.75rem;
-  }
 }
 
 @media (max-width: 600px) {
