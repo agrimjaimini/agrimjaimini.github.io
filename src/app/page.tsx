@@ -168,7 +168,7 @@ export default function Home() {
       </Section>
 
       <Section title="Contact" index={6} screenOnly>
-        <p>
+        <p className={styles.prose}>
           The best way to reach me is{" "}
           <a href={`mailto:${EMAIL}`} className="link">{EMAIL}</a>. You can also
           find me on{" "}

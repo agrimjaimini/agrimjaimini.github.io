@@ -49,11 +49,17 @@
   font-weight: 500;
 }
 
+/* 24px above, like the name above the lead, so links read as their own group */
 .links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+/* Prose sections start where list rows' text does (22px below the heading) */
+.prose {
+  padding-top: 8px;
 }
 
 /* Sections */
