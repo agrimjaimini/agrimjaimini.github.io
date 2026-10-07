@@ -1,5 +1,8 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import ArticleLayout from '@/components/ArticleLayout';
 import { MDXComponents } from '@/components/MDXComponents';
 import { getPostBySlug, getAllPostSlugs } from '@/lib/writing';
@@ -46,10 +49,15 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <ArticleLayout
       title={post.title}
+      slug={slug}
       date={post.date}
       readTime={post.readTime}
     >
-      <MDXRemote source={post.content} components={MDXComponents} />
+      <MDXRemote
+        source={post.content}
+        components={MDXComponents}
+        options={{ mdxOptions: { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] } }}
+      />
     </ArticleLayout>
   );
 }

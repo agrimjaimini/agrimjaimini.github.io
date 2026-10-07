@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { WritingPostMetadata } from '@/types/writing';
 import { formatDate } from '@/lib/format';
+import Morph from './Morph';
 import styles from './List.module.css';
 
 export default function PostList({ posts }: { posts: WritingPostMetadata[] }) {
@@ -15,12 +16,15 @@ export default function PostList({ posts }: { posts: WritingPostMetadata[] }) {
                 <li key={post.slug} className={styles.item}>
                     <Link href={`/writing/${post.slug}`} className={styles.row}>
                         <span className={styles.main}>
-                            <span className={styles.title}>{post.title}</span>
+                            <Morph name={`post-${post.slug}`}>
+                                <span className={styles.title}>{post.title}</span>
+                            </Morph>
                         </span>
                         <span className={styles.leader} aria-hidden />
                         <time className={styles.meta} dateTime={post.date}>
                             {formatDate(post.date, 'short')}
                         </time>
+                        <span className={styles.toggle} aria-hidden>→</span>
                     </Link>
                 </li>
             ))}

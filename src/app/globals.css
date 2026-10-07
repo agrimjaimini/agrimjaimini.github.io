@@ -124,18 +124,22 @@ p {
   border-radius: 3px;
 }
 
-/* Inline link: quiet underline that picks up the accent on hover */
+/* Inline link: a faint rule, with an ink underline that draws in on hover */
 .link {
   color: var(--text-primary);
-  text-decoration: underline;
-  text-decoration-color: var(--border-hover);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: text-decoration-color 0.2s ease;
+  text-decoration: none;
+  background-image:
+    linear-gradient(var(--accent), var(--accent)),
+    linear-gradient(var(--border-hover), var(--border-hover));
+  background-size: 0% 1px, 100% 1px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+  transition: background-size 0.5s var(--ease-out-expo);
 }
 
 .link:hover {
-  text-decoration-color: var(--accent);
+  background-size: 100% 1px, 100% 1px;
 }
 
 /* ---------- Page column, split into cells ---------- */
@@ -212,4 +216,23 @@ p {
 
 .writing-footer button:hover {
   color: var(--text-primary);
+}
+
+/* Page-to-page morphs (Fig. 1 and post titles) */
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: var(--ease-out-expo);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

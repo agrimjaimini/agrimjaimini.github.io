@@ -104,27 +104,6 @@
   }
 }
 
-/* Toolkit */
-.toolkit {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.toolRow {
-  display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
-  gap: 1rem;
-}
-
-.toolRow dt {
-  color: var(--text-primary);
-}
-
-.toolRow dd {
-  color: var(--text-secondary);
-}
-
 /* Footer */
 .footer {
   margin-top: calc(var(--pad) * 1.5);
@@ -154,11 +133,6 @@
 }
 
 @media (max-width: 520px) {
-  .toolRow {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
   .header {
     padding-top: calc(var(--pad) + 1.5rem);
   }

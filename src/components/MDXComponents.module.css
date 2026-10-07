@@ -138,3 +138,22 @@
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
+
+/* Math (KaTeX): match the text color, and let wide equations scroll */
+.p :global(.katex),
+.li :global(.katex) {
+  font-size: 1.04em;
+  color: var(--text-primary);
+}
+
+:global(.katex-display) {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  color: var(--text-primary);
+}
+
+:global(.katex-display > .katex) {
+  font-size: 1.12em;
+}

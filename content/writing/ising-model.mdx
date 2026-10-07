@@ -11,11 +11,23 @@ The grid at the top of my homepage is a live Markov chain. It comes from a lectu
 
 ## The idea
 
-Each dot is a vertex labeled +1 (bright) or −1 (faint), and neighbors like to agree. A labeling x gets weight w(x) = exp(c · Σ x(u)x(v)) over the edges, where c is the inverse temperature. We want to sample from π = w / Z, but Z sums over 2ⁿ states. You can't compute it.
+Each dot is a vertex labeled $+1$ (bright) or $-1$ (faint), and neighbors like to agree. A labeling $x$ gets weight
 
-The trick is to never compute it. Pick a random vertex, propose flipping it, and accept with probability min\{1, w(y) / w(x)\}. Z cancels in the ratio, and the flip only depends on that vertex's four neighbors. Run the chain long enough and its state is a sample from π.
+$$
+w(x) = \exp\Big( c \sum_{(u,v) \in E} x(u)\, x(v) \Big),
+$$
 
-Near c ≈ 0.44 something sudden happens: noise snaps into large aligned domains. Hover over the grid to melt them, or click to cool a spot.
+where $c$ is the inverse temperature. We want to sample from $\pi = w / Z$, but $Z = \sum_x w(x)$ sums over $2^n$ states. You can't compute it.
+
+The trick is to never compute it. Pick a random vertex $r$, propose flipping it to get $y$, and accept with probability
+
+$$
+\min\left\{ 1,\ \frac{w(y)}{w(x)} \right\} = \min\left\{ 1,\ \exp\Big( c\,\big(y(r) - x(r)\big) \sum_{(r,v) \in \partial r} x(v) \Big) \right\}.
+$$
+
+$Z$ cancels in the ratio, and the flip only depends on $r$'s four neighbors. Run the chain long enough and its state is a sample from $\pi$.
+
+Near $c \approx 0.44$ something sudden happens: noise snaps into large aligned domains. Hover over the grid to melt them, or click to cool a spot.
 
 ## On CS 4850
 

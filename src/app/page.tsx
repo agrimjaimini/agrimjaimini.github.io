@@ -5,6 +5,7 @@ import PostList from "@/components/PostList";
 import LocalTime from "@/components/LocalTime";
 import SectionSpy from "@/components/SectionSpy";
 import IsingField from "@/components/IsingField";
+import Morph from "@/components/Morph";
 import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
@@ -89,7 +90,9 @@ export default function Home() {
       </header>
 
       <div className={`cell ruled ${styles.visual} enter`} style={delay(1)}>
-        <IsingField />
+        <Morph name="fig-1">
+          <IsingField />
+        </Morph>
       </div>
 
       <div className={`cell ${styles.intro} enter`} style={delay(2)}>
@@ -155,15 +158,17 @@ export default function Home() {
         />
       </Section>
 
-      <Section title="Toolkit" index={5}>
-        <dl className={styles.toolkit}>
-          {toolkit.map(([category, names]) => (
-            <div key={category} className={styles.toolRow}>
-              <dt>{shortLabels[category] ?? category}</dt>
-              <dd>{names.join(", ")}</dd>
-            </div>
-          ))}
-        </dl>
+      <Section title="Toolkit" index={5} list>
+        <Disclosure
+          items={toolkit.map(([category, names]) => ({
+            key: category,
+            title: shortLabels[category] ?? category,
+            sub: names.slice(0, 4).join(", "),
+            meta: names.length > 4 ? `+${names.length - 4}` : undefined,
+            points: names,
+            columns: true,
+          }))}
+        />
       </Section>
 
       <Section title="Contact" index={6}>

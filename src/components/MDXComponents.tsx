@@ -1,13 +1,16 @@
 import React from 'react';
 import IsingField from './IsingField';
+import Morph from './Morph';
 import styles from './MDXComponents.module.css';
 
 export const MDXComponents = {
   // Interactive figures that posts can embed
   IsingField: () => (
-    <div className={styles.figure}>
-      <IsingField linked={false} />
-    </div>
+    <Morph name="fig-1">
+      <div className={styles.figure}>
+        <IsingField linked={false} />
+      </div>
+    </Morph>
   ),
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className={styles.h1} {...props} />

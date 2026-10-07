@@ -42,6 +42,11 @@ export default function ThemeToggle({ className }: { className?: string }) {
             onClick={() => apply(next)}
             aria-label={`Theme: ${theme}. Switch to ${next}.`}
         >
+            <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden style={{ marginRight: 6, verticalAlign: '-1px' }}>
+                <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+                {theme === 'dark' && <circle cx="6" cy="6" r="5" fill="currentColor" />}
+                {theme === 'auto' && <path d="M6 1a5 5 0 0 1 0 10z" fill="currentColor" />}
+            </svg>
             {theme === 'auto' ? 'Auto' : theme === 'light' ? 'Light' : 'Dark'}
         </button>
     );
