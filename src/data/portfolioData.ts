@@ -136,7 +136,8 @@ export const projects: Project[] = [
             "Colab-friendly configs and evaluation suite covering preference accuracy, reward margin, perplexity, and sample generations"
         ],
         tech: ["PyTorch", "Hugging Face Transformers", "DPO", "Google Colab"],
-        date: "Aug 2025"
+        date: "Aug 2025",
+        github: "https://github.com/agrimjaimini/dpo"
     },
     {
         title: "BugSense",
@@ -149,7 +150,7 @@ export const projects: Project[] = [
         ],
         tech: ["Next.js", "Node.js", "Kafka", "PostgreSQL", "Redis", "PyTorch", "Kubernetes", "GCP"],
         date: "July 2025",
-        github: "https://github.com/agrimjaimini/bugsense"
+        github: "https://github.com/agrimjaimini/bug-sense"
     },
     {
         title: "Cortex",
@@ -188,7 +189,7 @@ export const projects: Project[] = [
         ],
         tech: ["Python", "Flask", "React", "sentence-transformers"],
         date: "Mar 2025",
-        github: "https://github.com/agrimjaimini/nba-magic-8-ball"
+        github: "https://github.com/agrimjaimini/nba-magic-8ball"
     },
     {
         title: "WikiRacer",
@@ -201,7 +202,7 @@ export const projects: Project[] = [
         ],
         tech: ["Python", "BeautifulSoup", "Wikipedia API"],
         date: "Feb 2024",
-        github: "https://github.com/agrimjaimini/wikiracer"
+        github: "https://github.com/agrimjaimini/WikiRacer"
     }
 ];
 
