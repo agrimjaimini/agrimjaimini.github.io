@@ -1,5 +1,6 @@
 .term {
   position: relative;
+  white-space: nowrap;
   color: var(--text-primary);
   text-decoration: underline dotted;
   text-decoration-color: var(--text-dim);

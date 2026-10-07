@@ -18,6 +18,14 @@
   color: var(--text-primary);
 }
 
+/* Article titles lead the page; the writing index keeps the quiet size */
+.articleTitle {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
 .meta {
   color: var(--text-secondary);
 }

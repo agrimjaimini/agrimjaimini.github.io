@@ -95,8 +95,6 @@ export default function Disclosure({ items, limit }: { items: DisclosureItem[]; 
                         <span className={styles.main}>
                             <span className={styles.sub}>{hidden} more</span>
                         </span>
-                        <span className={styles.leader} aria-hidden />
-                        <span className={styles.toggle} aria-hidden>+</span>
                     </button>
                 </li>
             )}

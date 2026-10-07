@@ -22,7 +22,7 @@ export default function PostList({ posts }: { posts: WritingPostMetadata[] }) {
                         </span>
                         <span className={styles.leader} aria-hidden />
                         <time className={styles.meta} dateTime={post.date}>
-                            {formatDate(post.date, 'short')}
+                            {formatDate(post.date, 'month')}
                         </time>
                         <span className={styles.toggle} aria-hidden>→</span>
                     </Link>

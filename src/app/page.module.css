@@ -80,12 +80,13 @@
   transition: color 0.4s ease;
 }
 
-.section[data-active] .heading {
-  color: var(--text-primary);
-}
-
-/* Wide screens: section labels hang in the margin as quiet notes */
+/* Wide screens: section labels hang in the margin as quiet notes,
+   and the one for the section being read lights up */
 @media (min-width: 1100px) {
+  .section[data-active] .heading {
+    color: var(--text-primary);
+  }
+
   .heading {
     position: absolute;
     top: calc(var(--pad) * 0.6);
@@ -100,6 +101,13 @@
 }
 
 /* Now */
+.nowRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
 .nowLabel {
   flex-shrink: 0;
   width: 84px;
@@ -113,7 +121,7 @@
 
 @media (max-width: 520px) {
   .nowLabel {
-    width: auto;
+    width: 72px;
   }
 }
 

@@ -22,10 +22,16 @@ where $c$ is the inverse temperature. We want to sample from $\pi = w / Z$, but 
 The trick is to never compute it. Pick a random vertex $r$, propose flipping it to get $y$, and accept with probability
 
 $$
-\min\left\{ 1,\ \frac{w(y)}{w(x)} \right\} = \min\left\{ 1,\ \exp\Big( c\,\big(y(r) - x(r)\big) \sum_{(r,v) \in \partial r} x(v) \Big) \right\}.
+\min\left\{ 1,\ \frac{w(y)}{w(x)} \right\}.
 $$
 
-$Z$ cancels in the ratio, and the flip only depends on $r$'s four neighbors. Run the chain long enough and its state is a sample from $\pi$.
+$Z$ cancels in the ratio, and for a single flip it only depends on $r$'s four neighbors:
+
+$$
+\frac{w(y)}{w(x)} = \exp\Big( c\,\big(y(r) - x(r)\big) \sum_{(r,v) \in \partial r} x(v) \Big).
+$$
+
+Run the chain long enough and its state is a sample from $\pi$.
 
 Near $c \approx 0.44$ something sudden happens: noise snaps into large aligned domains. Hover over the grid to melt them, or click to cool a spot.
 

@@ -135,7 +135,7 @@ export const projects: Project[] = [
             "Custom SFT + DPO PyTorch trainers with bfloat16, gradient checkpointing, and tokenizer/model consistency checks",
             "Colab-friendly configs and evaluation suite covering preference accuracy, reward margin, perplexity, and sample generations"
         ],
-        tech: ["PyTorch", "Direct Preference Optimization (DPO)", "Hugging Face Transformers", "bfloat16", "Gradient Checkpointing", "Google Colab", "YAML"],
+        tech: ["PyTorch", "Hugging Face Transformers", "DPO", "Google Colab"],
         date: "Aug 2025"
     },
     {
@@ -186,7 +186,7 @@ export const projects: Project[] = [
             "Served cosine-similarity results through Flask API backed by aggregated comment embeddings",
             "React frontend delivering real-time query responses with intuitive UX"
         ],
-        tech: ["Python", "Flask", "React", "Natural Language Processing (NLP)"],
+        tech: ["Python", "Flask", "React", "sentence-transformers"],
         date: "Mar 2025",
         github: "https://github.com/agrimjaimini/nba-magic-8-ball"
     },
@@ -199,115 +199,23 @@ export const projects: Project[] = [
             "Parsed live content via Wikipedia API with heuristics to prioritize relevant links",
             "Optimized traversal speed and accuracy with informed path scoring"
         ],
-        tech: ["Python", "BeautifulSoup", "Web Scraping", "Algorithms"],
+        tech: ["Python", "BeautifulSoup", "Wikipedia API"],
         date: "Feb 2024",
         github: "https://github.com/agrimjaimini/wikiracer"
     }
 ];
 
-export interface Skill {
-    name: string;
-    description: string;
+export interface ToolGroup {
     category: string;
-    usedIn: string;
+    items: string[];
 }
 
-export const skills: Skill[] = [
-    { name: "Python", description: "General-purpose programming language.", category: "Programming Languages", usedIn: "ML pipelines at TI, blockchain analytics at Artemis, NLP projects, data processing" },
-    { name: "JavaScript (TypeScript)", description: "Web and typed scripting languages.", category: "Programming Languages", usedIn: "React frontends, web applications, portfolio development, UI/UX" },
-    { name: "Java", description: "Object-oriented programming language.", category: "Programming Languages", usedIn: "Academic coursework, software engineering projects, algorithms and data structures" },
-    { name: "OCaml", description: "Functional programming language.", category: "Programming Languages", usedIn: "Git-like version control system, functional programming concepts" },
-    { name: "C/C++", description: "Low-level systems programming languages.", category: "Programming Languages", usedIn: "Systems programming, performance-critical applications, memory management" },
-    { name: "SQL", description: "Relational database query language.", category: "Programming Languages", usedIn: "Data analysis, database management, blockchain transaction queries" },
-    { name: "HTML/CSS", description: "Web markup and styling languages.", category: "Programming Languages", usedIn: "Web development, responsive design, UI styling" },
-    { name: "Bash", description: "Unix shell scripting language.", category: "Programming Languages", usedIn: "DevOps automation, system administration, deployment scripts" },
-    { name: "Go", description: "Statically typed systems language.", category: "Programming Languages", usedIn: "GitHub API proxy at Coinbase" },
-    { name: "Rust", description: "Memory-safe systems language.", category: "Programming Languages", usedIn: "Trace-Accel inference simulator" },
-
-    { name: "React", description: "JavaScript UI library.", category: "Web Development", usedIn: "Cortex app, portfolio, NBA Magic 8 Ball frontend, web applications" },
-    { name: "Next.js", description: "React framework for production.", category: "Web Development", usedIn: "ML dashboard frontend at Texas Instruments" },
-    { name: "Node.js", description: "JavaScript runtime environment.", category: "Web Development", usedIn: "Cortex backend, server-side development" },
-    { name: "Flask", description: "Python web framework.", category: "Web Development", usedIn: "NBA Magic 8 Ball API backend, RESTful services" },
-    { name: "FastAPI", description: "Modern Python web API framework.", category: "Web Development", usedIn: "ML infrastructure at Texas Instruments, high-performance APIs" },
-    { name: "MongoDB", description: "NoSQL document database.", category: "Web Development", usedIn: "Cortex app data storage, scalable document management" },
-
-    { name: "PyTorch", description: "Deep learning framework.", category: "AI/ML", usedIn: "Deep learning models, neural networks, computer vision" },
-    { name: "Hugging Face Transformers", description: "NLP transformer models.", category: "AI/ML", usedIn: "NBA Magic 8 Ball semantic search engine, NLP applications" },
-    { name: "scikit-learn", description: "Machine learning library.", category: "AI/ML", usedIn: "ML pipelines, data analysis, anomaly detection at Artemis" },
-    { name: "Pandas", description: "Data analysis library.", category: "AI/ML", usedIn: "Blockchain analytics, data processing, time series analysis" },
-    { name: "NumPy", description: "Numerical computing library.", category: "AI/ML", usedIn: "Scientific computing, data analysis, mathematical operations" },
-    { name: "SentenceTransformers", description: "NLP embedding models.", category: "AI/ML", usedIn: "Cortex app semantic clustering, text embeddings" },
-    { name: "OpenCV", description: "Computer vision library.", category: "AI/ML", usedIn: "Computer vision, image processing, mmWave sensor data" },
-    { name: "NetworkX", description: "Graph analysis library.", category: "AI/ML", usedIn: "Ethereum transaction graph analytics at Artemis" },
-    { name: "PyVis", description: "Network visualization library.", category: "AI/ML", usedIn: "Interactive blockchain transaction dashboards" },
-    { name: "BeautifulSoup", description: "Web scraping library.", category: "AI/ML", usedIn: "WikiRacer project, data extraction from web sources" },
-    { name: "SQLAlchemy", description: "Python SQL toolkit and ORM.", category: "AI/ML", usedIn: "Database management, data modeling, ORM operations" },
-
-    { name: "AWS Lambda", description: "Serverless compute service.", category: "Cloud & Infrastructure", usedIn: "ML infrastructure at Texas Instruments, event-driven processing" },
-    { name: "AWS SageMaker", description: "Machine learning platform.", category: "Cloud & Infrastructure", usedIn: "ML model hosting and deployment at TI" },
-    { name: "AWS DynamoDB", description: "NoSQL database service.", category: "Cloud & Infrastructure", usedIn: "Data storage and retrieval in ML pipelines" },
-    { name: "AWS EC2", description: "Elastic compute cloud.", category: "Cloud & Infrastructure", usedIn: "Containerized service deployment at Texas Instruments" },
-    { name: "GCP Cloud Run", description: "Serverless container platform.", category: "Cloud & Infrastructure", usedIn: "Cloud deployment and containerized applications" },
-    { name: "GCP Compute Engine", description: "Virtual machine service.", category: "Cloud & Infrastructure", usedIn: "Infrastructure management and VM deployment" },
-
-    { name: "Docker", description: "Containerization platform.", category: "DevOps & Tools", usedIn: "ML model deployment, service containerization at TI" },
-    { name: "Git/GitHub", description: "Version control and collaboration.", category: "DevOps & Tools", usedIn: "All projects, collaborative development, code management" },
-    { name: "CI/CD", description: "Continuous integration and deployment.", category: "DevOps & Tools", usedIn: "Automated deployment pipelines at Texas Instruments" },
-    { name: "MLOps", description: "Machine learning operations.", category: "DevOps & Tools", usedIn: "ML pipeline automation, model versioning at TI" },
-    { name: "Unix/Linux", description: "Unix-based operating systems and tools.", category: "DevOps & Tools", usedIn: "System administration, development environment" },
-    { name: "Jupyter Notebooks", description: "Interactive computing environment.", category: "DevOps & Tools", usedIn: "Data analysis, ML model development, prototyping" },
-    { name: "Postman", description: "API development and testing tool.", category: "DevOps & Tools", usedIn: "API testing, documentation, endpoint validation" },
-    { name: "Lwt", description: "OCaml concurrency library.", category: "DevOps & Tools", usedIn: "OCaml-Git version control system, concurrent operations" },
-    { name: "JUnit", description: "Java unit testing framework.", category: "DevOps & Tools", usedIn: "Java project testing, test-driven development" },
-    { name: "OUnit", description: "OCaml unit testing framework.", category: "DevOps & Tools", usedIn: "OCaml-Git test-driven development, quality assurance" },
-    { name: "Redis", description: "In-memory data store.", category: "DevOps & Tools", usedIn: "ETag-keyed caching for the GitHub proxy at Coinbase" },
-    { name: "Datadog", description: "Observability platform.", category: "DevOps & Tools", usedIn: "Proxy metrics, dashboards, and alerting at Coinbase" },
-
-];
-
-import { Mail, Linkedin, MessageCircle, Calendar } from 'lucide-react';
-
-export const contactMethods = [
-    {
-        icon: Mail,
-        title: "Email",
-        value: "aj638@cornell.edu",
-        href: "mailto:aj638@cornell.edu",
-        description: "Send me a message directly",
-        color: "hover:text-blue-500",
-        bgColor: "hover:bg-blue-500/10",
-        borderColor: "hover:border-blue-500/50"
-    },
-    {
-        icon: Linkedin,
-        title: "LinkedIn",
-        value: "agrimjaimini",
-        href: "https://linkedin.com/in/agrimjaimini",
-        description: "Connect professionally",
-        color: "hover:text-blue-400",
-        bgColor: "hover:bg-blue-500/10",
-        borderColor: "hover:border-blue-500/50"
-    },
-    {
-        icon: MessageCircle,
-        title: "Telegram",
-        value: "agrimjaimini",
-        href: "https://t.me/agrimjaimini",
-        description: "Send me a message",
-        color: "hover:text-blue-400",
-        bgColor: "hover:bg-blue-500/10",
-        borderColor: "hover:border-blue-500/50"
-    },
-    {
-        icon: Calendar,
-        title: "Book a Meeting",
-        value: "15/30 Min Call",
-        href: "https://cal.com/agrim-jaimini",
-        description: "Schedule a call with me",
-        color: "hover:text-green-500",
-        bgColor: "hover:bg-green-500/10",
-        borderColor: "hover:border-green-500/50"
-    }
+export const toolkit: ToolGroup[] = [
+    { category: "Languages", items: ["Python", "TypeScript", "Go", "Rust", "C/C++", "Java", "OCaml", "SQL"] },
+    { category: "ML", items: ["PyTorch", "Hugging Face Transformers", "scikit-learn", "NumPy", "Pandas", "sentence-transformers"] },
+    { category: "Infrastructure", items: ["Docker", "Kubernetes", "Kafka", "Redis", "PostgreSQL", "MongoDB", "Datadog"] },
+    { category: "Cloud", items: ["AWS Lambda", "AWS EC2", "AWS SageMaker", "AWS DynamoDB", "GCP Cloud Run", "GCP Compute Engine"] },
+    { category: "Web", items: ["React", "Next.js", "Node.js", "FastAPI", "Flask"] },
 ];
 
 export interface NowItem {

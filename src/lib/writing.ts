@@ -78,14 +78,3 @@ export function getAllPostSlugs(): string[] {
     .filter(fileName => fileName.endsWith('.mdx'))
     .map(fileName => fileName.replace(/\.mdx$/, ''));
 }
-
-export function getAllTags(): string[] {
-  const posts = getAllPosts();
-  const tags = new Set<string>();
-
-  posts.forEach(post => {
-    post.tags.forEach(tag => tags.add(tag));
-  });
-
-  return Array.from(tags).sort();
-}

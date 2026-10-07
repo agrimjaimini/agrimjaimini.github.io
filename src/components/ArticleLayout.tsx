@@ -18,7 +18,7 @@ export default function ArticleLayout({ title, slug, date, readTime, children }:
       <Link href="/writing" className={`${styles.back} enter`}>← Writing</Link>
       <header className={`${styles.header} enter`} style={{ '--i': 1 } as React.CSSProperties}>
         <Morph name={`post-${slug}`}>
-          <h1 className={styles.title}>{title}</h1>
+          <h1 className={`${styles.title} ${styles.articleTitle}`}>{title}</h1>
         </Morph>
         <p className={styles.meta}>
           <time dateTime={date}>{formatDate(date)}</time>

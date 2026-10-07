@@ -10,7 +10,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
 import { EMAIL } from "@/lib/contact";
-import { education, experience, now, skills } from "@/data/portfolioData";
+import { education, experience, now, toolkit } from "@/data/portfolioData";
 import listStyles from "@/components/List.module.css";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
@@ -19,23 +19,7 @@ const links = [
   { label: "GitHub", href: "https://github.com/agrimjaimini" },
   { label: "LinkedIn", href: "https://linkedin.com/in/agrimjaimini" },
   { label: "Email", href: `mailto:${EMAIL}` },
-  { label: "Book a call", href: "https://cal.com/agrim-jaimini" },
 ];
-
-const shortLabels: Record<string, string> = {
-  "Programming Languages": "Languages",
-  "Web Development": "Web",
-  "Cloud & Infrastructure": "Cloud",
-  "DevOps & Tools": "Tools",
-};
-
-const toolkit = Object.entries(
-  skills.reduce<Record<string, string[]>>((groups, skill) => {
-    const list = (groups[skill.category] ??= []);
-    if (!list.includes(skill.name)) list.push(skill.name);
-    return groups;
-  }, {})
-);
 
 const years = (duration: string) => {
   const [start, end] = duration.replace(/[A-Z][a-z]{2} /g, "").split("–").map((s) => s.trim());
@@ -145,7 +129,7 @@ export default function Home() {
           {now.items.map((item) => (
             <li key={item.label} className={listStyles.item}>
               <div className={listStyles.row}>
-                <span className={listStyles.main}>
+                <span className={styles.nowRow}>
                   <span className={styles.nowLabel}>{item.label}</span>
                   <span className={listStyles.title}>{item.title}</span>
                   {item.by && <span className={listStyles.sub}>{item.by}</span>}
@@ -175,12 +159,12 @@ export default function Home() {
 
       <Section title="Toolkit" index={5} list>
         <Disclosure
-          items={toolkit.map(([category, names]) => ({
+          items={toolkit.map(({ category, items }) => ({
             key: category,
-            title: shortLabels[category] ?? category,
-            sub: names.slice(0, 4).join(", "),
-            meta: names.length > 4 ? `+${names.length - 4}` : undefined,
-            points: names,
+            title: category,
+            sub: items.slice(0, 4).join(", "),
+            meta: items.length > 4 ? `+${items.length - 4}` : undefined,
+            points: items,
             columns: true,
             preview: true,
           }))}
