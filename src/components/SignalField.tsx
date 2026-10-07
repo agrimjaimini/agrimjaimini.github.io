@@ -5,8 +5,8 @@ import styles from './SignalField.module.css';
 const GAP = 10;
 const RADIUS = 1.1;
 const BOOT_SPEED = 900; // px per second for the load-in sweep
-const RIPPLE_SPEED = 260; // px per second
-const RIPPLE_LIFE = 1.8; // seconds
+const RIPPLE_REACH = 380; // px a ripple travels before it's gone
+const RIPPLE_LIFE = 2.6; // seconds
 
 /**
  * A quiet field of dots with slow interfering waves running through it.
@@ -73,6 +73,26 @@ export default function SignalField() {
                     const appear = Math.min(1, Math.max(0, (boot - fromCenter) / 120));
                     if (appear <= 0) continue;
 
+                    // Ripples: a soft ring that eases outward, nudging dots along its front
+                    let lift = 0;
+                    let dxShift = 0;
+                    let dyShift = 0;
+                    for (const ripple of ripples) {
+                        const p = (t - ripple.t) / RIPPLE_LIFE;
+                        const radius = RIPPLE_REACH * (1 - Math.pow(1 - p, 2));
+                        const fade = Math.pow(1 - p, 2);
+                        const width = 9 + p * 22;
+                        const ddx = x - ripple.x;
+                        const ddy = y - ripple.y;
+                        const dist = Math.hypot(ddx, ddy) || 1;
+                        const front = Math.exp(-((dist - radius) ** 2) / (2 * width * width));
+                        const echo = Math.exp(-((dist - radius * 0.62) ** 2) / (2 * width * width)) * 0.4;
+                        const g = (front + echo) * fade;
+                        lift += g;
+                        dxShift += (ddx / dist) * front * fade * 3.5;
+                        dyShift += (ddy / dist) * front * fade * 3.5;
+                    }
+
                     const wave =
                         Math.sin(c * 0.16 + t * 0.55) +
                         Math.sin(r * 0.34 - t * 0.4 + c * 0.05) +
@@ -85,19 +105,14 @@ export default function SignalField() {
                     const near = Math.max(0, 1 - Math.hypot(x - pointer.x, y - pointer.y) / 110) * pointer.strength;
                     v += near * near * 0.9;
 
-                    for (const ripple of ripples) {
-                        const age = t - ripple.t;
-                        const ring = Math.abs(Math.hypot(x - ripple.x, y - ripple.y) - age * RIPPLE_SPEED);
-                        if (ring < 16) v += (1 - ring / 16) * (1 - age / RIPPLE_LIFE);
-                    }
-                    v = Math.min(1, v);
+                    v = Math.min(1, v + lift * 0.85);
 
                     // Only a sparse, stable subset of crest dots picks up the accent
                     const peak = v > 0.95 && (c * 7 + r * 13) % 5 === 0;
                     ctx.globalAlpha = (0.1 + v * (peak ? 0.9 : 0.6)) * appear;
                     ctx.fillStyle = peak ? colors.accent : colors.ink;
                     ctx.beginPath();
-                    ctx.arc(x, y, RADIUS + (peak ? 0.25 : 0), 0, Math.PI * 2);
+                    ctx.arc(x + dxShift, y + dyShift, RADIUS + (peak ? 0.25 : 0) + lift * 0.5, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
