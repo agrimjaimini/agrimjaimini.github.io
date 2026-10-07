@@ -49,14 +49,16 @@ export default function Disclosure({ items, limit }: { items: DisclosureItem[]; 
                             </span>
                             <span className={styles.leader} aria-hidden />
                             <span className={`${styles.meta} ${item.preview ? styles.preview : ''}`}>{item.meta}</span>
-                            <span className={styles.toggle} aria-hidden>{isOpen ? '−' : '+'}</span>
+                            <span className={`${styles.toggle} ${styles.plus}`} aria-hidden />
                         </button>
                         {/* Height animates via a 0fr → 1fr grid row; content stays mounted */}
                         <div className={styles.detail} data-open={isOpen} aria-hidden={!isOpen}>
                             <div className={styles.detailInner}>
                                 <ul className={item.columns ? styles.columns : undefined}>
                                     {item.points.map((point, j) => (
-                                        <li key={j}>{point}</li>
+                                        <li key={j} style={{ '--j': j } as React.CSSProperties}>
+                                            {point}
+                                        </li>
                                     ))}
                                 </ul>
                                 {(item.note || item.link) && (

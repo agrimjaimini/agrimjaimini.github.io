@@ -8,6 +8,15 @@
   color: var(--text-primary);
 }
 
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.back:hover .arrow {
+  transform: translateX(-2px);
+}
+
 .header {
   margin: 2.5rem 0 2rem;
 }

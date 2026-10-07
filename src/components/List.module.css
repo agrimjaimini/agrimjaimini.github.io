@@ -150,9 +150,34 @@
   padding-bottom: 14px;
 }
 
+/* Opened detail settles in as a quick cascade */
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.detail[data-open='true'] li,
+.detail[data-open='true'] .tags {
+  animation: settle 0.35s var(--ease-out-expo) both;
+  animation-delay: calc(var(--j, 0) * 30ms + 40ms);
+}
+
+.detail[data-open='true'] .tags {
+  animation-delay: 140ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .detail {
+  .detail,
+  .plus::before,
+  .plus::after {
     transition: none;
+  }
+
+  .detail[data-open='true'] li,
+  .detail[data-open='true'] .tags {
+    animation: none;
   }
 }
 
@@ -223,6 +248,34 @@
   color: var(--text-dim);
   opacity: 0;
   transition: opacity 0.2s, color 0.2s;
+}
+
+/* A drawn plus whose vertical bar turns flat into a minus when open */
+.plus {
+  position: relative;
+  align-self: center;
+  height: 1ch;
+}
+
+.plus::before,
+.plus::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.row[aria-expanded='true'] .plus::after {
+  transform: translate(-50%, -50%) rotate(180deg);
 }
 
 .row:hover .toggle,

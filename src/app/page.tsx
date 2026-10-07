@@ -172,7 +172,9 @@ export default function Home() {
         <span>© {new Date().getFullYear()} Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />
-          <a href="#" className={styles.footerLink}>Back to top ↑</a>
+          <a href="#" className={styles.footerLink}>
+            Back to top <span className={styles.upArrow}>↑</span>
+          </a>
         </span>
       </footer>
     </main>

@@ -124,7 +124,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             if (manualRef.current !== null) return manualRef.current;
             const s = Math.sin((t / CYCLE) * Math.PI * 2);
             const shaped = Math.sign(s) * Math.pow(Math.abs(s), 1.6);
-            return C_CRITICAL + dailyOffset(t) + shaped * (shaped > 0 ? 0.18 : 0.08);
+            return C_CRITICAL + dailyOffset(t) + shaped * (shaped > 0 ? 0.12 : 0.08);
         };
 
         // The cursor heats (lowers c); a click cools (raises c) around it
@@ -145,9 +145,9 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         };
 
         // One sweep = |V(G)| steps of the chain
-        const sweep = (t: number) => {
-            const n = x.length;
-            for (let k = 0; k < n; k++) {
+        // Run `count` steps of the chain (|V(G)| steps make one sweep)
+        const run = (count: number, t: number) => {
+            for (let k = 0; k < count; k++) {
                 // 1. Propose relabeling one uniformly random vertex r: y(r) = −x(r)
                 const col = (Math.random() * cols) | 0;
                 const row = (Math.random() * rows) | 0;
@@ -171,9 +171,11 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                 }
                 // 3. Else, remain at x
             }
-            steps += n;
+            steps += count;
         };
+        const sweep = (t: number) => run(x.length, t);
 
+        // `ease` is the per-frame easing amount toward each dot's target
         const draw = (t: number, ease: number) => {
             ctx.clearRect(0, 0, width, height);
             ctx.fillStyle = ink;
@@ -187,8 +189,10 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                     const px = offsetX + col * GAP;
                     const py = offsetY + row * GAP;
 
+                    const target = x[i] > 0 ? 1 : 0;
+
                     // Relabels fade rather than blink
-                    shown[i] += ((x[i] > 0 ? 1 : 0) - shown[i]) * ease;
+                    shown[i] += (target - shown[i]) * ease;
 
                     const appear = Math.min(1, Math.max(0, (boot - Math.hypot(px - cx, (py - cy) * 2)) / 120));
                     if (appear <= 0) continue;
@@ -236,13 +240,14 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             pointer.strength += ((pointer.x > -1e3 ? 1 : 0) - pointer.strength) * 0.06;
             c = globalC(t);
 
-            sweepDebt += dt * SWEEPS_PER_SECOND;
-            while (sweepDebt >= 1) {
-                sweep(t);
-                sweepDebt -= 1;
-            }
+            // Spread the work evenly across frames so the grid evolves a little
+            // every frame instead of lurching once per sweep
+            sweepDebt += dt * SWEEPS_PER_SECOND * x.length;
+            const due = Math.floor(sweepDebt);
+            run(due, t);
+            sweepDebt -= due;
 
-            draw(t, 1 - Math.exp(-dt * 4.5));
+            draw(t, 1 - Math.exp(-dt * 5));
             if (visible) raf = requestAnimationFrame(loop);
         };
 

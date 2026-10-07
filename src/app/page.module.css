@@ -154,6 +154,15 @@
   transition: color 0.2s;
 }
 
+.upArrow {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.footerLink:hover .upArrow {
+  transform: translateY(-2px);
+}
+
 .footerLink:hover {
   color: var(--text-primary);
 }

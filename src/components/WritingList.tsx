@@ -9,7 +9,7 @@ export default function WritingList({ posts }: { posts: WritingPostMetadata[] })
   // Safari draws a focus ring if that's a link (here, the back link).
   return (
     <div>
-      <Link href="/" className={`${styles.back} enter`}>← Agrim Jaimini</Link>
+      <Link href="/" className={`${styles.back} enter`}><span className={styles.arrow}>←</span> Agrim Jaimini</Link>
       <header className={`${styles.header} enter`} style={{ '--i': 1 } as React.CSSProperties}>
         <h1 className={styles.title}>Writing</h1>
       </header>
