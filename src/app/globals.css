@@ -10,7 +10,7 @@
   --accent: var(--text-primary);
   --on-accent: #fff;
 
-  --font-sans: 'Switzer', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-sans);
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 

@@ -1,7 +1,17 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
 import { Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 
+// Switzer (Fontshare, free license), self-hosted so the site doesn't depend on their CDN
+const switzer = localFont({
+  src: [
+    { path: './fonts/Switzer-Regular.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/Switzer-Medium.woff2', weight: '500', style: 'normal' },
+  ],
+  variable: '--font-switzer',
+  display: 'swap',
+})
 const geistMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-geist-mono',
@@ -43,11 +53,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={geistMono.variable} suppressHydrationWarning>
+    <html lang="en" className={`${switzer.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
-        {/* Switzer is served by Fontshare (not on Google Fonts) */}
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="" />
-        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" />
         {/* Apply a saved theme before first paint to avoid a flash */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
