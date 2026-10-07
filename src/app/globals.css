@@ -18,6 +18,11 @@
   --tracking-wide: 0.04em;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* Type scale: text, small, mono */
+  --text-size: 15px;
+  --small-size: 13px;
+  --mono-size: 12px;
+
   /* Frame geometry */
   --frame: 680px;
   --pad: 40px;
@@ -167,7 +172,7 @@ p {
 
 .mono {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--mono-size);
   letter-spacing: 0;
 }
 
@@ -209,7 +214,7 @@ p {
   justify-content: space-between;
   padding-top: 1.25rem;
   padding-bottom: 3rem;
-  font-size: 13.5px;
+  font-size: var(--small-size);
   color: var(--text-dim);
 }
 

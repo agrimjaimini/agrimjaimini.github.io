@@ -77,7 +77,7 @@
   border: 1px solid var(--border);
   background: var(--hover);
   overflow-x: auto;
-  font-size: 13.5px;
+  font-size: var(--small-size);
   line-height: 1.6;
 }
 
@@ -107,7 +107,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: var(--small-size);
 }
 
 .thead {
