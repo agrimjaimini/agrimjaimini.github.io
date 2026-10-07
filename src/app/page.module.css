@@ -16,7 +16,7 @@
 .place {
   display: flex;
   align-items: baseline;
-  gap: 0.9rem;
+  gap: 0.5rem;
   color: var(--text-dim);
 }
 
@@ -26,9 +26,12 @@
   gap: 0.5rem;
   font-variant-numeric: tabular-nums;
   min-height: 1.65rem;
-  /* Reserve room for "12:00 AM" so the clock doesn't shift the line when it mounts */
-  min-width: calc(8ch + 0.5rem + 5px);
-  justify-content: flex-end;
+}
+
+/* Two-digit hours make every time exactly 8ch in mono, so reserving that
+   width keeps the line from shifting when the clock mounts */
+.time > :last-child {
+  min-width: 8ch;
 }
 
 .live {
@@ -57,6 +60,14 @@
   gap: 1rem;
   /* Match the rhythm between sections */
   padding-bottom: calc(var(--pad) * 0.7);
+}
+
+/* The opening sentence leads: a touch larger, in full ink */
+.lead {
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: -0.012em;
+  color: var(--text-primary);
 }
 
 .em {
@@ -106,16 +117,17 @@
 }
 
 /* Now */
+/* Same title column as the lists above, so values share one vertical line */
 .nowRow {
   display: flex;
   align-items: baseline;
-  gap: 0.6rem;
+  gap: 0.75rem;
   min-width: 0;
 }
 
 .nowLabel {
   flex-shrink: 0;
-  width: 84px;
+  width: 9.5rem;
   color: var(--text-dim);
 }
 

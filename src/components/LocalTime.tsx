@@ -9,7 +9,7 @@ const subscribe = (onChange: () => void) => {
 export default function LocalTime({ timeZone }: { timeZone: string }) {
     const time = useSyncExternalStore(
         subscribe,
-        () => new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone }).format(new Date()),
+        () => new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date()),
         () => ''
     );
 

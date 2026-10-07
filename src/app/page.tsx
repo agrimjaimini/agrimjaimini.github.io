@@ -96,7 +96,7 @@ export default function Home() {
       </div>
 
       <div className={`cell ${styles.intro} enter`} style={delay(2)}>
-        <p>
+        <p className={styles.lead}>
           I build machine learning systems and the infrastructure behind them,
           and study Computer Science and Mathematics at{" "}
           <Term

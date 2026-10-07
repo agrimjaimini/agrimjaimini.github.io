@@ -154,7 +154,7 @@ export const projects: Project[] = [
     },
     {
         title: "Cortex",
-        summary: "Semantic knowledge workspace with embedding search",
+        summary: "Embedding-powered knowledge workspace",
         description: "Semantic knowledge workspace with embedding search across 1k+ docs using sentence-transformers and k-means clustering. React + Express stack surfaces clustered topics and relevance; tuned via silhouette scores to reach 95% relevance.",
         highlights: [
             "Semantic search across 1k+ documents with sentence-transformers embeddings and k-means clustering (95% relevance)",
