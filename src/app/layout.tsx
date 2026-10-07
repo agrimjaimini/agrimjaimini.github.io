@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata, Viewport } from 'next'
 import { Geist_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
+import Script from 'next/script'
 
 // Switzer (Fontshare, free license), self-hosted so the site doesn't depend on their CDN
 const switzer = localFont({
@@ -62,6 +63,14 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        {/* Cloudflare Web Analytics: cookieless; production builds only */}
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon='{"token": "ec586b2ae691444bba336fc231b59fe8"}'
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   )
