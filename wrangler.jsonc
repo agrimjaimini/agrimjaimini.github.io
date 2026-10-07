@@ -1,0 +1,12 @@
+// Cloudflare Workers config: serve the static export in ./out (built by `npm run build`)
+{
+  "name": "portfolio",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    // /writing → writing.html, /writing/ising-model → writing/ising-model.html
+    "html_handling": "auto-trailing-slash",
+    // Unknown URLs get the site's own 404 page
+    "not_found_handling": "404-page"
+  }
+}
