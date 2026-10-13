@@ -140,6 +140,21 @@
   }
 }
 
+/* A post's own frozen lattice, seeded by its slug, beside the date */
+.glyph {
+  flex-shrink: 0;
+  /* Centered on the title's first line, so it stays by the date when titles wrap */
+  align-self: flex-start;
+  margin-top: 6px;
+  color: var(--spin);
+  opacity: 0.7;
+  transition: opacity 0.25s ease;
+}
+
+.row:hover .glyph {
+  opacity: 1;
+}
+
 .meta {
   position: relative;
   flex-shrink: 0;
@@ -375,6 +390,7 @@
   }
 
   .moreItem,
+  .glyph,
   .toggle,
   .leader {
     display: none !important;

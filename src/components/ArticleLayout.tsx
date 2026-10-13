@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/format';
+import Lattice from './Lattice';
 import Morph from './Morph';
 import styles from './ArticleLayout.module.css';
 
@@ -23,8 +24,11 @@ export default function ArticleLayout({ title, slug, date, readTime, children }:
           <h1 className={`${styles.title} ${styles.articleTitle}`}>{title}</h1>
         </Morph>
         <p className={styles.meta}>
-          <time dateTime={date}>{formatDate(date)}</time>
-          {readTime ? ` · ${readTime} min read` : ''}
+          <Lattice seed={slug} cols={6} rows={3} className={styles.glyph} />
+          <span>
+            <time dateTime={date}>{formatDate(date)}</time>
+            {readTime ? ` · ${readTime} min read` : ''}
+          </span>
         </p>
       </header>
       <article className="enter" style={{ '--i': 2 } as React.CSSProperties}>

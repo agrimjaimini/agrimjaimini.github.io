@@ -6,7 +6,9 @@ const year = (duration: string) => {
     const [start, end] = duration.split('–').map((s) => s.trim());
     const startYear = start.slice(-4);
     const endYear = end === 'Present' ? 'Now' : end.slice(-4);
-    return startYear === endYear ? startYear : `${startYear} – ${endYear}`;
+    // A closed en dash and a short end year read as one figure: 2024–25
+    if (startYear === endYear) return startYear;
+    return endYear === 'Now' ? `${startYear}–Now` : `${startYear}–${endYear.slice(-2)}`;
 };
 
 export default function Experience() {

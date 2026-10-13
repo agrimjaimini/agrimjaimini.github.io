@@ -9,8 +9,9 @@
   padding-bottom: 0;
 }
 
+/* One step above the body, same family: the page's only change of size */
 .name {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--text-primary);
 }
@@ -54,11 +55,6 @@
   margin-top: 0.5rem;
 }
 
-/* Prose sections start where list rows' text does (22px below the heading) */
-.prose {
-  padding-top: 8px;
-}
-
 /* Sections */
 /* Generous room between sections, so each one stands on its own */
 .section {
@@ -68,6 +64,9 @@
 
 /* Headings in ink, content in gray: the page's outline reads at a glance */
 .heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
   margin-bottom: 0.75rem;
   font-size: 15px;
   font-weight: 400;
@@ -75,36 +74,29 @@
   transition: color 0.4s ease;
 }
 
-/* Now */
-/* Same title column as the lists above, so values share one vertical line */
-.nowRow {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  min-width: 0;
+/* Now: verbs in gray, titles in ink, read as one sentence */
+.now {
+  padding-top: 8px;
 }
 
-.nowLabel {
-  flex-shrink: 0;
-  width: 9.5rem;
+.nowTitle {
+  color: var(--text-primary);
+}
+
+/* Right edge of a heading: a date in the list rows' meta column */
+.headingMeta {
   color: var(--text-dim);
 }
 
-.updated {
-  margin-top: 0.75rem;
-  color: var(--text-dim);
-}
-
-@media (max-width: 520px) {
-  .nowLabel {
-    width: 72px;
-  }
+/* Contact: the closing sentence, set off by the same space as a section */
+.contact {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
 }
 
 /* Footer */
 .footer {
   margin-top: calc(var(--pad) * 1.5);
-  border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

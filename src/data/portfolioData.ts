@@ -44,7 +44,7 @@ export const experience: Experience[] = [
         location: "San Francisco, CA",
         points: [
             "Built a generalized GitHub API proxy in Go as shared developer infrastructure, unifying high-concurrency GitHub access behind a single internal API for autonomous CI systems and company-wide tooling",
-            "Engineered a Redis cache keyed on ETags and conditional requests to absorb high-concurrency agent traffic, keeping agents under GitHub's primary rate limits where naive per-agent access would exhaust them",
+            "Engineered a Redis cache keyed on ETags and conditional requests to absorb high-concurrency agent traffic, keeping agents under GitHub’s primary rate limits where naive per-agent access would exhaust them",
             "Added Datadog metrics, dashboards, and error-rate alerting to track proxy health and per-agent traffic"
         ]
     },
@@ -96,7 +96,7 @@ export interface Project {
 export const projects: Project[] = [
     {
         title: "Trace-Accel",
-        summary: "Transformer inference accelerator simulator",
+        summary: "Simulator for transformer inference",
         description: "Trace-driven Rust simulator modeling transformer inference (prefill/decode) on configurable hardware, estimating latency from compute and bandwidth costs to classify workloads as compute- or memory-bound.",
         highlights: [
             "Built a trace-driven Rust simulator modeling transformer inference (prefill/decode) on configurable hardware, estimating latency from compute and bandwidth costs to classify workloads as compute- or memory-bound",
@@ -111,14 +111,14 @@ export const projects: Project[] = [
         description: "Runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends.",
         highlights: [
             "Built a runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends",
-            "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion into each agent's prompt; exposed agent tooling over an MCP server consumed directly by Claude Code"
+            "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion into each agent’s prompt; exposed agent tooling over an MCP server consumed directly by Claude Code"
         ],
         tech: ["Python", "TypeScript", "Next.js", "SQLite", "MCP"],
         date: "2026"
     },
     {
         title: "Lore",
-        summary: "Shared memory marketplace for AI agents",
+        summary: "Shared memory market for AI agents",
         description: "Shared research-memory layer where AI agents cache and resell deep-research results, paying per retrieval via x402 machine-to-machine micropayments.",
         highlights: [
             "Built a shared research-memory layer where AI agents cache and resell deep-research results, ranking memories by semantic similarity, freshness decay, and LLM-judge quality to serve a cached hit or trigger re-research, with Arize tracing and evals; agents pay per retrieval via x402 machine-to-machine micropayments"
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     },
     {
         title: "DPO Alignment Stack",
-        summary: "Preference-tuning Mistral 7B with SFT + DPO",
+        summary: "Preference-tuning Mistral 7B (DPO)",
         description: "Built Direct Preference Optimization training stack on Anthropic HH preferences with SFT pretraining and DPO fine-tuning loops using custom PyTorch trainers. Added mixed-precision/bfloat16, gradient checkpointing, and tokenizer/model consistency guards for stable, memory-efficient Mistral 7B runs. Delivered Colab-ready configs with CLI overrides plus evaluation for preference accuracy, reward margin, perplexity, and qualitative generations in a YAML-driven A100 workflow.",
         highlights: [
             "Engineered preprocessing for prompt/chosen/rejected triples with preference dataloaders and DPO loss computation",
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     },
     {
         title: "BugSense",
-        summary: "ML-powered bug triage on Kafka, PyTorch, and GKE",
+        summary: "ML bug triage on Kafka and GKE",
         description: "Production ML triage engine that ranks bug tickets by severity using embeddings, duplicate detection, and component history. Event-driven ingest on Kafka with Redis caching; PyTorch + LightGBM on GKE behind explainable REST APIs and a Next.js dashboard.",
         highlights: [
             "Ranked tickets by severity using embeddings, duplicate signals, and component history with PyTorch + LightGBM on GKE",
@@ -149,12 +149,12 @@ export const projects: Project[] = [
             "Next.js dashboard surfacing severity, duplicates, and model explanations for engineering teams"
         ],
         tech: ["Next.js", "Node.js", "Kafka", "PostgreSQL", "Redis", "PyTorch", "Kubernetes", "GCP"],
-        date: "July 2025",
+        date: "Jul 2025",
         github: "https://github.com/agrimjaimini/bug-sense"
     },
     {
         title: "Cortex",
-        summary: "Embedding-powered knowledge workspace",
+        summary: "Semantic knowledge workspace",
         description: "Semantic knowledge workspace with embedding search across 1k+ docs using sentence-transformers and k-means clustering. React + Express stack surfaces clustered topics and relevance; tuned via silhouette scores to reach 95% relevance.",
         highlights: [
             "Semantic search across 1k+ documents with sentence-transformers embeddings and k-means clustering (95% relevance)",
@@ -162,12 +162,12 @@ export const projects: Project[] = [
             "Iterated clustering via silhouette score tuning to accelerate knowledge discovery"
         ],
         tech: ["Python", "React", "Node.js", "MongoDB", "sentence-transformers"],
-        date: "July 2025",
+        date: "Jul 2025",
         github: "https://github.com/agrimjaimini/cortex"
     },
     {
         title: "OCaml-Git",
-        summary: "A Git-style version control system written in OCaml",
+        summary: "Git-style version control in OCaml",
         description: "OCaml-built Git-style VCS with staging, branching, and remote push/pull. Content-addressable storage with digest hashing for O(1) lookups; hardened via TDD with OUnit.",
         highlights: [
             "Built OCaml Git-like VCS with staging, branching, and remote push/pull support",
@@ -180,7 +180,7 @@ export const projects: Project[] = [
     },
     {
         title: "NBA Magic 8 Ball",
-        summary: "Semantic search over NBA players with fine-tuned transformers",
+        summary: "Semantic search over NBA players",
         description: "NLP semantic search for NBA players powered by fine-tuned sentence-transformers on scraped social data. Flask API serves cosine-similarity results; React UI delivers real-time answers.",
         highlights: [
             "Fine-tuned HuggingFace sentence transformers on scraped NBA social data for semantic player search",
@@ -193,7 +193,7 @@ export const projects: Project[] = [
     },
     {
         title: "WikiRacer",
-        summary: "A* search for the shortest path between Wikipedia pages",
+        summary: "A* search across Wikipedia links",
         description: "A* solver that finds the shortest hyperlink path between Wikipedia pages. Streams live pages via Wikipedia API and applies heuristics to prioritize relevant links for faster traversal.",
         highlights: [
             "Solved WikiRacer shortest-path between Wikipedia pages using A* search",
@@ -207,17 +207,19 @@ export const projects: Project[] = [
 ];
 
 export interface NowItem {
+    /** The verb that leads the item, e.g. "Listening to" */
     label: string;
     title: string;
     by?: string;
+    href?: string;
 }
 
 /** The "Now" section. Edit freely, and bump `updated` when you do. */
 export const now: { updated: string; items: NowItem[] } = {
     updated: "Oct 2026",
     items: [
-        { label: "Reading", title: "Dune", by: "Frank Herbert" },
-        { label: "Watching", title: "Slow Horses" },
-        { label: "Listening", title: "The Deep 3" },
+        { label: "Reading", title: "Dune", by: "Frank Herbert", href: "https://en.wikipedia.org/wiki/Dune_(novel)" },
+        { label: "Watching", title: "Slow Horses", href: "https://en.wikipedia.org/wiki/Slow_Horses_(TV_series)" },
+        { label: "Listening to", title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
     ],
 };

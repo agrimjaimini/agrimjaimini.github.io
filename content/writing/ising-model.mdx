@@ -17,7 +17,7 @@ $$
 w(x) = \exp\Big( c \sum_{(u,v) \in E} x(u)\, x(v) \Big),
 $$
 
-where $c$ is the inverse temperature. We want to sample from $\pi = w / Z$, but $Z = \sum_x w(x)$ sums over $2^n$ states. You can't compute it.
+where $c$ is the inverse temperature. We want to sample from $\pi = w / Z$, but $Z = \sum_x w(x)$ sums over $2^n$ states. You can’t compute it.
 
 The trick is to never compute it. Pick a random vertex $r$, propose flipping it to get $y$, and accept with probability
 
@@ -25,7 +25,7 @@ $$
 \min\left\{ 1,\ \frac{w(y)}{w(x)} \right\}.
 $$
 
-$Z$ cancels in the ratio, and for a single flip it only depends on $r$'s four neighbors:
+$Z$ cancels in the ratio, and for a single flip it only depends on $r$’s four neighbors:
 
 $$
 \frac{w(y)}{w(x)} = \exp\Big( c\,\big(y(r) - x(r)\big) \sum_{(r,v) \in \partial r} x(v) \Big).
@@ -37,8 +37,8 @@ Near $c \approx 0.44$ something sudden happens: noise snaps into large aligned d
 
 ## On CS 4850
 
-4850 has been my favorite class at Cornell. I didn't take it to satisfy a requirement. I took it because the description sounded cool. It was challenging to keep up with, but learning such unique topics was incredibly rewarding.
+4850 has been my favorite class at Cornell. I didn’t take it to satisfy a requirement. I took it because the description sounded cool. It was challenging to keep up with, but learning such unique topics was incredibly rewarding.
 
-It was a reminder that education shouldn't be treated as a means to an end. The point of college is to get good at learning, and grades and job outcomes were supposed to be how we measure that. But once they become the goal, it's easy to end up graduating as fast as possible, checking off requirements, and only taking classes that help with recruiting. Goodhart's law, basically. I think a better metric is a much simpler one: what sounds cool, and what you find interesting.
+It was a reminder that education shouldn’t be treated as a means to an end. The point of college is to get good at learning, and grades and job outcomes were supposed to be how we measure that. But once they become the goal, it’s easy to end up graduating as fast as possible, checking off requirements, and only taking classes that help with recruiting. Goodhart’s law, basically. I think a better metric is a much simpler one: what sounds cool, and what you find interesting.
 
 Rather than going deep on one subject, the course let me explore the combination of fields I find most interesting: linear algebra, probability theory, and algorithm design. This lecture was one of my favorite examples of that. It pulls together Markov chains from probability, transition matrices from linear algebra, and a simple, intuitive algorithm you can describe in a couple sentences.

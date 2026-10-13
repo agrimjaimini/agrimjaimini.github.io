@@ -3,13 +3,13 @@ import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import PostList from "@/components/PostList";
 import IsingField from "@/components/IsingField";
+import Lattice from "@/components/Lattice";
 import Morph from "@/components/Morph";
 import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
 import { EMAIL } from "@/lib/contact";
 import { education, experience, now } from "@/data/portfolioData";
-import listStyles from "@/components/List.module.css";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
 
@@ -22,7 +22,7 @@ const links = [
 
 const years = (duration: string) => {
   const [start, end] = duration.replace(/[A-Z][a-z]{2} /g, "").split("–").map((s) => s.trim());
-  return start === end ? start : `${start} – ${end}`;
+  return start === end ? start : `${start}–${end.slice(-2)}`;
 };
 
 /** Hover card for a company mentioned in the intro, built from its experience entry. */
@@ -47,10 +47,13 @@ function Section({
   index,
   list,
   screenOnly,
+  meta,
   children,
 }: {
   title: string;
   index: number;
+  /** A date set at the heading's right edge, like a list row's meta. */
+  meta?: string;
   list?: boolean;
   /** Leave this section out of the printed résumé. */
   screenOnly?: boolean;
@@ -62,7 +65,10 @@ function Section({
       className={`cell ${styles.section} ${list ? styles.listSection : ""} ${screenOnly ? "screen-only" : ""} enter`}
       style={delay(index + 2)}
     >
-      <h2 className={styles.heading}>{title}</h2>
+      <h2 className={styles.heading}>
+        {title}
+        {meta && <span className={`mono ${styles.headingMeta}`}>{meta}</span>}
+      </h2>
       {children}
     </section>
   );
@@ -134,24 +140,33 @@ export default function Home() {
         </Section>
       )}
 
-      <Section title="Now" index={4} list screenOnly>
-        <ul className={`${listStyles.list} ${listStyles.static}`}>
-          {now.items.map((item) => (
-            <li key={item.label} className={listStyles.item}>
-              <div className={listStyles.row}>
-                <span className={styles.nowRow}>
-                  <span className={styles.nowLabel}>{item.label}</span>
-                  <span className={listStyles.title}>{item.title}</span>
-                  {item.by && <span className={listStyles.sub}>{item.by}</span>}
-                </span>
-              </div>
-            </li>
+      {/* Now: one sentence, dated like a list row */}
+      <Section title="Now" index={4} screenOnly meta={now.updated}>
+        <p className={styles.now}>
+          {now.items.map((item, i) => (
+            <React.Fragment key={item.label}>
+              {i > 0 && (i === now.items.length - 1 ? ", and " : ", ")}
+              {i > 0 ? item.label.toLowerCase() : item.label}{" "}
+              {item.href ? (
+                <a
+                  href={item.href}
+                  className="link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={item.by ? `${item.title}, ${item.by}` : undefined}
+                >
+                  {item.title}
+                </a>
+              ) : (
+                <span className={styles.nowTitle}>{item.title}</span>
+              )}
+            </React.Fragment>
           ))}
-        </ul>
-        <p className={`mono ${styles.updated}`}>Updated {now.updated}</p>
+          .
+        </p>
       </Section>
 
-      <Section title="Education" index={4} list>
+      <Section title="Education" index={5} list>
         <Disclosure
           items={[
             {
@@ -167,8 +182,9 @@ export default function Home() {
         />
       </Section>
 
-      <Section title="Contact" index={6} screenOnly>
-        <p className={styles.prose}>
+      {/* The page closes on a sentence rather than a section */}
+      <div className={`cell screen-only ${styles.contact} enter`} style={delay(8)}>
+        <p>
           The best way to reach me is{" "}
           <a href={`mailto:${EMAIL}`} className="link">{EMAIL}</a>. You can also
           find me on{" "}
@@ -176,9 +192,10 @@ export default function Home() {
           or{" "}
           <a href="https://cal.com/agrim-jaimini" className="link" target="_blank" rel="noopener noreferrer">book a call</a>.
         </p>
-      </Section>
+      </div>
 
       <footer className={`cell screen-only ${styles.footer}`}>
+        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} className="lattice-rule" />
         <span>© {new Date().getFullYear()} Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />

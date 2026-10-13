@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { WritingPostMetadata } from '@/types/writing';
 import { formatDate } from '@/lib/format';
+import Lattice from './Lattice';
 import Morph from './Morph';
 import styles from './List.module.css';
 
@@ -21,6 +22,7 @@ export default function PostList({ posts }: { posts: WritingPostMetadata[] }) {
                             </Morph>
                         </span>
                         <span className={styles.leader} aria-hidden />
+                        <Lattice seed={post.slug} cols={6} rows={3} className={styles.glyph} />
                         <time className={styles.meta} dateTime={post.date}>
                             {formatDate(post.date, 'month')}
                         </time>

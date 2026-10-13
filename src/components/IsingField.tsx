@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { C_CRITICAL } from '@/lib/ising';
 import styles from './IsingField.module.css';
 
 const GAP = 10;
 const RADIUS = 1.1;
-// Critical inverse temperature of the 2D square-lattice Ising model: ln(1 + √2) / 2 ≈ 0.4407
-const C_CRITICAL = Math.log(1 + Math.SQRT2) / 2;
 const CYCLE = 54; // seconds for one sweep of c through the critical point and back
 const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
 const BOOT_SPEED = 900; // px per second for the load-in sweep
@@ -75,7 +74,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         let ink = '#000';
 
         const readColors = () => {
-            ink = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
+            ink = getComputedStyle(document.documentElement).getPropertyValue('--spin').trim();
         };
 
         const layout = () => {

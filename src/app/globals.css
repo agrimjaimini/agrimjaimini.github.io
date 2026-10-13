@@ -9,6 +9,8 @@
   --hover: rgba(0, 0, 0, 0.025);
   --accent: var(--text-primary);
   --on-accent: #fff;
+  /* The lattice's up spins: Fig. 1, the post marks, the footer row */
+  --spin: var(--text-primary);
 
   --font-sans: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-sans);
@@ -201,6 +203,19 @@ p {
   }
 }
 
+/* The footer rule is one row of the lattice, faded at both ends like Fig. 1 */
+.lattice-rule {
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  width: calc(100% - 2 * var(--pad));
+  height: 10px;
+  color: var(--spin);
+  opacity: 0.6;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
 /* Writing pages */
 .writing {
   padding-top: calc(var(--pad) + 2.5rem);
@@ -209,7 +224,6 @@ p {
 }
 
 .writing-footer {
-  border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   padding-top: 1.25rem;
