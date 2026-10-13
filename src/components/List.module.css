@@ -9,6 +9,10 @@
     margin: 0 -10px;
   }
 
+  .detailInner {
+    padding: 0 10px;
+  }
+
   /* No hover on phones, and an open row shows itself, so drop the +/− slot
      and let the meta column sit flush with the right edge */
   .toggle {
@@ -61,6 +65,7 @@
   flex-shrink: 0;
   color: var(--text-primary);
   font-weight: 500;
+  text-wrap: balance;
 }
 
 .sub {
@@ -178,10 +183,12 @@
   visibility: visible;
 }
 
+/* The list overhangs 25px on the right for the +/−; the detail gives it back
+   so bullets end on the column's right edge */
 .detailInner {
   min-height: 0;
   overflow: hidden;
-  padding: 0 10px;
+  padding: 0 25px 0 10px;
 }
 
 .detail[data-open='true'] .detailInner {
@@ -374,6 +381,22 @@
 
   .detailInner {
     padding: 0 0 6px !important;
+  }
+
+  /* With the leader gone, the title block takes the free space so the year
+     still sits at the right edge */
+  .main {
+    flex: 1;
+  }
+
+  /* On paper a link prints as where it goes, not "GitHub ↗" */
+  .detailLink[data-print]::after {
+    content: attr(data-print);
+    color: var(--text-dim);
+  }
+
+  .detailLabel {
+    display: none;
   }
 
   .detailInner ul {

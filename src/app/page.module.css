@@ -76,7 +76,7 @@
 
 /* Now: verbs in gray, titles in ink, read as one sentence */
 .now {
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 .nowTitle {
@@ -137,6 +137,11 @@
 }
 
 @media print {
+  /* Across from the name, like the date on a letterhead */
+  .stamp {
+    color: var(--text-dim);
+  }
+
   .header {
     padding-top: 0;
   }

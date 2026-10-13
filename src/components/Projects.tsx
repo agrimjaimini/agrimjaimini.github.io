@@ -6,6 +6,7 @@ export default function Projects() {
     return (
         <Disclosure
             limit={6}
+            noun="projects"
             items={projects.map((project) => {
                 const href = project.github ?? project.demo;
                 return {

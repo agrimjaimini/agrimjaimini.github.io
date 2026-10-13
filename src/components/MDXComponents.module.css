@@ -10,12 +10,15 @@
   line-height: 1.4;
 }
 
-.h1 { font-size: 1.25rem; margin-top: 0; }
-.h2 { font-size: 1.0625rem; }
+/* Headings stand out by ink, weight, and the space above them, not size */
+.h1,
+.h2,
 .h3,
 .h4,
 .h5,
 .h6 { font-size: 15px; }
+
+.h1 { margin-top: 0; }
 
 .p {
   color: var(--text-secondary);

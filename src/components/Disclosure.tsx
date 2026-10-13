@@ -19,9 +19,9 @@ export interface DisclosureItem {
 
 /**
  * A list of rows that expand in place to show detail. One open at a time.
- * With `limit`, only the first rows show until "N more" is clicked.
+ * With `limit`, only the first rows show until "N more <noun>" is clicked.
  */
-export default function Disclosure({ items, limit }: { items: DisclosureItem[]; limit?: number }) {
+export default function Disclosure({ items, limit, noun }: { items: DisclosureItem[]; limit?: number; noun?: string }) {
     const [open, setOpen] = useState<string | null>(null);
     const [showAll, setShowAll] = useState(false);
     const hidden = limit && !showAll ? Math.max(0, items.length - limit) : 0;
@@ -70,8 +70,9 @@ export default function Disclosure({ items, limit }: { items: DisclosureItem[]; 
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className={styles.detailLink}
+                                                data-print={item.link.href.replace(/^https?:\/\//, '')}
                                             >
-                                                {item.link.label} ↗
+                                                <span className={styles.detailLabel}>{item.link.label} ↗</span>
                                             </a>
                                         )}
                                     </p>
@@ -85,7 +86,7 @@ export default function Disclosure({ items, limit }: { items: DisclosureItem[]; 
                 <li className={`${styles.item} ${styles.moreItem}`}>
                     <button className={`${styles.row} ${styles.more}`} onClick={() => setShowAll(true)}>
                         <span className={styles.main}>
-                            <span className={styles.sub}>{hidden} more</span>
+                            <span className={styles.sub}>{hidden} more{noun ? ` ${noun}` : ''}</span>
                         </span>
                     </button>
                 </li>

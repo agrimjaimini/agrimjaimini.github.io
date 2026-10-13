@@ -33,8 +33,13 @@ export const MDXComponents = {
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p className={styles.p} {...props} />
   ),
+  // External links open in a new tab; footnotes and in-page links stay put
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a className={styles.a} target="_blank" rel="noopener noreferrer" {...props} />
+    <a
+      className={styles.a}
+      {...(props.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      {...props}
+    />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul className={styles.ul} {...props} />

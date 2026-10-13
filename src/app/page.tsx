@@ -8,6 +8,9 @@ import Morph from "@/components/Morph";
 import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
+import Year from "@/components/Year";
+import PrintLink from "@/components/PrintLink";
+import PrintStamp from "@/components/PrintStamp";
 import { EMAIL } from "@/lib/contact";
 import { education, experience, now } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/writing";
@@ -19,6 +22,17 @@ const links = [
   { label: "LinkedIn", href: "https://linkedin.com/in/agrimjaimini", print: "linkedin.com/in/agrimjaimini" },
   { label: "Email", href: `mailto:${EMAIL}`, print: EMAIL },
 ];
+
+// Structured data so search results can show who this is
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Agrim Jaimini",
+  url: "https://agrimjaimini.com",
+  description: "Builds machine learning systems and the infrastructure behind them. CS & Math at Cornell.",
+  affiliation: { "@type": "CollegeOrUniversity", name: "Cornell University" },
+  sameAs: links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
+};
 
 const years = (duration: string) => {
   const [start, end] = duration.replace(/[A-Z][a-z]{2} /g, "").split("–").map((s) => s.trim());
@@ -80,9 +94,14 @@ export default function Home() {
 
   return (
     <main className="frame">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
+      />
 
       <header className={`cell ${styles.header} enter`}>
         <h1 className={styles.name}>Agrim Jaimini</h1>
+        <PrintStamp className={styles.stamp} />
       </header>
 
       <div className={`cell ${styles.intro} enter`} style={delay(1)}>
@@ -116,6 +135,7 @@ export default function Home() {
               {l.label}
             </a>
           ))}
+          <PrintLink className="link" />
         </nav>
       </div>
 
@@ -196,7 +216,7 @@ export default function Home() {
 
       <footer className={`cell screen-only ${styles.footer}`}>
         <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} className="lattice-rule" />
-        <span>© {new Date().getFullYear()} Agrim Jaimini</span>
+        <span>© <Year /> Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />
           <a href="#" className={styles.footerLink}>
