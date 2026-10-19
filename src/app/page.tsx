@@ -102,10 +102,6 @@ export default function Home() {
           </Term>
           .
         </p>
-        <p>
-          Lately, I’ve been interested in multi-agent systems and building
-          tools for LLM inference.
-        </p>
         <nav className={styles.links} aria-label="Elsewhere">
           {links.map((l) => (
             <a
