@@ -13,6 +13,7 @@ import Mentions from "@/components/Mentions";
 import Year from "@/components/Year";
 import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
+import LocalTime from "@/components/LocalTime";
 import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
 import { education, educationLines, experienceLines, now, projectLines } from "@/data/portfolioData";
@@ -85,6 +86,7 @@ export default function Home() {
 
       <header className={`cell ${styles.header} enter`}>
         <h1 className={styles.name}>Agrim Jaimini</h1>
+        <LocalTime className={styles.clock} />
         <PrintStamp className={styles.stamp} />
       </header>
 
@@ -189,22 +191,32 @@ export default function Home() {
       <Section title="Now" index={5} screenOnly meta={now.updated}>
         <p className={styles.now}>
           {now.items.map((item, i) => (
-            <React.Fragment key={item.label}>
+            <React.Fragment key={i}>
               {i > 0 && (i === now.items.length - 1 ? ", and " : ", ")}
               {i > 0 ? item.label.toLowerCase() : item.label}{" "}
-              {item.href ? (
-                <a
-                  href={item.href}
-                  className={`link ${styles.work}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={item.by ? `${item.title}, ${item.by}` : undefined}
-                >
-                  {item.title}
-                </a>
-              ) : (
-                <span className={`${styles.nowTitle} ${styles.work}`}>{item.title}</span>
-              )}
+              {item.works.map((work, j) => {
+                // Songs go in quotes; books, shows, and podcasts in italics
+                const style = work.song ? "" : styles.work;
+                const title = work.song ? `“${work.title}”` : work.title;
+                return (
+                  <React.Fragment key={work.title}>
+                    {j > 0 && " and "}
+                    {work.href ? (
+                      <a
+                        href={work.href}
+                        className={`link ${style}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={work.by ? `${work.title}, ${work.by}` : undefined}
+                      >
+                        {title}
+                      </a>
+                    ) : (
+                      <span className={`${styles.nowTitle} ${style}`}>{title}</span>
+                    )}
+                  </React.Fragment>
+                );
+              })}
               {item.after && ` ${item.after}`}
             </React.Fragment>
           ))}

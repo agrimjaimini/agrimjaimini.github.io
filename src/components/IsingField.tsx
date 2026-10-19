@@ -58,33 +58,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
     const sliderRef = useRef<HTMLInputElement>(null);
     const thumbRef = useRef<HTMLSpanElement>(null);
     const [manual, setManual] = useState<number | null>(null);
-    // Ithaca's time and what it does to c, shown when the caption is hovered
-    const [clock, setClock] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (fixedC !== undefined) return;
-        const tick = () => {
-            const now = new Date();
-            const time = new Intl.DateTimeFormat('en-US', {
-                hour: 'numeric',
-                minute: '2-digit',
-                timeZone: 'America/New_York',
-            })
-                .format(now)
-                .replace('AM', 'a.m.')
-                .replace('PM', 'p.m.');
-            const hour = Number(
-                new Intl.DateTimeFormat('en-US', { hour: 'numeric', hourCycle: 'h23', timeZone: 'America/New_York' }).format(now)
-            );
-            // Same curve as the drift's daily baseline: coldest near 3 a.m., warmest near 3 p.m.
-            const cold = Math.cos(((hour - 3) / 24) * Math.PI * 2);
-            const feel = cold > 0.35 ? 'running cold' : cold < -0.35 ? 'running warm' : cold > 0 ? 'cooling' : 'warming';
-            setClock(`Ithaca, ${time} · ${feel}`);
-        };
-        tick();
-        const timer = window.setInterval(tick, 30_000);
-        return () => window.clearInterval(timer);
-    }, [fixedC]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -543,15 +516,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                 ) : (
                     <span>Fig. 1</span>
                 )}
-                {/* On hover the title gives way to Ithaca's clock, which sets the drift */}
-                <span className={styles.subtitle}>
-                    <span className={styles.title}>Ising model</span>
-                    {clock && (
-                        <span className={styles.clock} aria-hidden>
-                            {clock}
-                        </span>
-                    )}
-                </span>
+                <span className={styles.subtitle}>Ising model</span>
             </figcaption>
             <div className={styles.stats} aria-hidden>
                 <span ref={cRef}>c {C_CRITICAL.toFixed(3)}</span>

@@ -10,6 +10,12 @@
 }
 
 /* One step above the body, same family: the page's only change of size */
+/* Ithaca's time across from the name, like a dateline */
+.clock {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
 .name {
   font-size: 18px;
   font-weight: 500;

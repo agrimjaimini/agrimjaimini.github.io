@@ -211,13 +211,21 @@ export const projects: Project[] = [
     }
 ];
 
-export interface NowItem {
-    /** The verb that leads the item, e.g. "Listening to" */
-    label: string;
+/** A book, show, podcast, song, or person a Now item names. */
+export interface NowWork {
     title: string;
     by?: string;
     href?: string;
-    /** Plain words after the title, outside the link and the italics. */
+    /** A song: set in quotes rather than italics. */
+    song?: boolean;
+}
+
+export interface NowItem {
+    /** The verb that leads the item, e.g. "Listening to" */
+    label: string;
+    /** One or two works, joined with "and". */
+    works: NowWork[];
+    /** Plain words after the works, outside the links and the italics. */
     after?: string;
 }
 
@@ -225,10 +233,20 @@ export interface NowItem {
 export const now: { updated: string; items: NowItem[] } = {
     updated: "Oct 2026",
     items: [
-        { label: "Reading", title: "Dune", by: "Frank Herbert", href: "https://en.wikipedia.org/wiki/Dune_(novel)" },
-        { label: "Watching", title: "Slow Horses", href: "https://en.wikipedia.org/wiki/Slow_Horses_(TV_series)" },
-        { label: "Listening to", title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
-        { label: "Watching", title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI", after: "make it look easy" },
+        { label: "Reading", works: [{ title: "Dune", by: "Frank Herbert", href: "https://en.wikipedia.org/wiki/Dune_(novel)" }] },
+        { label: "Watching", works: [{ title: "Slow Horses", href: "https://en.wikipedia.org/wiki/Slow_Horses_(TV_series)" }] },
+        {
+            label: "Listening to",
+            works: [
+                { title: "Virginia Beach", by: "Drake", href: "https://open.spotify.com/track/3eP13S8D5m2cweMEg3ZDed", song: true },
+                { title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
+            ],
+        },
+        {
+            label: "Watching",
+            works: [{ title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI" }],
+            after: "make it look easy",
+        },
     ],
 };
 
