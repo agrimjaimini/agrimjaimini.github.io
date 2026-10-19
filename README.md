@@ -21,7 +21,7 @@ The static site is written to `out/`. Pushing to `main` triggers a Cloudflare Wo
 
 ## Where things live
 
-- `src/data/portfolioData.ts`: experience, projects, education, and the "Now" section
+- `src/data/portfolioData.ts`: experience, projects, education, and the "Now" section. The full entries feed the printed résumé; `experienceLines`, `projectLines`, and `educationLines` are the sentences shown on screen, where `[Name]` opens that entry under its sentence. After changing content, print the homepage and check it still fits two pages.
 - `content/writing/*.mdx`: posts (see `content/writing/README.md`)
 - `src/components/IsingField.tsx`: Fig. 1, an Ising model sampled with Metropolis–Hastings
 - `src/app/fonts/`: self-hosted Switzer (Fontshare); Geist Mono comes from `next/font/google`

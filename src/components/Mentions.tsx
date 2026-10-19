@@ -38,7 +38,8 @@ function Panel({ item, open }: { item: MentionItem | undefined; open: boolean })
     }, []);
 
     return (
-        <div className={styles.panel} data-open={open} style={{ height: open ? height : 0 }} aria-hidden={!open}>
+        // `inert` while closed, so its links can't be tabbed into while hidden
+        <div className={styles.panel} data-open={open} style={{ height: open ? height : 0 }} inert={!open}>
             <div ref={innerRef} className={styles.inner}>
                 {item && (
                     // Keyed, so each entry plays its own entrance
@@ -68,7 +69,10 @@ function Panel({ item, open }: { item: MentionItem | undefined; open: boolean })
                             </ul>
                         )}
                         {(item.note || item.link) && (
-                            <p className={styles.note} style={{ '--j': item.points.length + 1 } as React.CSSProperties}>
+                            <p
+                                className={styles.note}
+                                style={{ '--j': (item.groups?.length ?? item.points.length) + 1 } as React.CSSProperties}
+                            >
                                 <span>{item.note}</span>
                                 {item.link && (
                                     <a href={item.link.href} target="_blank" rel="noopener noreferrer" className={styles.noteLink}>
