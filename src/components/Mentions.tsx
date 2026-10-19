@@ -9,6 +9,8 @@ export interface MentionItem {
     sub: string;
     meta?: string;
     points: string[];
+    /** Set the points in two columns, for short items like coursework. */
+    columns?: boolean;
     note?: string;
     link?: { href: string; label: string };
 }
@@ -43,7 +45,7 @@ function Panel({ item, open }: { item: MentionItem | undefined; open: boolean })
                             <span className={styles.sub}>{item.sub}</span>
                             {item.meta && <span className={styles.meta}>{item.meta}</span>}
                         </p>
-                        <ul className={styles.points}>
+                        <ul className={`${styles.points} ${item.columns ? styles.columns : ''}`}>
                             {item.points.map((point, j) => (
                                 <li key={j} style={{ '--j': j + 1 } as React.CSSProperties}>
                                     {point}

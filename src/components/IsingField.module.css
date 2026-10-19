@@ -187,3 +187,40 @@
     cursor: crosshair;
   }
 }
+
+/* The caption's title and Ithaca's clock share one slot and crossfade */
+.subtitle {
+  display: inline-grid;
+}
+
+.title,
+.clock {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.4s var(--ease-out-expo);
+}
+
+.clock {
+  opacity: 0;
+  transform: translateY(3px);
+}
+
+@media (hover: hover) {
+  .figure:hover .title {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  .figure:hover .clock {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .clock {
+    transition: opacity 0.2s ease;
+    transform: none !important;
+  }
+}

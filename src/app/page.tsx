@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Experience, { experienceId, experienceItems } from "@/components/Experience";
+import Experience, { experienceItems } from "@/components/Experience";
 import Projects, { projectItems } from "@/components/Projects";
 import PostList from "@/components/PostList";
 import IsingField from "@/components/IsingField";
@@ -15,7 +15,7 @@ import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
 import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
-import { education, experience, experienceLines, now, projectLines } from "@/data/portfolioData";
+import { education, educationLines, experienceLines, now, projectLines } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
 
@@ -36,27 +36,6 @@ const person = {
   affiliation: { "@type": "CollegeOrUniversity", name: "Cornell University" },
   sameAs: links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
 };
-
-const years = (duration: string) => {
-  const [start, end] = duration.replace(/[A-Z][a-z]{2} /g, "").split("–").map((s) => s.trim());
-  return start === end ? start : `${start}–${end.slice(-2)}`;
-};
-
-/** A company cited in the intro: a hover card from its experience entry, and a link to its row. */
-function Company({ name, children }: { name: string; children?: React.ReactNode }) {
-  const job = experience.find((j) => j.company === name);
-  if (!job) return <>{children ?? name}</>;
-  return (
-    <Term
-      title={job.company}
-      href={`#${experienceId(job.company)}`}
-      meta={years(job.duration)}
-      lines={[job.title, job.location].filter((l): l is string => Boolean(l))}
-    >
-      {children ?? name}
-    </Term>
-  );
-}
 
 const delay = (i: number) => ({ "--i": i }) as React.CSSProperties;
 
@@ -124,10 +103,8 @@ export default function Home() {
           .
         </p>
         <p>
-          Previously at <Company name="Coinbase" />, <Company name="Ripple" />,{" "}
-          <Company name="Texas Instruments" />, and{" "}
-          <Company name="Artemis Analytics">Artemis</Company>. Lately, building
-          tools for LLM inference and AI agents.
+          Lately, I’ve been interested in what it takes for AI agents to do
+          real work, and in building tools for LLM inference.
         </p>
         <nav className={styles.links} aria-label="Elsewhere">
           {links.map((l) => (
@@ -172,21 +149,38 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section title="Education" index={3} list>
-        <Disclosure
-          items={[
-            {
-              key: school.school,
-              id: "education-cornell",
-              title: school.school,
-              sub: school.degree.replace("BS, ", "B.S. "),
-              meta: school.duration.replace("Expected ", "").slice(-4),
-              points: school.coursework ?? [],
-              columns: true,
-              note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
-            },
-          ]}
-        />
+      <Section title="Education" index={3}>
+        <div className="screen-only">
+          <Mentions
+            lines={educationLines}
+            items={[
+              {
+                key: school.school,
+                id: "education-cornell",
+                sub: school.degree.replace("BS, ", "B.S. "),
+                meta: school.duration.replace("Expected ", ""),
+                points: school.coursework ?? [],
+                columns: true,
+                note: school.gpa && `${school.gpa} GPA`,
+              },
+            ]}
+          />
+        </div>
+        <div className="print-only">
+          <Disclosure
+            items={[
+              {
+                key: school.school,
+                title: school.school,
+                sub: school.degree.replace("BS, ", "B.S. "),
+                meta: school.duration.replace("Expected ", "").slice(-4),
+                points: school.coursework ?? [],
+                columns: true,
+                note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
+              },
+            ]}
+          />
+        </div>
       </Section>
 
       {posts.length > 0 && (

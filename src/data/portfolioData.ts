@@ -241,6 +241,10 @@ export const experienceLines = [
     "Before that, I traced fraud on Ethereum at [Artemis Analytics].",
 ];
 
+export const educationLines = [
+    "Class of 2028 at [Cornell University|Cornell], with coursework from machine learning to number theory.",
+];
+
 export const projectLines = [
     "Lately I’ve been building [Trellis], a runtime for parallel coding agents, and [Lore], a memory market that AI agents pay to read.",
     "[Trace-Accel] simulates transformer inference on configurable hardware.",
