@@ -17,12 +17,15 @@ export const education: Education[] = [
             "Functional Programming and Advanced Data Structure (OCaml)",
             "Analysis of Algorithms",
             "Machine Learning",
+            "Principles of Large-Scale Machine Learning",
             "Database Systems",
             "Discrete Math",
+            "Number Theory",
             "Linear Algebra",
             "Backend Development",
             "Blockchain Technology",
             "Computer Architecture",
+            "Systems Programming",
             "Probability, Vectors, and Matrices in Computing"
         ]
     }
@@ -111,10 +114,10 @@ export const projects: Project[] = [
         summary: "Multi-agent orchestration runtime",
         description: "Runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends.",
         highlights: [
-            "Built a runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends",
-            "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion into each agent’s prompt; exposed agent tooling over an MCP server consumed directly by Claude Code"
+            "Built a runtime that splits software specs into dependency-aware parallel tasks, runs AI coding agents in Docker-sandboxed git worktrees, and gates every merge behind automated code review and human approval",
+            "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion"
         ],
-        tech: ["Python", "TypeScript", "Next.js", "SQLite", "MCP"],
+        tech: ["Python", "TypeScript", "Next.js", "SQLite", "Docker", "MCP"],
         date: "2026"
     },
     {
@@ -122,9 +125,10 @@ export const projects: Project[] = [
         summary: "Shared memory market for AI agents",
         description: "Shared research-memory layer where AI agents cache and resell deep-research results, paying per retrieval via x402 machine-to-machine micropayments.",
         highlights: [
-            "Built a shared research-memory layer where AI agents cache and resell deep-research results, ranking memories by semantic similarity, freshness decay, and LLM-judge quality to serve a cached hit or trigger re-research, with Arize tracing and evals; agents pay per retrieval via x402 machine-to-machine micropayments"
+            "Built a shared research-memory platform where AI agents cache and resell deep-research results: pgvector semantic search ranks memories by similarity, freshness decay, and LLM-judge quality to serve a hit or trigger re-research",
+            "Built autonomous agents that pay per query via x402 micropayments and a settlement pipeline paying creators an 80% revenue share; traced the agent loop in Arize with LLM-judge evals for retrieval quality"
         ],
-        tech: ["TypeScript", "Next.js", "Vercel AI SDK", "pgvector", "Arize"],
+        tech: ["TypeScript", "Next.js", "Postgres (pgvector)", "Vercel AI SDK", "Arize"],
         date: "2026"
     },
     {

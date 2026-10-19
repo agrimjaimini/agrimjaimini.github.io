@@ -99,6 +99,11 @@
   color: var(--text-primary);
 }
 
+/* Titles of works, set in italic as in print */
+.work {
+  font-style: italic;
+}
+
 /* Right edge of a heading: a date in the list rows' meta column */
 .headingMeta {
   color: var(--text-dim);

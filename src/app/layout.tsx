@@ -10,6 +10,8 @@ const switzer = localFont({
   src: [
     { path: './fonts/Switzer-Regular.woff2', weight: '400', style: 'normal' },
     { path: './fonts/Switzer-Medium.woff2', weight: '500', style: 'normal' },
+    // Titles of works (books, shows) in Now
+    { path: './fonts/Switzer-Italic.woff2', weight: '400', style: 'italic' },
   ],
   variable: '--font-switzer',
   display: 'swap',

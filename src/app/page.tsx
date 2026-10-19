@@ -191,7 +191,7 @@ export default function Home() {
               {item.href ? (
                 <a
                   href={item.href}
-                  className="link"
+                  className={`link ${styles.work}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   title={item.by ? `${item.title}, ${item.by}` : undefined}
@@ -199,7 +199,7 @@ export default function Home() {
                   {item.title}
                 </a>
               ) : (
-                <span className={styles.nowTitle}>{item.title}</span>
+                <span className={`${styles.nowTitle} ${styles.work}`}>{item.title}</span>
               )}
             </React.Fragment>
           ))}
