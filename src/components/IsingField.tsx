@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { C_CRITICAL } from '@/lib/ising';
+import { hasReadingListeners, publishReading } from '@/lib/isingFeed';
 import styles from './IsingField.module.css';
 
 const GAP = 10;
@@ -72,9 +73,12 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         const pointer = { x: -1e4, y: -1e4, strength: 0 };
         const quenches: { x: number; y: number; t: number }[] = [];
         let ink = '#000';
+        let gain = 1;
 
         const readColors = () => {
-            ink = getComputedStyle(document.documentElement).getPropertyValue('--spin').trim();
+            const root = getComputedStyle(document.documentElement);
+            ink = root.getPropertyValue('--spin').trim();
+            gain = Number(root.getPropertyValue('--spin-gain')) || 1;
         };
 
         const layout = () => {
@@ -197,7 +201,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                     if (appear <= 0) continue;
 
                     const v = shown[i];
-                    ctx.globalAlpha = (0.07 + v * 0.72) * appear;
+                    ctx.globalAlpha = Math.min(1, (0.07 + v * 0.72) * gain) * appear;
                     ctx.beginPath();
                     ctx.arc(px, py, RADIUS + v * 0.3, 0, Math.PI * 2);
                     ctx.fill();
@@ -217,6 +221,18 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             if (cRef.current) cRef.current.textContent = `c ${c.toFixed(3)} ${trend}`;
 
             if (acceptRef.current) acceptRef.current.textContent = `accept ${(acceptance * 100).toFixed(0)}%`;
+
+            // How many edges join agreeing spins, for Fig. 2 to plot against c
+            // (each vertex's right and lower edge, wrapping around the torus)
+            let agree = 0;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const s = x[row * cols + col];
+                    if (s === x[row * cols + ((col + 1) % cols)]) agree++;
+                    if (s === x[((row + 1) % rows) * cols + col]) agree++;
+                }
+            }
+            publishReading({ c, agree: agree / (2 * x.length) });
         };
 
         const loop = (now: number) => {
@@ -250,8 +266,9 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             run(due, t);
             sweepDebt -= due;
 
-            draw(t, 1 - Math.exp(-dt * 5));
-            if (visible) raf = requestAnimationFrame(loop);
+            // Offscreen, the chain keeps sampling (undrawn) only while Fig. 2 plots it
+            if (visible) draw(t, 1 - Math.exp(-dt * 5));
+            if (visible || hasReadingListeners()) raf = requestAnimationFrame(loop);
         };
 
         const local = (e: PointerEvent) => {
@@ -268,6 +285,21 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         readColors();
         layout();
 
+        // Repaint in the new ink as soon as the theme changes (the theme flip
+        // reveals this frame), rather than on the next periodic read
+        const onTheme = () => {
+            readColors();
+            if (reduced) draw(0, 1);
+        };
+        const themeObserver = new MutationObserver(onTheme);
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        const scheme = window.matchMedia('(prefers-color-scheme: dark)');
+        scheme.addEventListener('change', onTheme);
+        const stopThemeWatch = () => {
+            themeObserver.disconnect();
+            scheme.removeEventListener('change', onTheme);
+        };
+
         // Burn-in: run the chain before the first frame so it opens near equilibrium
         c = globalC(performance.now() / 1000);
         for (let i = 0; i < 80; i++) sweep(0);
@@ -279,14 +311,14 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             for (let i = 0; i < 300; i++) sweep(0);
             draw(0, 1);
             updateReadout();
-            return;
+            return stopThemeWatch;
         }
 
         const io = new IntersectionObserver(([entry]) => {
             visible = entry.isIntersecting;
             cancelAnimationFrame(raf);
             last = 0;
-            if (visible) raf = requestAnimationFrame(loop);
+            if (visible || hasReadingListeners()) raf = requestAnimationFrame(loop);
         });
         io.observe(canvas);
 
@@ -308,6 +340,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             canvas.removeEventListener('pointermove', onMove);
             canvas.removeEventListener('pointerleave', onLeave);
             canvas.removeEventListener('pointerdown', onDown);
+            stopThemeWatch();
         };
     }, [fixedC, intro]);
 

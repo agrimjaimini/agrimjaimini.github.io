@@ -17,5 +17,6 @@ hidden: true                 # optional: builds the page but leaves it out of li
 ## In a post
 
 - Math: `$inline$` and `$$display$$` (KaTeX)
-- Figures: `<IsingField />` embeds the live Ising model with a `c` slider
+- Figures: `<IsingField />` embeds the live Ising model with a `c` slider;
+  `<AgreementPlot />` plots how often its neighbors agree against `c` (Fig. 2)
 - Literal braces in text must be escaped (`\{`, `\}`), since MDX treats `{}` as code

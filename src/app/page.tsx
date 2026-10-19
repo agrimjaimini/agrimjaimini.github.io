@@ -1,5 +1,5 @@
 import React from "react";
-import Experience from "@/components/Experience";
+import Experience, { experienceId } from "@/components/Experience";
 import Projects from "@/components/Projects";
 import PostList from "@/components/PostList";
 import IsingField from "@/components/IsingField";
@@ -11,6 +11,7 @@ import Disclosure from "@/components/Disclosure";
 import Year from "@/components/Year";
 import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
+import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
 import { education, experience, now } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/writing";
@@ -39,13 +40,14 @@ const years = (duration: string) => {
   return start === end ? start : `${start}–${end.slice(-2)}`;
 };
 
-/** Hover card for a company mentioned in the intro, built from its experience entry. */
+/** A company cited in the intro: a hover card from its experience entry, and a link to its row. */
 function Company({ name, children }: { name: string; children?: React.ReactNode }) {
   const job = experience.find((j) => j.company === name);
   if (!job) return <>{children ?? name}</>;
   return (
     <Term
       title={job.company}
+      href={`#${experienceId(job.company)}`}
       meta={years(job.duration)}
       lines={[job.title, job.location].filter((l): l is string => Boolean(l))}
     >
@@ -69,14 +71,15 @@ function Section({
   /** A date set at the heading's right edge, like a list row's meta. */
   meta?: string;
   list?: boolean;
-  /** Leave this section out of the printed résumé. */
+  /** Leave this section out of the printed résumé. On screen these are the
+      personal sections after the résumé ones, set a step closer together. */
   screenOnly?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <section
       data-section={title.toLowerCase()}
-      className={`cell ${styles.section} ${list ? styles.listSection : ""} ${screenOnly ? "screen-only" : ""} enter`}
+      className={`cell ${styles.section} ${list ? styles.listSection : ""} ${screenOnly ? `screen-only ${styles.personal}` : ""} enter`}
       style={delay(index + 2)}
     >
       <h2 className={styles.heading}>
@@ -104,12 +107,13 @@ export default function Home() {
         <PrintStamp className={styles.stamp} />
       </header>
 
-      <div className={`cell ${styles.intro} enter`} style={delay(1)}>
+      <div id="intro" className={`cell ${styles.intro} enter`} style={delay(1)}>
         <p className={styles.lead}>
           I build machine learning systems and the infrastructure behind them,
           and study Computer Science and Mathematics at{" "}
           <Term
             title="Cornell University"
+            href="#education-cornell"
             meta={school.duration.replace("Expected ", "")}
             lines={[school.degree.replace("BS, ", "B.S. "), `${school.gpa} GPA`]}
           >
@@ -154,14 +158,31 @@ export default function Home() {
         <Projects />
       </Section>
 
+      <Section title="Education" index={3} list>
+        <Disclosure
+          items={[
+            {
+              key: school.school,
+              id: "education-cornell",
+              title: school.school,
+              sub: school.degree.replace("BS, ", "B.S. "),
+              meta: school.duration.replace("Expected ", "").slice(-4),
+              points: school.coursework ?? [],
+              columns: true,
+              note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
+            },
+          ]}
+        />
+      </Section>
+
       {posts.length > 0 && (
-        <Section title="Writing" index={3} list screenOnly>
+        <Section title="Writing" index={4} list screenOnly>
           <PostList posts={posts} />
         </Section>
       )}
 
       {/* Now: one sentence, dated like a list row */}
-      <Section title="Now" index={4} screenOnly meta={now.updated}>
+      <Section title="Now" index={5} screenOnly meta={now.updated}>
         <p className={styles.now}>
           {now.items.map((item, i) => (
             <React.Fragment key={item.label}>
@@ -186,27 +207,11 @@ export default function Home() {
         </p>
       </Section>
 
-      <Section title="Education" index={5} list>
-        <Disclosure
-          items={[
-            {
-              key: school.school,
-              title: school.school,
-              sub: school.degree.replace("BS, ", "B.S. "),
-              meta: school.duration.replace("Expected ", "").slice(-4),
-              points: school.coursework ?? [],
-              columns: true,
-              note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
-            },
-          ]}
-        />
-      </Section>
-
       {/* The page closes on a sentence rather than a section */}
       <div className={`cell screen-only ${styles.contact} enter`} style={delay(8)}>
         <p>
           The best way to reach me is{" "}
-          <a href={`mailto:${EMAIL}`} className="link">{EMAIL}</a>. You can also
+          <CopyEmail email={EMAIL} />. You can also
           find me on{" "}
           <a href="https://t.me/agrimjaimini" className="link" target="_blank" rel="noopener noreferrer">Telegram</a>{" "}
           or{" "}

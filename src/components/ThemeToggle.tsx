@@ -1,5 +1,6 @@
 "use client";
 import { useSyncExternalStore } from 'react';
+import { flushSync } from 'react-dom';
 
 type Theme = 'auto' | 'light' | 'dark';
 const order: Theme[] = ['auto', 'light', 'dark'];
@@ -14,17 +15,44 @@ function read(): Theme {
     }
 }
 
-function apply(theme: Theme) {
+/** Whether a setting puts the page in dark, following the system for auto. */
+const isDark = (theme: Theme) =>
+    theme === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : theme === 'dark';
+
+function save(theme: Theme) {
     const root = document.documentElement;
-    root.classList.add('theme-transition');
     if (theme === 'auto') delete root.dataset.theme;
     else root.dataset.theme = theme;
     try {
         if (theme === 'auto') localStorage.removeItem('theme');
         else localStorage.setItem('theme', theme);
     } catch {}
-    window.setTimeout(() => root.classList.remove('theme-transition'), 350);
     listeners.forEach((l) => l());
+}
+
+/**
+ * The whole page crossfades to the new theme as one picture, so text, rules,
+ * and Fig. 1's dots all change together. See .theme-fade in globals.css.
+ */
+function apply(theme: Theme) {
+    const root = document.documentElement;
+    const flips = isDark(theme) !== isDark(read());
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!flips || reduced || !('startViewTransition' in document)) {
+        // Where a view transition can't (or shouldn't) run, fade the colors instead
+        if (flips) {
+            root.classList.add('theme-transition');
+            window.setTimeout(() => root.classList.remove('theme-transition'), 350);
+        }
+        save(theme);
+        return;
+    }
+
+    root.classList.add('theme-fade');
+    // Re-render the label inside the update so it lands in the new snapshot
+    const transition = document.startViewTransition(() => flushSync(() => save(theme)));
+    transition.finished.finally(() => root.classList.remove('theme-fade'));
 }
 
 const subscribe = (l: () => void) => {

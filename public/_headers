@@ -1,3 +1,9 @@
 # Cloudflare static assets: Next's build files are content-hashed, so browsers can keep them forever
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Per-post link previews are PNGs exported without an extension
+/writing/*/opengraph-image
+  Content-Type: image/png
+/writing/*/twitter-image
+  Content-Type: image/png

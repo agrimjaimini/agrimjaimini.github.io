@@ -35,6 +35,16 @@
   transition: opacity 0.25s ease;
 }
 
+/* A row reached from a citation in the intro lands a quarter of the way down
+   the screen, and the other rows dim for a moment, as they do on hover */
+.item[id] {
+  scroll-margin-top: 25vh;
+}
+
+.list:has(> [data-cited]) > .item:not([data-cited]) {
+  opacity: 0.45;
+}
+
 .row {
   width: 100%;
   display: flex;
@@ -126,23 +136,6 @@
 .row[aria-expanded='true'] .leader {
   opacity: 0.9;
   clip-path: inset(0 0 0 0);
-}
-
-.row:hover .leader {
-  animation: march 1.2s linear infinite;
-}
-
-/* Dots drift toward the meta column while the row is hovered */
-@keyframes march {
-  to {
-    background-position: 5px 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .row:hover .leader {
-    animation: none;
-  }
 }
 
 /* A post's own frozen lattice, seeded by its slug, beside the date */
@@ -272,6 +265,7 @@
   color: var(--text-dim);
   font-family: var(--font-mono);
   font-size: var(--mono-size);
+  letter-spacing: 0;
 }
 
 .detailLink {
@@ -290,6 +284,7 @@
   margin-left: -0.5rem;
   font-family: var(--font-mono);
   font-size: var(--mono-size);
+  letter-spacing: 0;
   text-align: center;
   color: var(--text-dim);
   opacity: 0;
@@ -341,6 +336,11 @@
     white-space: normal;
   }
 
+  /* Balanced lines leave a gap before the meta on a narrow row; fill the
+     first line instead and only keep the last from ending on one word */
+  .title {
+    text-wrap: pretty;
+  }
 
   .leader {
     display: none;

@@ -65,12 +65,12 @@ export default function RootLayout({
       <body>
         {children}
         <ConsoleNote />
-        {/* Umami analytics: cookieless; production builds only */}
+        {/* Umami analytics: cookieless; production builds only, loaded once the page is idle */}
         {process.env.NODE_ENV === 'production' && (
           <Script
             src="https://cloud.umami.is/script.js"
             data-website-id="a376fd57-d8a4-4690-aac4-b9dad145932e"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
         )}
       </body>

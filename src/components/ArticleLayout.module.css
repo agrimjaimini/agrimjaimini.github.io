@@ -24,7 +24,7 @@
 /* The writing index's label, set like a homepage section heading */
 .title {
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text-primary);
 }
 

@@ -1,14 +1,14 @@
 /* Up spins as full dots, down spins as faint, smaller ones; flips fade
    between the two rather than blink, like the dots in Fig. 1 */
 .lattice circle {
-  opacity: 0.8;
+  opacity: calc(0.8 * var(--spin-gain, 1));
   transform-box: fill-box;
   transform-origin: center;
   transition: opacity 0.6s ease, transform 0.6s var(--ease-out-expo);
 }
 
 .lattice circle.down {
-  opacity: 0.16;
+  opacity: calc(0.16 * var(--spin-gain, 1));
   transform: scale(0.75);
 }
 

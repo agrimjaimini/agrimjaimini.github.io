@@ -63,24 +63,23 @@
   border-left: 2px solid var(--border-hover);
 }
 
+/* Code is set apart by the mono face and ink, not a box */
 .inlineCode {
   font-family: var(--font-mono);
   font-size: 0.875em;
-  padding: 0.1rem 0.35rem;
-  border-radius: 4px;
-  background: var(--hover);
-  border: 1px solid var(--border);
+  letter-spacing: 0;
   color: var(--text-primary);
 }
 
+/* Code blocks run edge to edge between hairlines, like the embedded figure */
 .pre {
   margin: 1.5rem 0;
-  padding: 1rem 1.15rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--hover);
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   overflow-x: auto;
   font-size: var(--small-size);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 
@@ -111,6 +110,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: var(--small-size);
+  letter-spacing: var(--tracking-small);
 }
 
 .thead {

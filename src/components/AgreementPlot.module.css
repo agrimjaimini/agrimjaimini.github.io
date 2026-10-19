@@ -1,0 +1,49 @@
+/* Plot area: the canvas draws the axes, curve, and points; labels are text */
+.plot {
+  position: relative;
+  padding-top: 14px;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 170px;
+}
+
+.axis {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  letter-spacing: 0;
+  line-height: 1;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The y-axis ends: 100% at top left (where the curve is low) and 50% on the
+   floor line at the right (where the curve is high), clear of the data */
+.top {
+  top: 14px;
+  left: 0;
+}
+
+.floor {
+  right: 0;
+  bottom: 28px;
+}
+
+/* Under the |m| = 0 line, which sits 22px above the canvas's bottom edge */
+.tick {
+  bottom: 4px;
+}
+
+.critical {
+  transform: translateX(-50%);
+}
+
+@media (max-width: 600px) {
+  .canvas {
+    height: 130px;
+  }
+}

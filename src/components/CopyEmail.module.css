@@ -1,0 +1,36 @@
+/* "Copied" sits over the address instead of replacing it, so the sentence
+   never reflows and the link's underline keeps the address's width */
+.email {
+  position: relative;
+}
+
+.address,
+.copied {
+  transition: opacity 0.15s ease;
+}
+
+.copied {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  /* Not part of the sentence if someone selects it to copy */
+  user-select: none;
+}
+
+.email[data-copied] .address {
+  opacity: 0;
+}
+
+.email[data-copied] .copied {
+  opacity: 1;
+}
+
+/* Announced to screen readers, not shown */
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

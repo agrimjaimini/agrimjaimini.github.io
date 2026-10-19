@@ -1,5 +1,6 @@
 import React from 'react';
 import IsingField from './IsingField';
+import AgreementPlot from './AgreementPlot';
 import Morph from './Morph';
 import styles from './MDXComponents.module.css';
 
@@ -11,6 +12,12 @@ export const MDXComponents = {
         <IsingField linked={false} intro={false} control />
       </div>
     </Morph>
+  ),
+  // Fig. 2: how often Fig. 1's neighbors agree, against c, over the exact curve
+  AgreementPlot: () => (
+    <div className={styles.figure}>
+      <AgreementPlot />
+    </div>
   ),
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className={styles.h1} {...props} />

@@ -17,6 +17,7 @@
 .stats {
   font-family: var(--font-mono);
   font-size: var(--mono-size);
+  letter-spacing: 0;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
 }
@@ -64,6 +65,7 @@
   padding: 12px var(--pad) 0;
   font-family: var(--font-mono);
   font-size: var(--mono-size);
+  letter-spacing: 0;
   color: var(--text-dim);
 }
 

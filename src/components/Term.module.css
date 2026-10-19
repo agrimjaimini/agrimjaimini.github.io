@@ -18,6 +18,11 @@
   text-decoration-color: var(--text-dim);
 }
 
+/* A citation: clicking jumps to the row the term summarizes */
+a.term {
+  cursor: pointer;
+}
+
 .card {
   position: absolute;
   left: -12px;
@@ -29,13 +34,13 @@
   flex-direction: column;
   gap: 1px;
   padding: 10px 12px;
-  border: 1px solid var(--border);
+  /* No shadow, as nowhere else on the site: a firmer hairline lifts it off the text */
+  border: 1px solid var(--border-hover);
   border-radius: 10px;
   background: var(--background);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -8px rgba(0, 0, 0, 0.12);
   font-family: var(--font-sans);
   font-size: var(--small-size);
-  letter-spacing: -0.008em;
+  letter-spacing: var(--tracking-small);
   line-height: 1.5;
   white-space: normal;
   text-align: left;

@@ -43,9 +43,10 @@ export const experience: Experience[] = [
         duration: "May 2026 – Aug 2026",
         location: "San Francisco, CA",
         points: [
-            "Built a generalized GitHub API proxy in Go as shared developer infrastructure, unifying high-concurrency GitHub access behind a single internal API for autonomous CI systems and company-wide tooling",
-            "Engineered a Redis cache keyed on ETags and conditional requests to absorb high-concurrency agent traffic, keeping agents under GitHub’s primary rate limits where naive per-agent access would exhaust them",
-            "Added Datadog metrics, dashboards, and error-rate alerting to track proxy health and per-agent traffic"
+            "Owned the design, implementation, and feedback-driven iteration of a generalized GitHub API proxy in Go, giving AI agents and internal tooling one scalable, high-concurrency internal API to GitHub",
+            "Coordinated with consuming teams so their existing systems could roll over to the proxy with minimal rework",
+            "Engineered a Redis cache on ETags and conditional requests to keep high-concurrency agent traffic under GitHub’s rate limits, securing it with a keyed hash of each caller’s token in the cache key to block unauthorized cache hits",
+            "Added Datadog metrics, dashboards, and error-rate alerting for observability into proxy health and per-agent traffic"
         ]
     },
     {
@@ -65,9 +66,9 @@ export const experience: Experience[] = [
         duration: "May 2025 – Jul 2025",
         location: "Dallas, TX",
         points: [
-            "Designed and deployed modular ML pipeline processing 1M+ data points with event-driven architecture, AWS Lambda ingestion, FastAPI inference service, and Next.js monitoring dashboard; achieved 99% uptime through containerized deployment with Docker on AWS EC2 and CI/CD automation",
-            "Built scalable model versioning system with PostgreSQL enabling A/B testing across 10+ iterations, reducing deployment rollback time by 75% and improving experiment reproducibility for production ML systems",
-            "Trained PointNet deep learning model using PyTorch achieving 93% accuracy with <300ms inference latency; implemented synthetic data augmentation increasing training data by 5X to improve model robustness"
+            "Worked closely with a team of ML interns to train a PointNet point-cloud classifier to 93% accuracy, iterating through 10+ model versions with training configs and model artifact paths tracked in PostgreSQL",
+            "Built an event-driven AWS Lambda pipeline that ingested 1M+ live data points for real-time inference",
+            "Deployed the classifier as a containerized Flask inference API on EC2, using CI/CD for versioned releases and latency monitoring to track response times in production"
         ]
     },
     {

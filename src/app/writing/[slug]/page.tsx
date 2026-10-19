@@ -42,13 +42,12 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description: post.excerpt,
       url: `/writing/${slug}`,
       publishedTime: post.date,
-      images: ['/og.png'],
+      // The image comes from opengraph-image.tsx: each post gets its own
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: ['/og.png'],
     },
   };
 }
