@@ -209,6 +209,7 @@ export default function Home() {
               ) : (
                 <span className={`${styles.nowTitle} ${styles.work}`}>{item.title}</span>
               )}
+              {item.after && ` ${item.after}`}
             </React.Fragment>
           ))}
           . Articles I’ve liked go on my{" "}

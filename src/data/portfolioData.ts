@@ -217,6 +217,8 @@ export interface NowItem {
     title: string;
     by?: string;
     href?: string;
+    /** Plain words after the title, outside the link and the italics. */
+    after?: string;
 }
 
 /** The "Now" section. Edit freely, and bump `updated` when you do. */
@@ -226,7 +228,7 @@ export const now: { updated: string; items: NowItem[] } = {
         { label: "Reading", title: "Dune", by: "Frank Herbert", href: "https://en.wikipedia.org/wiki/Dune_(novel)" },
         { label: "Watching", title: "Slow Horses", href: "https://en.wikipedia.org/wiki/Slow_Horses_(TV_series)" },
         { label: "Listening to", title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
-        { label: "Following", title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI" },
+        { label: "Watching", title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI", after: "cook the whole league" },
     ],
 };
 
