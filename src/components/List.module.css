@@ -129,7 +129,7 @@
      dotted line draws in from the title, marking the row being read. */
   opacity: 0;
   clip-path: inset(0 100% 0 0);
-  transition: opacity 0.25s ease, clip-path 0.45s var(--ease-out-expo);
+  transition: opacity 0.2s ease, clip-path 0.3s var(--ease-out-expo);
 }
 
 .row:hover .leader,
@@ -166,7 +166,7 @@
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
-  transition: grid-template-rows 0.4s var(--ease-out-expo), opacity 0.3s ease, visibility 0.4s;
+  transition: grid-template-rows 0.3s var(--ease-out-expo), opacity 0.2s ease, visibility 0.3s;
   visibility: hidden;
 }
 
@@ -199,7 +199,7 @@
 
 .detail[data-open='true'] li,
 .detail[data-open='true'] .tags {
-  animation: settle 0.35s var(--ease-out-expo) both;
+  animation: settle 0.25s var(--ease-out-expo) both;
   animation-delay: calc(var(--j, 0) * 30ms + 40ms);
 }
 

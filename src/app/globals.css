@@ -165,7 +165,7 @@ p {
   background-repeat: no-repeat;
   padding-bottom: 1px;
   white-space: nowrap;
-  transition: background-size 0.5s var(--ease-out-expo);
+  transition: background-size 0.3s var(--ease-out-expo);
 }
 
 .link:hover {
@@ -268,7 +268,7 @@ p {
 
 /* Page-to-page morphs (Fig. 1 and post titles) */
 ::view-transition-group(*) {
-  animation-duration: 0.55s;
+  animation-duration: 0.4s;
   animation-timing-function: var(--ease-out-expo);
 }
 

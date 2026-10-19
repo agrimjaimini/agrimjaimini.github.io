@@ -2,12 +2,13 @@
 import { useEffect, useRef } from 'react';
 import { C_CRITICAL } from '@/lib/ising';
 import { subscribeReadings, type IsingReading } from '@/lib/isingFeed';
+import CSlider, { SLIDER_MAX, SLIDER_MIN } from './CSlider';
 import figure from './IsingField.module.css';
 import styles from './AgreementPlot.module.css';
 
-// The c slider's range in Fig. 1
-const C_MIN = 0.2;
-const C_MAX = 0.8;
+// The x-axis spans the c slider's range
+const C_MIN = SLIDER_MIN;
+const C_MAX = SLIDER_MAX;
 const TRAIL = 240; // readouts kept: about 48 seconds at five a second
 const INSET = { top: 16, bottom: 22 }; // px of room for the labels
 
@@ -155,6 +156,8 @@ export default function AgreementPlot() {
                 </span>
                 <span className={`${styles.axis} ${styles.tick}`} style={{ right: 0 }}>{C_MAX.toFixed(1)}</span>
             </div>
+            {/* The same c as Fig. 1's slider: drag either and both follow */}
+            <CSlider id="ising-c-fig-2" />
             <figcaption className={figure.label}>
                 <span>Fig. 2</span>
                 <span>Neighbors agreeing</span>

@@ -10,11 +10,19 @@ const switzer = localFont({
   src: [
     { path: './fonts/Switzer-Regular.woff2', weight: '400', style: 'normal' },
     { path: './fonts/Switzer-Medium.woff2', weight: '500', style: 'normal' },
-    // Titles of works (books, shows) in Now
-    { path: './fonts/Switzer-Italic.woff2', weight: '400', style: 'italic' },
   ],
   variable: '--font-switzer',
   display: 'swap',
+})
+// Italic only sets titles of works in Now, near the end of the page, so it
+// loads when used instead of being preloaded with the faces above the fold
+const switzerItalic = localFont({
+  src: './fonts/Switzer-Italic.woff2',
+  weight: '400',
+  style: 'italic',
+  variable: '--font-switzer-italic',
+  display: 'swap',
+  preload: false,
 })
 const geistMono = Geist_Mono({
   subsets: ['latin'],
@@ -59,7 +67,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${switzer.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${switzer.variable} ${switzerItalic.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Apply a saved theme before first paint to avoid a flash */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

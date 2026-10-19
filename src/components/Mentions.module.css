@@ -58,8 +58,8 @@
 /* An entry settles in as a short cascade: header, each point, then the note */
 .entry > *,
 .points li {
-  animation: settle 0.5s var(--ease-out-expo) both;
-  animation-delay: calc(var(--j, 0) * 35ms);
+  animation: settle 0.3s var(--ease-out-expo) both;
+  animation-delay: calc(var(--j, 0) * 25ms);
 }
 
 .points {

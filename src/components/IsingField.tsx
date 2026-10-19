@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { C_CRITICAL } from '@/lib/ising';
-import { hasReadingListeners, publishReading } from '@/lib/isingFeed';
+import { getManualC, hasReadingListeners, publishReading, setLiveC, setManualC } from '@/lib/isingFeed';
+import CSlider from './CSlider';
 import styles from './IsingField.module.css';
 
 const GAP = 10;
@@ -10,9 +11,6 @@ const RADIUS = 1.1;
 const CYCLE = 54; // seconds for one sweep of c through the critical point and back
 const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
 const BOOT_SPEED = 900; // px per second for the load-in sweep
-const SLIDER_MIN = 0.2;
-const SLIDER_MAX = 0.8;
-const THUMB = 11; // px, matches .thumb and the native thumb in IsingField.module.css
 const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
 const MAX_QUENCHES = 32; // a dragged stroke leaves a trail of them
 // The opening: a silent field, one flipped spin, and a front that spreads from it
@@ -53,11 +51,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
     const acceptRef = useRef<HTMLSpanElement>(null);
-    // A value set with the slider wins over the automatic drift until reset
-    const manualRef = useRef<number | null>(null);
-    const sliderRef = useRef<HTMLInputElement>(null);
-    const thumbRef = useRef<HTMLSpanElement>(null);
-    const [manual, setManual] = useState<number | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -147,7 +140,9 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
 
         const globalC = (t: number) => {
             if (fixedC !== undefined) return fixedC;
-            if (manualRef.current !== null) return manualRef.current;
+            // A value set with a slider (this figure's or Fig. 2's) wins over the drift
+            const manual = control ? getManualC() : null;
+            if (manual !== null) return manual;
             const s = Math.sin((t / CYCLE) * Math.PI * 2);
             const shaped = Math.sign(s) * Math.pow(Math.abs(s), 1.6);
             return C_CRITICAL + dailyOffset(t) + shaped * (shaped > 0 ? 0.12 : 0.08);
@@ -319,15 +314,8 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             // The cursor stops heating while it draws, or it would melt its own stroke
             pointer.strength += ((pointer.x > -1e3 && !drawing ? 1 : 0) - pointer.strength) * 0.06;
             c = globalC(t);
-            // Keep the slider on the current c; the drawn thumb moves every frame
-            const slider = sliderRef.current;
-            const thumb = thumbRef.current;
-            if (slider && thumb) {
-                if (manualRef.current === null) slider.value = String(c);
-                const frac = (c - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN);
-                // Same geometry as the native thumb: its center travels from r to width − r
-                thumb.style.transform = `translate3d(${frac * (slider.clientWidth - THUMB)}px, -50%, 0)`;
-            }
+            // The sliders' thumbs follow this every frame
+            if (control) setLiveC(c);
 
             // Spread the work evenly across frames so the grid evolves a little
             // every frame instead of lurching once per sweep
@@ -457,57 +445,15 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             canvas.removeEventListener('pointerup', onUp);
             canvas.removeEventListener('pointercancel', onUp);
             stopThemeWatch();
+            // A hand-set c belongs to this page; the next visit starts drifting again
+            if (control) setManualC(null);
         };
-    }, [fixedC, intro, nucleate]);
+    }, [fixedC, intro, nucleate, control]);
 
     return (
         <figure className={styles.figure}>
             <canvas ref={canvasRef} className={styles.canvas} aria-hidden />
-            {control && (
-                <div className={styles.control}>
-                    <label className={styles.controlLabel} htmlFor="ising-c">
-                        c
-                    </label>
-                    {/* The native range input handles dragging, keys, and screen readers;
-                        it's transparent, and the visible thumb is drawn with a sub-pixel
-                        transform so it glides instead of hopping pixel to pixel. */}
-                    <span className={styles.sliderWrap}>
-                        <span className={styles.track} aria-hidden />
-                        <span ref={thumbRef} className={styles.thumb} aria-hidden />
-                        <input
-                            id="ising-c"
-                            className={styles.slider}
-                            type="range"
-                            min={SLIDER_MIN}
-                            max={SLIDER_MAX}
-                            step="any"
-                            ref={sliderRef}
-                            defaultValue={C_CRITICAL}
-                            onChange={(e) => {
-                                const value = Number(e.target.value);
-                                manualRef.current = value;
-                                setManual(value);
-                            }}
-                            aria-label="Inverse temperature c"
-                        />
-                    </span>
-                    <span className={styles.controlHint}>
-                        {manual === null ? (
-                            'drag to set'
-                        ) : (
-                            <button
-                                className={styles.reset}
-                                onClick={() => {
-                                    manualRef.current = null;
-                                    setManual(null);
-                                }}
-                            >
-                                auto
-                            </button>
-                        )}
-                    </span>
-                </div>
-            )}
+            {control && <CSlider id="ising-c" />}
             <figcaption className={styles.label}>
                 {linked ? (
                     <Link href="/writing/ising-model" className={styles.figLink}>

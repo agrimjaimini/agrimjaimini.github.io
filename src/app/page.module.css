@@ -107,6 +107,7 @@
 
 /* Titles of works, set in italic as in print */
 .work {
+  font-family: var(--font-switzer-italic), var(--font-sans);
   font-style: italic;
 }
 

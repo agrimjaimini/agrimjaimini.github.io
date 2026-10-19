@@ -29,3 +29,30 @@ export function subscribeReadings(listener: Listener) {
         listeners.delete(listener);
     };
 }
+
+// c set by hand with a slider (Fig. 1's or Fig. 2's), shared so both stay in
+// step; null means c drifts on its own
+let manualC: number | null = null;
+const manualListeners = new Set<() => void>();
+
+export const getManualC = () => manualC;
+
+export function setManualC(value: number | null) {
+    manualC = value;
+    manualListeners.forEach((l) => l());
+}
+
+export function subscribeManualC(listener: () => void) {
+    manualListeners.add(listener);
+    return () => {
+        manualListeners.delete(listener);
+    };
+}
+
+// The c Fig. 1 is sampling at right now, updated every frame so a slider's
+// thumb can glide with it rather than hop between readouts
+let liveC: number | null = null;
+export const getLiveC = () => liveC;
+export const setLiveC = (c: number) => {
+    liveC = c;
+};
