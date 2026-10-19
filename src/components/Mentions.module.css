@@ -2,25 +2,25 @@
   padding-top: 10px;
 }
 
-/* One sentence per line, set close like lines of one paragraph, so the
-   section still reads as prose; an entry opens between them */
+/* One sentence per line, so an entry can open right under the one that
+   names it; a little air between them keeps each sentence a unit */
 .line {
   color: var(--text-secondary);
 }
 
-/* A name reads as ink in a gray sentence, at body weight: color carries the
-   hierarchy. On hover, and while its entry is open, an ink rule draws in
-   under it, as under links. */
+/* A name is set like the site's links: ink, on a faint rule that the ink
+   draws over on hover and while its entry is open */
 .name {
   color: var(--text-primary);
   cursor: pointer;
   outline: none;
   /* A citation from the intro lands a quarter of the way down the screen */
   scroll-margin-top: 25vh;
-  white-space: nowrap;
-  background-image: linear-gradient(var(--text-primary), var(--text-primary));
-  background-size: 0% 1px;
-  background-position: 0 100%;
+  background-image:
+    linear-gradient(var(--text-primary), var(--text-primary)),
+    linear-gradient(var(--border-hover), var(--border-hover));
+  background-size: 0% 1px, 100% 1px;
+  background-position: 0 100%, 0 100%;
   background-repeat: no-repeat;
   padding-bottom: 1px;
   transition:
@@ -31,27 +31,7 @@
 .name:hover,
 .name:focus-visible,
 .name[aria-expanded='true'] {
-  background-size: 100% 1px;
-}
-
-/* The footnote number, set in mono like the site's other readouts */
-/* Raised by offset rather than vertical-align, so it never opens up the line
-   it sits on and every line keeps the same leading */
-.mark {
-  position: relative;
-  top: -0.6em;
-  vertical-align: baseline;
-  margin-left: 1px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  line-height: 0;
-  color: var(--text-dim);
-  transition: color 0.3s ease;
-}
-
-.name:hover .mark,
-.name[aria-expanded='true'] .mark {
-  color: var(--text-primary);
+  background-size: 100% 1px, 100% 1px;
 }
 
 /* With an entry open, the other names step back */
@@ -97,19 +77,8 @@
 .head {
   display: flex;
   align-items: baseline;
-  gap: 0;
   margin-bottom: 10px;
   color: var(--text-primary);
-}
-
-/* The entry hangs off its footnote number, which sits in the bullets' indent */
-.number {
-  flex-shrink: 0;
-  width: 22px;
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: var(--mono-size);
-  letter-spacing: 0;
 }
 
 .sub {
@@ -134,7 +103,7 @@
 
 .points li {
   position: relative;
-  padding-left: 22px;
+  padding-left: 14px;
   color: var(--text-secondary);
 }
 
@@ -178,9 +147,6 @@
   }
 }
 
-/* On a phone the sentences wrap; a little air keeps each one a unit */
-@media (max-width: 600px) {
-  .stop + .stop {
-    margin-top: 8px;
-  }
+.stop + .stop {
+  margin-top: 6px;
 }

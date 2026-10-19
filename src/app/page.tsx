@@ -165,7 +165,7 @@ export default function Home() {
 
       <Section title="Projects" index={2}>
         <div className="screen-only">
-          <Mentions lines={projectLines} items={projectItems} start={experienceItems.length + 1} />
+          <Mentions lines={projectLines} items={projectItems} />
         </div>
         <div className="print-only">
           <Projects />

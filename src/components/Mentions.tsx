@@ -13,13 +13,13 @@ export interface MentionItem {
     link?: { href: string; label: string };
 }
 
-/** A run of plain text, or a marked name with its footnote number. */
-type Part = string | { item: MentionItem; label: string; n: number };
+/** A run of plain text, or a marked name. */
+type Part = string | { item: MentionItem; label: string };
 
 const TOKEN = /\[([^\]|]+)(?:\|([^\]]+))?\]/g;
 
 /** A line's entry, which keeps showing while its panel closes around it. */
-function Panel({ item, number, open }: { item: MentionItem | undefined; number: number | undefined; open: boolean }) {
+function Panel({ item, open }: { item: MentionItem | undefined; open: boolean }) {
     const innerRef = useRef<HTMLDivElement>(null);
     const [height, setHeight] = useState(0);
 
@@ -40,7 +40,6 @@ function Panel({ item, number, open }: { item: MentionItem | undefined; number: 
                     // Keyed, so each entry plays its own entrance
                     <div key={item.key} className={styles.entry}>
                         <p className={styles.head}>
-                            <span className={styles.number}>{number}</span>
                             <span className={styles.sub}>{item.sub}</span>
                             {item.meta && <span className={styles.meta}>{item.meta}</span>}
                         </p>
@@ -69,18 +68,17 @@ function Panel({ item, number, open }: { item: MentionItem | undefined; number: 
 }
 
 /**
- * A few short sentences, one stop each. Marked names carry footnote numbers,
- * as in a paper, and open their entries directly under their own sentence,
- * one at a time, like text that stretches where it's read. Numbers run on
- * from `start`, so a later section continues the count.
+ * A few sentences, each on its own line. Marked names open their entries
+ * directly under their own sentence, one at a time, like text that stretches
+ * where it's read.
  */
-export default function Mentions({ lines, items, start = 1 }: { lines: string[]; items: MentionItem[]; start?: number }) {
+export default function Mentions({ lines, items }: { lines: string[]; items: MentionItem[] }) {
     const [open, setOpen] = useState<string | null>(null);
     // What each line last showed, so a closing panel keeps its content
     const [shown, setShown] = useState<Record<number, string>>({});
 
-    // Parse once per render: each line's pieces, and every marked name's line and number
-    const where = new Map<string, { line: number; n: number }>();
+    // Parse once per render: each line's pieces, and which line every marked name is on
+    const where = new Map<string, { line: number }>();
     const parsed = lines.map((text, line) => {
         const parts: Part[] = [];
         let at = 0;
@@ -91,9 +89,8 @@ export default function Mentions({ lines, items, start = 1 }: { lines: string[];
             if (!item) {
                 parts.push(label);
             } else {
-                const n = start + where.size;
-                where.set(item.key, { line, n });
-                parts.push({ item, label, n });
+                where.set(item.key, { line });
+                parts.push({ item, label });
             }
             at = m.index + m[0].length;
         }
@@ -131,7 +128,7 @@ export default function Mentions({ lines, items, start = 1 }: { lines: string[];
                         <p className={styles.line}>
                             {parts.map((part, k) => {
                                 if (typeof part === 'string') return <React.Fragment key={k}>{part}</React.Fragment>;
-                                const { item, label, n } = part;
+                                const { item, label } = part;
                                 return (
                                     <span
                                         key={k}
@@ -151,14 +148,12 @@ export default function Mentions({ lines, items, start = 1 }: { lines: string[];
                                         }}
                                     >
                                         {label}
-                                        <sup className={styles.mark}>{n}</sup>
                                     </span>
                                 );
                             })}
                         </p>
                         <Panel
                             item={items.find((i) => i.key === key)}
-                            number={key ? where.get(key)?.n : undefined}
                             open={openLine === line}
                         />
                     </div>

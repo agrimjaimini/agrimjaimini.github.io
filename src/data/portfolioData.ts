@@ -230,21 +230,19 @@ export const now: { updated: string; items: NowItem[] } = {
 };
 
 /**
- * The screen version of Experience and Projects: a few short sentences, one
- * stop each. `[Name]` (or `[Name|label]`) marks a name that carries a footnote
- * number and opens its entry above directly under its sentence. Names left
- * unmarked are plain text. The printed résumé still uses the full lists.
+ * The screen version of Experience and Projects: a few sentences, each set on
+ * its own line. `[Name]` (or `[Name|label]`) marks a name that opens its entry
+ * above directly under its sentence; unmarked names are plain text. The
+ * printed résumé still uses the full lists.
  */
 export const experienceLines = [
-    "This summer I built a GitHub API proxy for AI agents at [Coinbase].",
-    "Before that, on-chain bounty payouts at [Ripple].",
-    "A point-cloud classifier at [Texas Instruments].",
-    "And fraud tracing on Ethereum at [Artemis Analytics].",
+    "This summer I was at [Coinbase], building a GitHub API proxy for AI agents.",
+    "In 2025 I built on-chain bounty payouts at [Ripple] and trained a point-cloud classifier at [Texas Instruments].",
+    "Before that, I traced fraud on Ethereum at [Artemis Analytics].",
 ];
 
 export const projectLines = [
-    "Lately I’ve been building [Trellis], a runtime for parallel coding agents.",
-    "[Lore] is a memory market that AI agents pay to read.",
+    "Lately I’ve been building [Trellis], a runtime for parallel coding agents, and [Lore], a memory market that AI agents pay to read.",
     "[Trace-Accel] simulates transformer inference on configurable hardware.",
-    "Earlier: BugSense, Cortex, OCaml-Git, and a DPO stack for Mistral 7B.",
+    "Earlier, I preference-tuned Mistral 7B with [DPO Alignment Stack|DPO] and wrote a Git clone in [OCaml-Git|OCaml].",
 ];
