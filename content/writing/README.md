@@ -2,6 +2,9 @@
 
 Each `.mdx` file here becomes a post at `/writing/<filename>`.
 
+A file starting with `_` is a draft: it's left out of lists and the production
+build, and only shows up in `next dev` at `/writing/_<name>`.
+
 ## Frontmatter
 
 ```yaml

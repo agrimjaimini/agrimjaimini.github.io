@@ -73,8 +73,10 @@ export function getAllPostSlugs(): string[] {
     return [];
   }
 
+  // Drafts (`_name.mdx`) are only built in dev, at /writing/_name
+  const includeDrafts = process.env.NODE_ENV !== 'production';
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames
-    .filter(fileName => fileName.endsWith('.mdx'))
+    .filter(fileName => fileName.endsWith('.mdx') && (includeDrafts || !fileName.startsWith('_')))
     .map(fileName => fileName.replace(/\.mdx$/, ''));
 }
