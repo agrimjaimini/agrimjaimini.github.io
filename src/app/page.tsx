@@ -103,8 +103,8 @@ export default function Home() {
           .
         </p>
         <p>
-          Lately, I’ve been interested in what it takes for AI agents to do
-          real work, and in building tools for LLM inference.
+          Lately, I’ve been interested in multi-agent systems and building
+          tools for LLM inference.
         </p>
         <nav className={styles.links} aria-label="Elsewhere">
           {links.map((l) => (
