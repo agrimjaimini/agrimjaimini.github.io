@@ -15,7 +15,7 @@ import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
 import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
-import { education, experience, experienceLine, now, projectsLine } from "@/data/portfolioData";
+import { education, experience, experienceLines, now, projectLines } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
 
@@ -152,11 +152,11 @@ export default function Home() {
         </Morph>
       </div>
 
-      {/* On screen these two are a sentence each, whose names open their entries; the printed
+      {/* On screen these two are a few short sentences whose names open their entries; the printed
           résumé keeps the rows and their bullets */}
       <Section title="Experience" index={1}>
         <div className="screen-only">
-          <Mentions text={experienceLine} items={experienceItems} />
+          <Mentions lines={experienceLines} items={experienceItems} />
         </div>
         <div className="print-only">
           <Experience anchors={false} />
@@ -165,7 +165,7 @@ export default function Home() {
 
       <Section title="Projects" index={2}>
         <div className="screen-only">
-          <Mentions text={projectsLine} items={projectItems} start={experienceItems.length + 1} />
+          <Mentions lines={projectLines} items={projectItems} start={experienceItems.length + 1} />
         </div>
         <div className="print-only">
           <Projects />

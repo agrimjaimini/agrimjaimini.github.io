@@ -13,26 +13,15 @@ export interface MentionItem {
     link?: { href: string; label: string };
 }
 
+/** A run of plain text, or a marked name with its footnote number. */
+type Part = string | { item: MentionItem; label: string; n: number };
+
 const TOKEN = /\[([^\]|]+)(?:\|([^\]]+))?\]/g;
 
-/**
- * A sentence whose names carry footnote numbers, as in a paper, and open
- * their entries beneath it, one at a time. Numbers run on from `start`, so a
- * later section continues the count. The panel's height follows its content,
- * so switching names glides between entries rather than jumping.
- */
-export default function Mentions({ text, items, start = 1 }: { text: string; items: MentionItem[]; start?: number }) {
-    const [open, setOpen] = useState<string | null>(null);
-    // The entry stays rendered while the panel closes around it
-    const [shown, setShown] = useState<string | null>(null);
-    const [height, setHeight] = useState(0);
+/** A line's entry, which keeps showing while its panel closes around it. */
+function Panel({ item, number, open }: { item: MentionItem | undefined; number: number | undefined; open: boolean }) {
     const innerRef = useRef<HTMLDivElement>(null);
-
-    const select = (key: string | null) => {
-        setOpen(key);
-        if (key) setShown(key);
-    };
-    const toggle = (key: string) => select(open === key ? null : key);
+    const [height, setHeight] = useState(0);
 
     useLayoutEffect(() => {
         const inner = innerRef.current;
@@ -43,6 +32,81 @@ export default function Mentions({ text, items, start = 1 }: { text: string; ite
         ro.observe(inner);
         return () => ro.disconnect();
     }, []);
+
+    return (
+        <div className={styles.panel} data-open={open} style={{ height: open ? height : 0 }} aria-hidden={!open}>
+            <div ref={innerRef} className={styles.inner}>
+                {item && (
+                    // Keyed, so each entry plays its own entrance
+                    <div key={item.key} className={styles.entry}>
+                        <p className={styles.head}>
+                            <span className={styles.number}>{number}</span>
+                            <span className={styles.sub}>{item.sub}</span>
+                            {item.meta && <span className={styles.meta}>{item.meta}</span>}
+                        </p>
+                        <ul className={styles.points}>
+                            {item.points.map((point, j) => (
+                                <li key={j} style={{ '--j': j + 1 } as React.CSSProperties}>
+                                    {point}
+                                </li>
+                            ))}
+                        </ul>
+                        {(item.note || item.link) && (
+                            <p className={styles.note} style={{ '--j': item.points.length + 1 } as React.CSSProperties}>
+                                <span>{item.note}</span>
+                                {item.link && (
+                                    <a href={item.link.href} target="_blank" rel="noopener noreferrer" className={styles.noteLink}>
+                                        {item.link.label} ↗
+                                    </a>
+                                )}
+                            </p>
+                        )}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+/**
+ * A few short sentences, one stop each. Marked names carry footnote numbers,
+ * as in a paper, and open their entries directly under their own sentence,
+ * one at a time, like text that stretches where it's read. Numbers run on
+ * from `start`, so a later section continues the count.
+ */
+export default function Mentions({ lines, items, start = 1 }: { lines: string[]; items: MentionItem[]; start?: number }) {
+    const [open, setOpen] = useState<string | null>(null);
+    // What each line last showed, so a closing panel keeps its content
+    const [shown, setShown] = useState<Record<number, string>>({});
+
+    // Parse once per render: each line's pieces, and every marked name's line and number
+    const where = new Map<string, { line: number; n: number }>();
+    const parsed = lines.map((text, line) => {
+        const parts: Part[] = [];
+        let at = 0;
+        for (const m of text.matchAll(TOKEN)) {
+            if (m.index > at) parts.push(text.slice(at, m.index));
+            const item = items.find((i) => i.key === m[1]);
+            const label = m[2] ?? m[1];
+            if (!item) {
+                parts.push(label);
+            } else {
+                const n = start + where.size;
+                where.set(item.key, { line, n });
+                parts.push({ item, label, n });
+            }
+            at = m.index + m[0].length;
+        }
+        if (at < text.length) parts.push(text.slice(at));
+        return parts;
+    });
+
+    const select = (key: string | null) => {
+        setOpen(key);
+        const at = key ? where.get(key) : undefined;
+        if (key && at) setShown((prev) => ({ ...prev, [at.line]: key }));
+    };
+    const toggle = (key: string) => select(open === key ? null : key);
 
     // A citation (e.g. #experience-coinbase in the intro) opens its entry
     const onHash = useEffectEvent(() => {
@@ -56,87 +120,50 @@ export default function Mentions({ text, items, start = 1 }: { text: string; ite
         return () => window.removeEventListener('hashchange', handle);
     }, []);
 
-    const parts: React.ReactNode[] = [];
-    const numbers = new Map<string, number>();
-    let at = 0;
-    for (const m of text.matchAll(TOKEN)) {
-        if (m.index > at) parts.push(text.slice(at, m.index));
-        const item = items.find((i) => i.key === m[1]);
-        const label = m[2] ?? m[1];
-        if (!item) {
-            parts.push(label);
-        } else {
-            const key = item.key;
-            const n = start + numbers.size;
-            numbers.set(key, n);
-            parts.push(
-                <span
-                    key={key}
-                    id={item.id}
-                    role="button"
-                    tabIndex={0}
-                    className={styles.name}
-                    aria-expanded={open === key}
-                    onClick={() => toggle(key)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            toggle(key);
-                        } else if (e.key === 'Escape') {
-                            select(null);
-                        }
-                    }}
-                >
-                    {label}
-                    <sup className={styles.mark}>{n}</sup>
-                </span>
-            );
-        }
-        at = m.index + m[0].length;
-    }
-    if (at < text.length) parts.push(text.slice(at));
-
-    const item = items.find((i) => i.key === shown);
+    const openLine = open ? where.get(open)?.line : undefined;
 
     return (
         <div className={styles.mentions} data-active={open ? '' : undefined}>
-            <p className={styles.line}>{parts}</p>
-            <div
-                className={styles.panel}
-                data-open={open !== null}
-                style={{ height: open ? height : 0 }}
-                aria-hidden={open === null}
-            >
-                <div ref={innerRef} className={styles.inner}>
-                    {item && (
-                        // Keyed, so each entry plays its own entrance
-                        <div key={item.key} className={styles.entry}>
-                            <p className={styles.head}>
-                                <span className={styles.number}>{numbers.get(item.key)}</span>
-                                <span className={styles.sub}>{item.sub}</span>
-                                {item.meta && <span className={styles.meta}>{item.meta}</span>}
-                            </p>
-                            <ul className={styles.points}>
-                                {item.points.map((point, j) => (
-                                    <li key={j} style={{ '--j': j + 1 } as React.CSSProperties}>
-                                        {point}
-                                    </li>
-                                ))}
-                            </ul>
-                            {(item.note || item.link) && (
-                                <p className={styles.note} style={{ '--j': item.points.length + 1 } as React.CSSProperties}>
-                                    <span>{item.note}</span>
-                                    {item.link && (
-                                        <a href={item.link.href} target="_blank" rel="noopener noreferrer" className={styles.noteLink}>
-                                            {item.link.label} ↗
-                                        </a>
-                                    )}
-                                </p>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </div>
+            {parsed.map((parts, line) => {
+                const key = shown[line];
+                return (
+                    <div key={line} className={styles.stop}>
+                        <p className={styles.line}>
+                            {parts.map((part, k) => {
+                                if (typeof part === 'string') return <React.Fragment key={k}>{part}</React.Fragment>;
+                                const { item, label, n } = part;
+                                return (
+                                    <span
+                                        key={k}
+                                        id={item.id}
+                                        role="button"
+                                        tabIndex={0}
+                                        className={styles.name}
+                                        aria-expanded={open === item.key}
+                                        onClick={() => toggle(item.key)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                toggle(item.key);
+                                            } else if (e.key === 'Escape') {
+                                                select(null);
+                                            }
+                                        }}
+                                    >
+                                        {label}
+                                        <sup className={styles.mark}>{n}</sup>
+                                    </span>
+                                );
+                            })}
+                        </p>
+                        <Panel
+                            item={items.find((i) => i.key === key)}
+                            number={key ? where.get(key)?.n : undefined}
+                            open={openLine === line}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 }

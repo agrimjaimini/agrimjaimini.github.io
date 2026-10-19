@@ -2,6 +2,8 @@
   padding-top: 10px;
 }
 
+/* One sentence per line, set close like lines of one paragraph, so the
+   section still reads as prose; an entry opens between them */
 .line {
   color: var(--text-secondary);
 }
@@ -70,7 +72,7 @@
 }
 
 .inner {
-  padding: 18px 0 4px;
+  padding: 12px 0 18px;
 }
 
 /* An entry settles in as a short cascade: header, each point, then the note */
@@ -173,5 +175,12 @@
   .entry > *,
   .points li {
     animation: none;
+  }
+}
+
+/* On a phone the sentences wrap; a little air keeps each one a unit */
+@media (max-width: 600px) {
+  .stop + .stop {
+    margin-top: 8px;
   }
 }

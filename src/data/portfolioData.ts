@@ -230,12 +230,21 @@ export const now: { updated: string; items: NowItem[] } = {
 };
 
 /**
- * The screen version of Experience and Projects: a sentence each. `[Name]`
- * (or `[Name|label]`) marks a name that carries a footnote number and opens
- * its entry above beneath the sentence. The printed résumé still uses the full lists.
+ * The screen version of Experience and Projects: a few short sentences, one
+ * stop each. `[Name]` (or `[Name|label]`) marks a name that carries a footnote
+ * number and opens its entry above directly under its sentence. Names left
+ * unmarked are plain text. The printed résumé still uses the full lists.
  */
-export const experienceLine =
-    "This summer I was at [Coinbase], building a GitHub API proxy for AI agents. Before that, [Ripple], paying open-source contributors on the XRP Ledger; [Texas Instruments], shipping a point-cloud classifier; and [Artemis Analytics], tracing fraud through Ethereum transactions.";
+export const experienceLines = [
+    "This summer I built a GitHub API proxy for AI agents at [Coinbase].",
+    "Before that, on-chain bounty payouts at [Ripple].",
+    "A point-cloud classifier at [Texas Instruments].",
+    "And fraud tracing on Ethereum at [Artemis Analytics].",
+];
 
-export const projectsLine =
-    "Lately, [Trellis], a runtime for parallel coding agents; [Lore], a memory market agents pay to read; and [Trace-Accel], a simulator for transformer inference. Before that, [BugSense], [Cortex], [OCaml-Git], and a [DPO Alignment Stack|DPO stack] for Mistral 7B.";
+export const projectLines = [
+    "Lately I’ve been building [Trellis], a runtime for parallel coding agents.",
+    "[Lore] is a memory market that AI agents pay to read.",
+    "[Trace-Accel] simulates transformer inference on configurable hardware.",
+    "Earlier: BugSense, Cortex, OCaml-Git, and a DPO stack for Mistral 7B.",
+];
