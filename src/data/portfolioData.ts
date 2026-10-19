@@ -228,3 +228,14 @@ export const now: { updated: string; items: NowItem[] } = {
         { label: "Listening to", title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
     ],
 };
+
+/**
+ * The screen version of Experience and Projects: a sentence each. `[Name]`
+ * (or `[Name|label]`) marks a name that carries a footnote number and opens
+ * its entry above beneath the sentence. The printed résumé still uses the full lists.
+ */
+export const experienceLine =
+    "This summer I was at [Coinbase], building a GitHub API proxy for AI agents. Before that, [Ripple], paying open-source contributors on the XRP Ledger; [Texas Instruments], shipping a point-cloud classifier; and [Artemis Analytics], tracing fraud through Ethereum transactions.";
+
+export const projectsLine =
+    "Lately, [Trellis], a runtime for parallel coding agents; [Lore], a memory market agents pay to read; and [Trace-Accel], a simulator for transformer inference. Before that, [BugSense], [Cortex], [OCaml-Git], and a [DPO Alignment Stack|DPO stack] for Mistral 7B.";

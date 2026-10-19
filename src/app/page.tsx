@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import Experience, { experienceId } from "@/components/Experience";
-import Projects from "@/components/Projects";
+import Experience, { experienceId, experienceItems } from "@/components/Experience";
+import Projects, { projectItems } from "@/components/Projects";
 import PostList from "@/components/PostList";
 import IsingField from "@/components/IsingField";
 import Lattice from "@/components/Lattice";
@@ -9,12 +9,13 @@ import Morph from "@/components/Morph";
 import ThemeToggle from "@/components/ThemeToggle";
 import Term from "@/components/Term";
 import Disclosure from "@/components/Disclosure";
+import Mentions from "@/components/Mentions";
 import Year from "@/components/Year";
 import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
 import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
-import { education, experience, now } from "@/data/portfolioData";
+import { education, experience, experienceLine, now, projectsLine } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/writing";
 import styles from "./page.module.css";
 
@@ -147,16 +148,28 @@ export default function Home() {
       {/* The figure sits in the text column, after the introduction */}
       <div className={`cell screen-only ${styles.visual} enter`} style={delay(2)}>
         <Morph name="fig-1">
-          <IsingField />
+          <IsingField nucleate />
         </Morph>
       </div>
 
-      <Section title="Experience" index={1} list>
-        <Experience />
+      {/* On screen these two are a sentence each, whose names open their entries; the printed
+          résumé keeps the rows and their bullets */}
+      <Section title="Experience" index={1}>
+        <div className="screen-only">
+          <Mentions text={experienceLine} items={experienceItems} />
+        </div>
+        <div className="print-only">
+          <Experience anchors={false} />
+        </div>
       </Section>
 
-      <Section title="Projects" index={2} list>
-        <Projects />
+      <Section title="Projects" index={2}>
+        <div className="screen-only">
+          <Mentions text={projectsLine} items={projectItems} start={experienceItems.length + 1} />
+        </div>
+        <div className="print-only">
+          <Projects />
+        </div>
       </Section>
 
       <Section title="Education" index={3} list>

@@ -180,3 +180,10 @@
     animation: none;
   }
 }
+
+/* Pressing and dragging draws in the field */
+@media (hover: hover) {
+  .canvas {
+    cursor: crosshair;
+  }
+}

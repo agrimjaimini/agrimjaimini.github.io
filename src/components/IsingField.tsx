@@ -14,6 +14,17 @@ const SLIDER_MIN = 0.2;
 const SLIDER_MAX = 0.8;
 const THUMB = 11; // px, matches .thumb and the native thumb in IsingField.module.css
 const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
+const MAX_QUENCHES = 32; // a dragged stroke leaves a trail of them
+// The opening: a silent field, one flipped spin, and a front that spreads from it
+const NUCLEUS_IN = 0.35; // seconds for the quiet field to fade in
+const NUCLEUS_HOLD = 0.65; // seconds the single flipped spin sits alone
+const FRONT_SPREAD = 2.4; // seconds for the front to cross the field
+const FRONT_BAND = 5; // px half-width of the front: about one row of spins
+const FRONT_WOBBLE = 0.08; // how far the front strays from a circle, as a fraction of its radius
+const FRONT_GRAIN = 3; // px of per-spin roughness along the front
+
+// Slow to start, as the nucleus takes hold; then it runs and settles at the edges
+const easeInOut = (p: number) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
 
 /**
  * Fig. 1: the Ising model sampled by MCMC, following the 23 Mar 2026 lecture.
@@ -33,9 +44,12 @@ interface IsingFieldProps {
     intro?: boolean;
     /** Show a slider that lets the reader set c by hand. */
     control?: boolean;
+    /** Open on a silent field where one flipped spin nucleates a front that
+        spreads out and leaves the live state behind it. */
+    nucleate?: boolean;
 }
 
-export default function IsingField({ linked = true, fixedC, intro = true, control = false }: IsingFieldProps) {
+export default function IsingField({ linked = true, fixedC, intro = true, control = false, nucleate = false }: IsingFieldProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
     const acceptRef = useRef<HTMLSpanElement>(null);
@@ -70,6 +84,13 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         let visible = true;
         let raf = 0;
         let bootStart: number | null = null;
+        // The nucleation opening, while it plays
+        let nucleating = false;
+        let nucleateStart = 0;
+        let equilibrium = new Int8Array(0); // the state the front reveals
+        let revealed = new Uint8Array(0);
+        let grain = new Float32Array(0); // each spin's fixed offset from the front
+        const wobble = [0, 0, 0].map(() => Math.random() * Math.PI * 2); // the front's shape
         const pointer = { x: -1e4, y: -1e4, strength: 0 };
         const quenches: { x: number; y: number; t: number }[] = [];
         let ink = '#000';
@@ -178,13 +199,58 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         };
         const sweep = (t: number) => run(x.length, t);
 
+        // Where the front is: 0 while the nucleus sits alone, null once it has passed
+        const frontAt = (e: number) => {
+            if (e < NUCLEUS_IN + NUCLEUS_HOLD) return 0;
+            const reach = Math.hypot(width / 2, height / 2) * (1 + FRONT_WOBBLE) + FRONT_BAND + FRONT_GRAIN;
+            const p = (e - NUCLEUS_IN - NUCLEUS_HOLD) / FRONT_SPREAD;
+            return p >= 1 ? null : easeInOut(p) * reach;
+        };
+        // Ahead of the front, every spin is down; on it, up; behind it, the
+        // live state, which the chain is already sampling
+        const holdFront = (radius: number) => {
+            const cx = width / 2;
+            const cy = height / 2;
+            const nucleus = Math.round((cy - offsetY) / GAP) * cols + Math.round((cx - offsetX) / GAP);
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const i = row * cols + col;
+                    if (radius === 0) {
+                        x[i] = i === nucleus ? 1 : -1;
+                        continue;
+                    }
+                    const dx = offsetX + col * GAP - cx;
+                    const dy = offsetY + row * GAP - cy;
+                    // A domain wall, not a circle: the radius wanders with angle,
+                    // and each spin sits a little ahead of or behind it
+                    const a = Math.atan2(dy, dx);
+                    const shape =
+                        0.5 * Math.sin(3 * a + wobble[0]) +
+                        0.3 * Math.sin(5 * a + wobble[1]) +
+                        0.2 * Math.sin(8 * a + wobble[2]);
+                    const d = Math.hypot(dx, dy) - grain[i] * FRONT_GRAIN;
+                    const r = radius * (1 + FRONT_WOBBLE * shape);
+                    if (d > r + FRONT_BAND) {
+                        x[i] = -1;
+                    } else if (d > r - FRONT_BAND) {
+                        x[i] = 1;
+                    } else if (!revealed[i]) {
+                        x[i] = equilibrium[i];
+                        revealed[i] = 1;
+                    }
+                }
+            }
+        };
+
         // `ease` is the per-frame easing amount toward each dot's target
         const draw = (t: number, ease: number) => {
             ctx.clearRect(0, 0, width, height);
             ctx.fillStyle = ink;
             const cx = width / 2;
             const cy = height / 2;
-            const boot = bootStart === null ? Infinity : (t - bootStart) * BOOT_SPEED;
+            const boot = bootStart === null || nucleate ? Infinity : (t - bootStart) * BOOT_SPEED;
+            // The quiet field fades in before the nucleus appears
+            const fieldIn = nucleating ? Math.min(1, (t - nucleateStart) / NUCLEUS_IN) : 1;
 
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < cols; col++) {
@@ -197,7 +263,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
                     // Relabels fade rather than blink
                     shown[i] += (target - shown[i]) * ease;
 
-                    const appear = Math.min(1, Math.max(0, (boot - Math.hypot(px - cx, (py - cy) * 2)) / 120));
+                    const appear = Math.min(1, Math.max(0, (boot - Math.hypot(px - cx, (py - cy) * 2)) / 120)) * fieldIn;
                     if (appear <= 0) continue;
 
                     const v = shown[i];
@@ -237,7 +303,10 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
 
         const loop = (now: number) => {
             const t = now / 1000;
-            if (bootStart === null) bootStart = intro ? t : -Infinity;
+            if (bootStart === null) {
+                bootStart = intro ? t : -Infinity;
+                nucleateStart = t;
+            }
             const dt = Math.min(0.05, last ? t - last : 0);
             last = t;
             frame++;
@@ -247,7 +316,8 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             for (let i = quenches.length - 1; i >= 0; i--) {
                 if (t - quenches[i].t > QUENCH_LIFE) quenches.splice(i, 1);
             }
-            pointer.strength += ((pointer.x > -1e3 ? 1 : 0) - pointer.strength) * 0.06;
+            // The cursor stops heating while it draws, or it would melt its own stroke
+            pointer.strength += ((pointer.x > -1e3 && !drawing ? 1 : 0) - pointer.strength) * 0.06;
             c = globalC(t);
             // Keep the slider on the current c; the drawn thumb moves every frame
             const slider = sliderRef.current;
@@ -265,6 +335,11 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             const due = Math.floor(sweepDebt);
             run(due, t);
             sweepDebt -= due;
+            if (nucleating) {
+                const radius = frontAt(t - nucleateStart);
+                if (radius === null) nucleating = false;
+                else holdFront(radius);
+            }
 
             // Offscreen, the chain keeps sampling (undrawn) only while Fig. 2 plots it
             if (visible) draw(t, 1 - Math.exp(-dt * 5));
@@ -275,11 +350,40 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             const rect = canvas.getBoundingClientRect();
             return { x: e.clientX - rect.left, y: e.clientY - rect.top };
         };
-        const onMove = (e: PointerEvent) => Object.assign(pointer, local(e));
+        // A click cools its spot; dragging draws up spins and cools the trail,
+        // so a stroke holds for a moment before the chain melts it
+        let drawing = false;
+        const cool = (p: { x: number; y: number }) => {
+            quenches.push({ ...p, t: performance.now() / 1000 });
+            if (quenches.length > MAX_QUENCHES) quenches.shift();
+        };
+        const stroke = (p: { x: number; y: number }) => {
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    if (Math.hypot(offsetX + col * GAP - p.x, offsetY + row * GAP - p.y) <= GAP * 1.2) {
+                        x[row * cols + col] = 1;
+                    }
+                }
+            }
+            const lastQ = quenches[quenches.length - 1];
+            if (!lastQ || Math.hypot(lastQ.x - p.x, lastQ.y - p.y) > GAP * 1.5) cool(p);
+        };
+        const onMove = (e: PointerEvent) => {
+            const p = local(e);
+            Object.assign(pointer, p);
+            if (drawing) stroke(p);
+        };
         const onLeave = () => Object.assign(pointer, { x: -1e4, y: -1e4 });
         const onDown = (e: PointerEvent) => {
-            quenches.push({ ...local(e), t: performance.now() / 1000 });
-            if (quenches.length > 4) quenches.shift();
+            const p = local(e);
+            cool(p);
+            if (e.pointerType === 'mouse' || e.pointerType === 'pen') {
+                drawing = true;
+                canvas.setPointerCapture(e.pointerId);
+            }
+        };
+        const onUp = () => {
+            drawing = false;
         };
 
         readColors();
@@ -303,6 +407,13 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         // Burn-in: run the chain before the first frame so it opens near equilibrium
         c = globalC(performance.now() / 1000);
         for (let i = 0; i < 80; i++) sweep(0);
+        if (nucleate && intro && !reduced) {
+            nucleating = true;
+            equilibrium = x.slice();
+            revealed = new Uint8Array(x.length);
+            grain = Float32Array.from({ length: x.length }, () => Math.random() * 2 - 1);
+            holdFront(0);
+        }
         for (let i = 0; i < x.length; i++) shown[i] = x[i] > 0 ? 1 : 0;
 
         if (reduced) {
@@ -327,11 +438,14 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             if (canvas.clientWidth === lastWidth) return;
             lastWidth = canvas.clientWidth;
             layout();
+            nucleating = false; // a resize mid-opening just skips to the live state
         });
         ro.observe(canvas);
         canvas.addEventListener('pointermove', onMove);
         canvas.addEventListener('pointerleave', onLeave);
         canvas.addEventListener('pointerdown', onDown);
+        canvas.addEventListener('pointerup', onUp);
+        canvas.addEventListener('pointercancel', onUp);
 
         return () => {
             cancelAnimationFrame(raf);
@@ -340,9 +454,11 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             canvas.removeEventListener('pointermove', onMove);
             canvas.removeEventListener('pointerleave', onLeave);
             canvas.removeEventListener('pointerdown', onDown);
+            canvas.removeEventListener('pointerup', onUp);
+            canvas.removeEventListener('pointercancel', onUp);
             stopThemeWatch();
         };
-    }, [fixedC, intro]);
+    }, [fixedC, intro, nucleate]);
 
     return (
         <figure className={styles.figure}>
