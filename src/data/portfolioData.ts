@@ -228,7 +228,7 @@ export const now: { updated: string; items: NowItem[] } = {
         { label: "Reading", title: "Dune", by: "Frank Herbert", href: "https://en.wikipedia.org/wiki/Dune_(novel)" },
         { label: "Watching", title: "Slow Horses", href: "https://en.wikipedia.org/wiki/Slow_Horses_(TV_series)" },
         { label: "Listening to", title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
-        { label: "Watching", title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI", after: "cook the whole league" },
+        { label: "Watching", title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI", after: "make it look easy" },
     ],
 };
 
