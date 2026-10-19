@@ -17,8 +17,10 @@
 }
 
 .name {
-  font-size: 18px;
-  font-weight: 500;
+  /* Larger and lighter: the size carries it, so the weight doesn't have to */
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
@@ -184,8 +186,10 @@
     padding-top: 0;
   }
 
+  /* On paper the name keeps Medium, like a letterhead */
   .name {
     font-size: 14pt;
+    font-weight: 500;
   }
 
   .intro {
