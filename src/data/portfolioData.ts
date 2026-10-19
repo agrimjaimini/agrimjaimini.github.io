@@ -3,30 +3,42 @@ export interface Education {
     degree: string;
     duration: string;
     gpa?: string;
-    coursework?: string[];
+    /** Grouped by subject, in the order they should read. */
+    coursework?: { area: string; courses: string[] }[];
 }
 
 export const education: Education[] = [
     {
         school: "Cornell University",
-        degree: "BS, Computer Science & Mathematics",
+        degree: "BA, Computer Science & Mathematics",
         duration: "Expected May 2028",
         gpa: "4.04",
         coursework: [
-            "Data Structures and Object-Oriented Programming (Java)",
-            "Functional Programming and Advanced Data Structure (OCaml)",
-            "Analysis of Algorithms",
-            "Machine Learning",
-            "Principles of Large-Scale Machine Learning",
-            "Database Systems",
-            "Discrete Math",
-            "Number Theory",
-            "Linear Algebra",
-            "Backend Development",
-            "Blockchain Technology",
-            "Computer Architecture",
-            "Systems Programming",
-            "Probability, Vectors, and Matrices in Computing"
+            {
+                area: "Computer Science",
+                courses: [
+                    "Data Structures and Object-Oriented Programming (Java)",
+                    "Functional Programming and Advanced Data Structure (OCaml)",
+                    "Analysis of Algorithms",
+                    "Systems Programming",
+                    "Computer Architecture",
+                    "Database Systems",
+                    "Backend Development",
+                    "Blockchain Technology",
+                ],
+            },
+            {
+                area: "Machine Learning",
+                courses: ["Machine Learning", "Principles of Large-Scale Machine Learning"],
+            },
+            {
+                area: "Mathematics",
+                courses: ["Discrete Math", "Linear Algebra", "Number Theory", "Probability, Vectors, and Matrices in Computing"],
+            },
+            {
+                area: "Humanities",
+                courses: ["Anthropology", "German", "Philosophy"],
+            },
         ]
     }
 ];
@@ -263,7 +275,7 @@ export const experienceLines = [
 ];
 
 export const educationLines = [
-    "Class of 2028 at [Cornell University|Cornell], with coursework from machine learning to number theory.",
+    "Studying Computer Science and Mathematics at [Cornell University|Cornell], class of 2028. Taking coursework from machine learning to philosophy.",
 ];
 
 export const projectLines = [

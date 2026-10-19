@@ -114,6 +114,23 @@
   color: var(--text-dim);
 }
 
+/* Coursework by subject: a small gray label over each group */
+.group + .group {
+  margin-top: 14px;
+}
+
+.groupLabel {
+  margin-bottom: 6px;
+  color: var(--text-dim);
+  font-size: var(--small-size);
+  letter-spacing: var(--tracking-small);
+}
+
+/* A group settles in as one unit, so its courses don't animate twice */
+.group li {
+  animation: none;
+}
+
 .points.columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -121,7 +138,24 @@
 }
 
 @media (max-width: 520px) {
-  .points.columns {
+  /* Coursework by subject: a small gray label over each group */
+.group + .group {
+  margin-top: 14px;
+}
+
+.groupLabel {
+  margin-bottom: 6px;
+  color: var(--text-dim);
+  font-size: var(--small-size);
+  letter-spacing: var(--tracking-small);
+}
+
+/* A group settles in as one unit, so its courses don't animate twice */
+.group li {
+  animation: none;
+}
+
+.points.columns {
     grid-template-columns: minmax(0, 1fr);
   }
 }

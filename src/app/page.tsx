@@ -76,6 +76,8 @@ function Section({
 export default function Home() {
   const posts = getAllPosts().slice(0, 5);
   const school = education[0];
+  // "BA, Computer Science & Mathematics" → "B.A. Computer Science & Mathematics"
+  const degree = school.degree.replace(/^(B)(A|S), /, "$1.$2. ");
 
   return (
     <main className="frame">
@@ -98,7 +100,7 @@ export default function Home() {
             title="Cornell University"
             href="#education-cornell"
             meta={school.duration.replace("Expected ", "")}
-            lines={[school.degree.replace("BS, ", "B.S. "), `${school.gpa} GPA`]}
+            lines={[degree, `${school.gpa} GPA`]}
           >
             Cornell
           </Term>
@@ -155,9 +157,10 @@ export default function Home() {
               {
                 key: school.school,
                 id: "education-cornell",
-                sub: school.degree.replace("BS, ", "B.S. "),
+                sub: degree,
                 meta: school.duration.replace("Expected ", ""),
-                points: school.coursework ?? [],
+                points: [],
+                groups: school.coursework?.map((g) => ({ label: g.area, points: g.courses })),
                 columns: true,
                 note: school.gpa && `${school.gpa} GPA`,
               },
@@ -170,9 +173,9 @@ export default function Home() {
               {
                 key: school.school,
                 title: school.school,
-                sub: school.degree.replace("BS, ", "B.S. "),
+                sub: degree,
                 meta: school.duration.replace("Expected ", "").slice(-4),
-                points: school.coursework ?? [],
+                points: school.coursework?.flatMap((g) => g.courses) ?? [],
                 columns: true,
                 note: [school.gpa && `${school.gpa} GPA`, school.duration].filter(Boolean).join(" · "),
               },

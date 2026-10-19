@@ -11,6 +11,8 @@ export interface MentionItem {
     points: string[];
     /** Set the points in two columns, for short items like coursework. */
     columns?: boolean;
+    /** Points under small labels, in place of `points` (e.g. coursework by subject). */
+    groups?: { label: string; points: string[] }[];
     note?: string;
     link?: { href: string; label: string };
 }
@@ -45,13 +47,26 @@ function Panel({ item, open }: { item: MentionItem | undefined; open: boolean })
                             <span className={styles.sub}>{item.sub}</span>
                             {item.meta && <span className={styles.meta}>{item.meta}</span>}
                         </p>
-                        <ul className={`${styles.points} ${item.columns ? styles.columns : ''}`}>
-                            {item.points.map((point, j) => (
-                                <li key={j} style={{ '--j': j + 1 } as React.CSSProperties}>
-                                    {point}
-                                </li>
-                            ))}
-                        </ul>
+                        {item.groups ? (
+                            item.groups.map((group, g) => (
+                                <div key={group.label} className={styles.group} style={{ '--j': g + 1 } as React.CSSProperties}>
+                                    <p className={styles.groupLabel}>{group.label}</p>
+                                    <ul className={`${styles.points} ${item.columns ? styles.columns : ''}`}>
+                                        {group.points.map((point) => (
+                                            <li key={point}>{point}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))
+                        ) : (
+                            <ul className={`${styles.points} ${item.columns ? styles.columns : ''}`}>
+                                {item.points.map((point, j) => (
+                                    <li key={j} style={{ '--j': j + 1 } as React.CSSProperties}>
+                                        {point}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                         {(item.note || item.link) && (
                             <p className={styles.note} style={{ '--j': item.points.length + 1 } as React.CSSProperties}>
                                 <span>{item.note}</span>
