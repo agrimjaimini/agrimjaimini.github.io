@@ -12,6 +12,12 @@ export interface Reading {
 
 const reading: Reading[] = [
   {
+    title: 'Transformer Feed-Forward Layers Are Key-Value Memories',
+    url: 'https://arxiv.org/abs/2012.14913',
+    source: 'Geva et al.',
+    date: '2026-10-19',
+  },
+  {
     title: 'You and Your Research',
     url: 'https://www.cs.virginia.edu/~robins/YouAndYourResearch.html',
     source: 'Richard Hamming',
