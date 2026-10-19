@@ -10,5 +10,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE}/writing/${post.slug}`,
     lastModified: post.date,
   }));
-  return [{ url: SITE }, { url: `${SITE}/writing` }, ...posts];
+  return [{ url: SITE }, { url: `${SITE}/writing` }, { url: `${SITE}/reading` }, ...posts];
 }

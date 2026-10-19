@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import Experience, { experienceId } from "@/components/Experience";
 import Projects from "@/components/Projects";
 import PostList from "@/components/PostList";
@@ -203,7 +204,8 @@ export default function Home() {
               )}
             </React.Fragment>
           ))}
-          .
+          . Articles I’ve liked go on my{" "}
+          <Link href="/reading" className="link">reading list</Link>.
         </p>
       </Section>
 
