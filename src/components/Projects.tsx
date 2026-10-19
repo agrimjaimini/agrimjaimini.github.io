@@ -16,10 +16,12 @@ export const projectItems: MentionItem[] = projects.map((project) => {
     };
 });
 
+/** The printed résumé's project list (on screen, Projects is told in sentences).
+    Five rows keep the résumé to two pages. */
 export default function Projects() {
     return (
         <Disclosure
-            limit={6}
+            limit={5}
             noun="projects"
             items={projects.map((project) => {
                 const href = project.github ?? project.demo;

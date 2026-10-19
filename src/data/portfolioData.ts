@@ -12,7 +12,7 @@ export const education: Education[] = [
         school: "Cornell University",
         degree: "BA, Computer Science & Mathematics",
         duration: "Expected May 2028",
-        gpa: "4.04",
+        gpa: "4.03",
         coursework: [
             {
                 area: "Computer Science",
@@ -255,7 +255,7 @@ export const now: { updated: string; items: NowItem[] } = {
             ],
         },
         {
-            label: "Watching",
+            label: "Rewatching",
             works: [{ title: "Luka Dončić", href: "https://www.youtube.com/watch?v=fqSTGIgHabI" }],
             after: "make it look easy",
         },
@@ -269,13 +269,13 @@ export const now: { updated: string; items: NowItem[] } = {
  * printed résumé still uses the full lists.
  */
 export const experienceLines = [
-    "This summer I was at [Coinbase], building a GitHub API proxy for AI agents.",
+    "In 2026 I was at [Coinbase], building a GitHub API proxy for CI systems and AI agents.",
     "In 2025 I built on-chain bounty payouts at [Ripple] and trained a point-cloud classifier at [Texas Instruments].",
     "Before that, I traced fraud on Ethereum at [Artemis Analytics].",
 ];
 
 export const educationLines = [
-    "Studying Computer Science and Mathematics at [Cornell University|Cornell], class of 2028. Taking coursework from machine learning to philosophy.",
+    "Class of 2028 at [Cornell University|Cornell], taking coursework from machine learning to philosophy.",
 ];
 
 export const projectLines = [
