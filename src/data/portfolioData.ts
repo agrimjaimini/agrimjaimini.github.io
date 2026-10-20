@@ -250,7 +250,7 @@ export const now: { updated: string; items: NowItem[] } = {
         {
             label: "Listening to",
             works: [
-                { title: "Virginia Beach", by: "Drake", href: "https://open.spotify.com/track/3eP13S8D5m2cweMEg3ZDed", song: true },
+                { title: "For All the Dogs", by: "Drake", href: "https://en.wikipedia.org/wiki/For_All_the_Dogs" },
                 { title: "The Deep 3", href: "https://podcasts.apple.com/us/podcast/the-deep-3-podcast/id1657940794" },
             ],
         },
