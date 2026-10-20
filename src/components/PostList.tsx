@@ -22,7 +22,7 @@ export default function PostList({ posts }: { posts: WritingPostMetadata[] }) {
                             </Morph>
                         </span>
                         <span className={styles.leader} aria-hidden />
-                        <Lattice seed={post.slug} cols={6} rows={3} className={styles.glyph} />
+                        <Lattice seed={post.slug} cols={6} rows={3} fade={0.45} className={styles.glyph} />
                         <time className={styles.meta} dateTime={post.date}>
                             {formatDate(post.date, 'month')}
                         </time>

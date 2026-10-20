@@ -11,7 +11,7 @@ export default function WritingLayout({
     <main className="frame">
       <div className="cell writing">{children}</div>
       <footer className="cell writing-footer">
-        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} className="lattice-rule" />
+        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} fade={0.6} className="lattice-rule" />
         <span>© <Year /> Agrim Jaimini</span>
         <ThemeToggle />
       </footer>

@@ -16,7 +16,20 @@ interface LatticeProps {
     c?: number;
     /** Sweeps per second while running; a sweep proposes one flip per vertex. */
     speed?: number;
+    /** Dims dots toward the edges, from this fraction of the way out (0–1); omit for none. */
+    fade?: number;
     className?: string;
+}
+
+// Opacity left at the very edge when faded
+const FADE_FLOOR = 0.3;
+
+/** How much of a dot's opacity survives the fade at (col, row), from 1 at the center down to FADE_FLOOR. */
+function edgeGain(col: number, row: number, cols: number, rows: number, from: number) {
+    const nx = ((col + 0.5) / cols) * 2 - 1;
+    const ny = rows > 1 ? ((row + 0.5) / rows) * 2 - 1 : 0;
+    const t = Math.min(1, Math.max(0, (Math.hypot(nx, ny) - from) / (1 - from)));
+    return +(1 - (1 - FADE_FLOOR) * t * t * (3 - 2 * t)).toFixed(2);
 }
 
 // How much faster the chain runs while the link around it is hovered
@@ -28,7 +41,7 @@ const HOVER_BOOST = 6;
  * the server, then keeps sampling in the browser: slowly at rest, quicker while
  * the link it sits in is hovered. Paused offscreen and under reduced motion.
  */
-export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE_C, speed = 0.25, className }: LatticeProps) {
+export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE_C, speed = 0.25, fade, className }: LatticeProps) {
     const svgRef = useRef<SVGSVGElement>(null);
     const initial = isingState(seed, cols, rows, c);
     const r = radius ?? gap * 0.28;
@@ -94,6 +107,7 @@ export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE
                     cx={(i % cols) * gap + gap / 2}
                     cy={Math.floor(i / cols) * gap + gap / 2}
                     r={r}
+                    style={fade === undefined ? undefined : ({ '--edge': edgeGain(i % cols, Math.floor(i / cols), cols, rows, fade) } as React.CSSProperties)}
                 />
             ))}
         </svg>

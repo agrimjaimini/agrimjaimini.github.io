@@ -24,7 +24,7 @@ export default function ArticleLayout({ title, slug, date, readTime, children }:
           <h1 className={`${styles.title} ${styles.articleTitle}`}>{title}</h1>
         </Morph>
         <p className={styles.meta}>
-          <Lattice seed={slug} cols={6} rows={3} className={styles.glyph} />
+          <Lattice seed={slug} cols={6} rows={3} fade={0.45} className={styles.glyph} />
           <span>
             <time dateTime={date}>{formatDate(date)}</time>
             {readTime ? ` · ${readTime} min read` : ''}

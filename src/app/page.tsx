@@ -241,7 +241,7 @@ export default function Home() {
       </div>
 
       <footer className={`cell screen-only ${styles.footer}`}>
-        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} className="lattice-rule" />
+        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} fade={0.6} className="lattice-rule" />
         <span>© <Year /> Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />
