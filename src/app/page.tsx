@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Experience, { experienceItems } from "@/components/Experience";
-import Projects, { projectItems } from "@/components/Projects";
+import Projects, { projectItems, projectSlots } from "@/components/Projects";
 import PostList from "@/components/PostList";
 import IsingField from "@/components/IsingField";
 import Lattice from "@/components/Lattice";
@@ -26,6 +26,8 @@ const links = [
   { label: "LinkedIn", href: "https://linkedin.com/in/agrimjaimini", print: "linkedin.com/in/agrimjaimini" },
   { label: "Email", href: `mailto:${EMAIL}`, print: EMAIL },
 ];
+
+const hrefOf = (label: string) => links.find((l) => l.label === label)?.href;
 
 // Structured data so search results can show who this is
 const person = {
@@ -106,6 +108,7 @@ export default function Home() {
           </Term>
           .
         </p>
+        {/* The résumé's contact line; on screen these are in the closing sentence */}
         <nav className={styles.links} aria-label="Elsewhere">
           {links.map((l) => (
             <a
@@ -118,7 +121,6 @@ export default function Home() {
               {l.label}
             </a>
           ))}
-          <PrintLink className="link" />
         </nav>
       </div>
 
@@ -142,7 +144,7 @@ export default function Home() {
 
       <Section title="Projects" index={2}>
         <div className="screen-only">
-          <Mentions lines={projectLines} items={projectItems} />
+          <Mentions lines={projectLines} items={projectItems} slots={projectSlots} />
         </div>
         <div className="print-only">
           <Projects />
@@ -232,11 +234,12 @@ export default function Home() {
       <div className={`cell screen-only ${styles.contact} enter`} style={delay(8)}>
         <p>
           The best way to reach me is{" "}
-          <CopyEmail email={EMAIL} />. You can also
-          find me on{" "}
-          <a href="https://t.me/agrimjaimini" className="link" target="_blank" rel="noopener noreferrer">Telegram</a>{" "}
-          or{" "}
-          <a href="https://cal.com/agrim-jaimini" className="link" target="_blank" rel="noopener noreferrer">book a call</a>.
+          <CopyEmail email={EMAIL} />. I’m also on{" "}
+          <a href={hrefOf("GitHub")} className="link" target="_blank" rel="noopener noreferrer">GitHub</a>,{" "}
+          <a href={hrefOf("LinkedIn")} className="link" target="_blank" rel="noopener noreferrer">LinkedIn</a>, and{" "}
+          <a href="https://t.me/agrimjaimini" className="link" target="_blank" rel="noopener noreferrer">Telegram</a>, and you can{" "}
+          <a href="https://cal.com/agrim-jaimini" className="link" target="_blank" rel="noopener noreferrer">book a call</a>{" "}
+          or print my <PrintLink className="link">résumé</PrintLink>.
         </p>
       </div>
 

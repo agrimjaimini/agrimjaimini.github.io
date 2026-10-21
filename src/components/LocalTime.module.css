@@ -1,0 +1,68 @@
+/* A small clock face across from the name; its place and time in words
+   slide in beside it on hover, focus, or a tap */
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  align-self: center;
+  color: var(--text-dim);
+  cursor: default;
+}
+
+.face {
+  display: block;
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--text-dim);
+  stroke-width: 1;
+}
+
+.hour,
+.minute {
+  stroke: var(--text-primary);
+  stroke-linecap: round;
+}
+
+.hour {
+  stroke-width: 1.4;
+}
+
+.minute {
+  stroke-width: 1;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(4px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s var(--ease-out-expo);
+}
+
+.clock:hover .label,
+.clock:focus-visible .label,
+.clock[data-open] .label {
+  opacity: 1;
+  transform: none;
+}
+
+.clock:focus-visible {
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label {
+    transition: none;
+    transform: none;
+  }
+}

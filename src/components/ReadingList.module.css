@@ -16,6 +16,52 @@
   color: var(--text-dim);
 }
 
+/* A preview sits in the right margin, level with its row: plain gray text,
+   no box, shown only while the row is hovered or focused, and only where the
+   margin is wide enough to hold it */
+.item {
+  position: relative;
+}
+
+.preview {
+  display: none;
+}
+
+@media (min-width: 1240px) and (hover: hover) {
+  .preview {
+    position: absolute;
+    top: 12px;
+    left: calc(100% + 28px);
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .item:hover .preview,
+  .item:focus-within .preview {
+    opacity: 1;
+  }
+}
+
+.excerpt {
+  color: var(--text-secondary);
+  font-size: var(--small-size);
+  letter-spacing: var(--tracking-small);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.previewMeta {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  letter-spacing: 0;
+}
+
 @media (max-width: 520px) {
   .stack {
     flex: 1;

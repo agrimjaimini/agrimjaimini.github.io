@@ -146,6 +146,11 @@ p {
   text-wrap: pretty;
 }
 
+/* List points wrap like paragraphs, so a last line is never one stranded word */
+li {
+  text-wrap: pretty;
+}
+
 :focus-visible {
   outline: 1.5px solid var(--accent);
   outline-offset: 3px;

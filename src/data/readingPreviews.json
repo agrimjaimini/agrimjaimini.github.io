@@ -1,0 +1,15 @@
+{
+  "https://arxiv.org/abs/2012.14913": {
+    "excerpt": "Feed-forward layers constitute two-thirds of a transformer model's parameters, yet their role in the network remains under-explored.",
+    "published": "2020-12",
+    "via": "arXiv"
+  },
+  "https://www.cs.virginia.edu/~robins/YouAndYourResearch.html": {
+    "excerpt": "At a seminar in the Bell Communications Research Colloquia Series, Dr. Richard W. Hamming, a Professor at the Naval Postgraduate School in Monterey, California and a retired Bell Labs scientist, gave a very interesting and stimulating…",
+    "published": "1986"
+  },
+  "https://karpathy.github.io/2015/05/21/rnn-effectiveness/": {
+    "excerpt": "There’s something magical about Recurrent Neural Networks (RNNs). I still remember when I trained my first recurrent network for Image Captioning.",
+    "published": "2015"
+  }
+}

@@ -16,14 +16,29 @@ const year = (duration: string) => {
 export const experienceId = (company: string) =>
     `experience-${company.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
+/** "May 2026 – Aug 2026" → "May–Aug 2026"; across years, "Oct 2024–Jan 2025". */
+const span = (duration: string) => {
+    const [start, end] = duration.split('–').map((s) => s.trim());
+    const [startMonth, startYear] = start.split(' ');
+    const [endMonth, endYear] = end.split(' ');
+    return startYear === endYear ? `${startMonth}–${endMonth} ${endYear}` : `${start}–${end}`;
+};
+
+/** "Software Engineer Intern in San Francisco", or "…, remote". */
+const role = (job: (typeof experience)[number]) => {
+    if (!job.location) return job.title;
+    if (job.location === 'Remote') return `${job.title}, remote`;
+    return `${job.title} in ${job.location.split(',')[0]}`;
+};
+
 /** Each job as an entry the Experience sentence can open. */
 export const experienceItems: MentionItem[] = experience.map((job) => ({
     key: job.company,
     id: experienceId(job.company),
-    sub: job.title,
-    meta: job.duration.replace(' – ', '–'),
+    sub: role(job),
+    meta: span(job.duration),
+    story: job.story,
     points: job.points,
-    note: job.location,
 }));
 
 /** `anchors` off when the prose version on screen holds the citation targets. */

@@ -11,3 +11,9 @@ export function formatDate(dateString: string, style: 'month' | 'short' | 'long'
     day: 'numeric',
   });
 }
+
+/** `{words|term}` marks in a highlight, which tie words to a part of a figure. */
+export const TERM = /\{([^}|]+)\|([^}]+)\}/g;
+
+/** A highlight without its marks, for print. */
+export const plain = (text: string) => text.replace(TERM, '$1');

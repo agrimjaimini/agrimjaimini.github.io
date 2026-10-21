@@ -47,6 +47,9 @@ export interface Experience {
     company: string;
     title: string;
     duration: string;
+    /** What opens under the name on screen: a few plain sentences, in the
+        same voice as the line that names it. `points` are the printed résumé's. */
+    story?: string;
     points: string[];
     location?: string;
 }
@@ -54,6 +57,7 @@ export interface Experience {
 export const experience: Experience[] = [
     {
         company: "Coinbase",
+        story: "I designed and built a GitHub API proxy in Go that gives AI agents and internal tools one high-concurrency way into GitHub. A Redis cache on ETags and conditional requests keeps agent traffic under GitHub’s rate limits, keyed by a hash of each caller’s token so no one is served another’s cache. I worked with the teams moving onto it so the switch took little rework, and gave it Datadog metrics, dashboards, and alerts.",
         title: "Software Engineer Intern",
         duration: "May 2026 – Aug 2026",
         location: "San Francisco, CA",
@@ -66,6 +70,7 @@ export const experience: Experience[] = [
     },
     {
         company: "Ripple",
+        story: "Through the XRPL Builder Residency I built BountyX end to end: payouts on the XRP Ledger for open-source contributions, across more than 100 bounties. FastAPI services on PostgreSQL create bounties, check claims, and settle them, and nothing pays out until the GitHub API confirms the pull request merged. It ran on EC2 in Docker, with CI/CD, tests, and logs that trace every payout.",
         title: "Software Engineer Intern",
         duration: "Jul 2025 – Aug 2025",
         location: "New York City, NY",
@@ -77,6 +82,7 @@ export const experience: Experience[] = [
     },
     {
         company: "Texas Instruments",
+        story: "With a team of ML interns I trained a PointNet point-cloud classifier to 93% accuracy over more than ten model versions, with every config and artifact tracked in PostgreSQL. I built the event-driven Lambda pipeline that fed it over a million live data points, and served it as a containerized Flask API on EC2 with versioned releases and latency monitoring.",
         title: "Machine Learning Engineer Intern",
         duration: "May 2025 – Jul 2025",
         location: "Dallas, TX",
@@ -88,6 +94,7 @@ export const experience: Experience[] = [
     },
     {
         company: "Artemis Analytics",
+        story: "I built a dashboard for exploring Ethereum wallet networks and following funds across more than a million transactions a day. Isolation Forest flagged suspicious wallets and Louvain community detection grouped related addresses, which cut the manual work in fraud investigations.",
         title: "Software Engineer Intern",
         duration: "Oct 2024 – Jan 2025",
         location: "Remote",
@@ -100,6 +107,12 @@ export const experience: Experience[] = [
 
 export interface Project {
     title: string;
+    /** What opens under the name on screen, in prose; `highlights` are the
+        printed résumé's. `{words|term}` ties words to a part of the project's
+        figure, and `{{key}}` places a live piece (see `projectSlots`). */
+    story?: string;
+    /** In highlights, `{words|term}` marks words that light up the part of the
+        project's figure named `term` (`plain` in lib/format drops the marks). */
     summary: string;
     description: string;
     tech: string[];
@@ -112,10 +125,11 @@ export interface Project {
 export const projects: Project[] = [
     {
         title: "Trace-Accel",
+        story: "A trace-driven Rust simulator that estimates {prefill|prefill} and {decode|decode} latency from {compute|compute} and {bandwidth|bandwidth} costs, and says which one {bounds the workload|ridge}. At a batch of {{batch}}, {{chip}} decodes at {{rate}} TFLOP/s.",
         summary: "Simulator for transformer inference",
         description: "Trace-driven Rust simulator modeling transformer inference (prefill/decode) on configurable hardware, estimating latency from compute and bandwidth costs to classify workloads as compute- or memory-bound.",
         highlights: [
-            "Built a trace-driven Rust simulator modeling transformer inference (prefill/decode) on configurable hardware, estimating latency from compute and bandwidth costs to classify workloads as compute- or memory-bound",
+            "Built a trace-driven Rust simulator modeling transformer inference ({prefill|prefill}/{decode|decode}) on configurable hardware, estimating latency from {compute|compute} and {bandwidth|bandwidth} costs to classify workloads as {compute- or memory-bound|ridge}",
             "Added parameter sweeps, plots, and CI regression tests to compare hardware configurations (compute throughput, memory bandwidth, interconnect) and quantify their impact on end-to-end inference latency"
         ],
         tech: ["Rust", "Python"],
@@ -123,10 +137,11 @@ export const projects: Project[] = [
     },
     {
         title: "Trellis",
+        story: "A runtime that splits {software specs|spec} into {dependency-aware parallel tasks|tasks}, runs coding agents in Docker-sandboxed git worktrees, and holds {every merge|main} for {automated review and human approval|review}. Agents learn across tasks from a graph-and-vector memory of past runs, decisions, and review outcomes, kept in SQLite.",
         summary: "Multi-agent orchestration runtime",
         description: "Runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends.",
         highlights: [
-            "Built a runtime that splits software specs into dependency-aware parallel tasks, runs AI coding agents in Docker-sandboxed git worktrees, and gates every merge behind automated code review and human approval",
+            "Built a runtime that splits {software specs|spec} into {dependency-aware parallel tasks|tasks}, runs AI coding agents in Docker-sandboxed git worktrees, and gates {every merge|main} behind {automated code review and human approval|review}",
             "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion"
         ],
         tech: ["Python", "TypeScript", "Next.js", "SQLite", "Docker", "MCP"],
@@ -134,10 +149,11 @@ export const projects: Project[] = [
     },
     {
         title: "Lore",
+        story: "A shared research memory that AI agents pay to read, per query, through x402 micropayments, with 80% going to whoever did the research. Each query ranks cached results by {similarity|similarity}, {freshness|freshness}, and {an LLM judge’s grade|quality}, then {serves the best one or researches again|threshold}.",
         summary: "Shared memory market for AI agents",
         description: "Shared research-memory layer where AI agents cache and resell deep-research results, paying per retrieval via x402 machine-to-machine micropayments.",
         highlights: [
-            "Built a shared research-memory platform where AI agents cache and resell deep-research results: pgvector semantic search ranks memories by similarity, freshness decay, and LLM-judge quality to serve a hit or trigger re-research",
+            "Built a shared research-memory platform where AI agents cache and resell deep-research results: pgvector {semantic search|similarity} ranks memories by similarity, {freshness decay|freshness}, and {LLM-judge quality|quality} to {serve a hit or trigger re-research|threshold}",
             "Built autonomous agents that pay per query via x402 micropayments and a settlement pipeline paying creators an 80% revenue share; traced the agent loop in Arize with LLM-judge evals for retrieval quality"
         ],
         tech: ["TypeScript", "Next.js", "Postgres (pgvector)", "Vercel AI SDK", "Arize"],
@@ -145,12 +161,13 @@ export const projects: Project[] = [
     },
     {
         title: "DPO Alignment Stack",
+        story: "SFT and DPO trainers in PyTorch that preference-tune Mistral 7B on Anthropic’s HH data, with bfloat16 and gradient checkpointing for memory-efficient runs on an A100. The {DPO loss|loss} pushes hardest on the pairs the model gets wrong, and the evals track preference accuracy, {reward margin|margin}, and perplexity.",
         summary: "Preference-tuning Mistral 7B (DPO)",
         description: "Built Direct Preference Optimization training stack on Anthropic HH preferences with SFT pretraining and DPO fine-tuning loops using custom PyTorch trainers. Added mixed-precision/bfloat16, gradient checkpointing, and tokenizer/model consistency guards for stable, memory-efficient Mistral 7B runs. Delivered Colab-ready configs with CLI overrides plus evaluation for preference accuracy, reward margin, perplexity, and qualitative generations in a YAML-driven A100 workflow.",
         highlights: [
-            "Engineered preprocessing for prompt/chosen/rejected triples with preference dataloaders and DPO loss computation",
+            "Engineered preprocessing for prompt/chosen/rejected triples with preference dataloaders and {DPO loss computation|loss}",
             "Custom SFT + DPO PyTorch trainers with bfloat16, gradient checkpointing, and tokenizer/model consistency checks",
-            "Colab-friendly configs and evaluation suite covering preference accuracy, reward margin, perplexity, and sample generations"
+            "Colab-friendly configs and evaluation suite covering preference accuracy, {reward margin|margin}, perplexity, and sample generations"
         ],
         tech: ["PyTorch", "Hugging Face Transformers", "DPO", "Google Colab"],
         date: "Aug 2025",
@@ -184,11 +201,12 @@ export const projects: Project[] = [
     },
     {
         title: "OCaml-Git",
+        story: "A Git-style version control system in OCaml, with staging, branching, and remote push and pull. Storage is content-addressed: {blobs|blobs}, {trees|trees}, and {commits|commits} are filed under the digest of their contents for O(1) lookups. Built test-first with OUnit.",
         summary: "Git-style version control in OCaml",
         description: "OCaml-built Git-style VCS with staging, branching, and remote push/pull. Content-addressable storage with digest hashing for O(1) lookups; hardened via TDD with OUnit.",
         highlights: [
             "Built OCaml Git-like VCS with staging, branching, and remote push/pull support",
-            "Implemented content-addressable storage with digest hashing for O(1) lookups of blobs, trees, and commits",
+            "Implemented content-addressable storage with digest hashing for O(1) lookups of {blobs|blobs}, {trees|trees}, and {commits|commits}",
             "Practiced TDD with OUnit and Agile workflows for reliability"
         ],
         tech: ["OCaml", "OUnit", "Unix"],

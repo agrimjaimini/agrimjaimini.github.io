@@ -58,9 +58,10 @@
   font-weight: 500;
 }
 
-/* 28px above, like the name above the lead, so links read as their own group */
+/* Only on paper, as the résumé's contact line; on screen the links live in
+   the closing sentence, so the page opens on the intro and Fig. 1 */
 .links {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
   margin-top: 6px;
@@ -177,6 +178,10 @@
 }
 
 @media print {
+  .links {
+    display: flex;
+  }
+
   /* Across from the name, like the date on a letterhead */
   .stamp {
     color: var(--text-dim);
