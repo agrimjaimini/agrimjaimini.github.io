@@ -8,7 +8,7 @@ export default function NotFound() {
       <div className={`cell ${styles.head}`}>
         <h1 className={styles.title}>404</h1>
         <p>
-          This page doesn&apos;t exist. It&apos;s stuck in the disordered phase.
+          This page doesn’t exist. It’s stuck in the disordered phase.
         </p>
       </div>
       <div className="cell ruled" style={{ padding: 0 }}>
