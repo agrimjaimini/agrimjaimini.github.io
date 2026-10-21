@@ -137,11 +137,11 @@ export const projects: Project[] = [
     },
     {
         title: "Trellis",
-        story: "A runtime that splits {software specs|spec} into {dependency-aware parallel tasks|tasks}, runs coding agents in Docker-sandboxed git worktrees, and holds {every merge|main} for {automated review and human approval|review}. Agents learn across tasks from a graph-and-vector memory of past runs, decisions, and review outcomes, kept in SQLite.",
+        story: "A runtime that splits {software specs|spec} into {dependency-aware parallel tasks|tasks}, runs each coding agent in its own git worktree, and holds {every merge|main} for {automated review and human approval|review}. Agents learn across tasks from a graph-and-vector memory of past runs, decisions, and review outcomes, kept in SQLite.",
         summary: "Multi-agent orchestration runtime",
         description: "Runtime that splits software specs into dependency-aware parallel tasks, runs workers in git worktrees, and gates merges on automated and human review, with Claude Code and Codex as pluggable backends.",
         highlights: [
-            "Built a runtime that splits {software specs|spec} into {dependency-aware parallel tasks|tasks}, runs AI coding agents in Docker-sandboxed git worktrees, and gates {every merge|main} behind {automated code review and human approval|review}",
+            "Built a runtime that splits {software specs|spec} into {dependency-aware parallel tasks|tasks}, runs AI coding agents in isolated git worktrees, and gates {every merge|main} behind {automated code review and human approval|review}",
             "Designed graph + vector memory so agents learn across tasks: past runs, decisions, and review outcomes are embedded and entity-linked in SQLite, then recalled via similarity search and multi-hop graph expansion"
         ],
         tech: ["Python", "TypeScript", "Next.js", "SQLite", "Docker", "MCP"],
