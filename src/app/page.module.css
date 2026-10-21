@@ -164,6 +164,20 @@
   color: var(--text-primary);
 }
 
+/* On touch screens a footer control answers a finger-sized area (about 44px
+   tall) around its words, without moving them */
+@media (pointer: coarse) {
+  .footerLink {
+    position: relative;
+  }
+
+  .footerLink::after {
+    content: '';
+    position: absolute;
+    inset: -12px -8px;
+  }
+}
+
 /* Phones: sections sit 60px apart, so the heading's step down tightens with them */
 @media (max-width: 600px) {
   .heading {

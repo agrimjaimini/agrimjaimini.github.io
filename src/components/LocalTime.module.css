@@ -1,9 +1,9 @@
 /* A small clock face across from the name; its place and time in words
    slide in beside it on hover, focus, or a tap */
 .clock {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
   align-self: center;
   color: var(--text-dim);
   cursor: default;
@@ -37,6 +37,15 @@
 }
 
 .label {
+  /* Hung to the left of the face, outside the button's box, so only the face
+     itself answers the pointer */
+  position: absolute;
+  right: calc(100% + 0.6rem);
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
   font-family: var(--font-mono);
   font-size: var(--mono-size);
   letter-spacing: 0;
@@ -54,6 +63,15 @@
 .clock[data-open] .label {
   opacity: 1;
   transform: none;
+}
+
+/* The face is 16px; on touch screens it answers a 44px area around it */
+@media (pointer: coarse) {
+  .clock::after {
+    content: '';
+    position: absolute;
+    inset: -14px;
+  }
 }
 
 .clock:focus-visible {

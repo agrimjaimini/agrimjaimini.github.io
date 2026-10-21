@@ -245,6 +245,11 @@ li {
 }
 
 /* Writing pages */
+/* Sidenotes number themselves through each article */
+article {
+  counter-reset: sidenote;
+}
+
 .writing {
   padding-top: calc(var(--pad) + 2.5rem);
   padding-bottom: calc(var(--pad) + 2rem);
@@ -268,6 +273,21 @@ li {
 
 .writing-footer button:hover {
   color: var(--text-primary);
+}
+
+/* Finger-sized tap areas for the footer's controls on touch screens */
+@media (pointer: coarse) {
+  .writing-footer button,
+  .writing-footer a {
+    position: relative;
+  }
+
+  .writing-footer button::after,
+  .writing-footer a::after {
+    content: '';
+    position: absolute;
+    inset: -12px -8px;
+  }
 }
 
 /* Page-to-page morphs (Fig. 1 and post titles) */

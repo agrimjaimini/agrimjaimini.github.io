@@ -2,6 +2,7 @@ import React from 'react';
 import IsingField from './IsingField';
 import AgreementPlot from './AgreementPlot';
 import Morph from './Morph';
+import Sidenote from './Sidenote';
 import styles from './MDXComponents.module.css';
 
 export const MDXComponents = {
@@ -19,6 +20,8 @@ export const MDXComponents = {
       <AgreementPlot />
     </div>
   ),
+  // A note in the margin on wide screens, opened under its line on narrow ones
+  Sidenote,
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className={styles.h1} {...props} />
   ),

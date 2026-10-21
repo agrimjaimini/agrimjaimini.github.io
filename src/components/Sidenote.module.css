@@ -1,0 +1,108 @@
+/* Each citing number counts up through the article (reset on <article>) */
+.ref {
+  counter-increment: sidenote;
+}
+
+/* The citing number: small mono figures set at the line's top with no
+   leading of their own, so the paragraph's rhythm doesn't break */
+.number {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 0;
+  vertical-align: super;
+  margin-left: 1px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.number::after {
+  content: counter(sidenote);
+}
+
+/* Hidden but still reachable by keyboard; the number shows its focus */
+.toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ref:has(.toggle:focus-visible) .number {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* The note: small sans in gray, led by its own number */
+.note {
+  display: none;
+  font-size: var(--small-size);
+  letter-spacing: var(--tracking-small);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+  transition: color 0.2s;
+}
+
+.note::before {
+  content: counter(sidenote) '\2002';
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.ref:hover .number,
+.ref:hover .note {
+  color: var(--text-primary);
+}
+
+/* Narrow: a tapped number opens its note as a short block under the line */
+.toggle:checked + .note {
+  display: block;
+  margin: 8px 0 10px;
+  padding-left: 14px;
+}
+
+.ref:has(.toggle:checked) .number {
+  color: var(--text-primary);
+}
+
+/* Wide: the note floats out into the right margin, level with its line, and
+   the number is no longer a control */
+@media (min-width: 1240px) {
+  .note {
+    display: block;
+    float: right;
+    clear: right;
+    width: 220px;
+    margin-right: -252px;
+    margin-top: 0.3em;
+    margin-bottom: 12px;
+  }
+
+  .toggle:checked + .note {
+    margin: 0.3em -252px 12px 0;
+    padding-left: 0;
+  }
+
+  .number {
+    cursor: default;
+  }
+
+  /* Nothing to open: the checkbox steps out of the tab order's way */
+  .toggle {
+    display: none;
+  }
+}
+
+/* Paper: notes print in place, under their line */
+@media print {
+  .note {
+    display: block;
+    float: none;
+    margin: 4px 0 6px;
+    width: auto;
+  }
+}
