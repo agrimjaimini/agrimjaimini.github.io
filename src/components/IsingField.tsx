@@ -2,14 +2,15 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { C_CRITICAL } from '@/lib/ising';
-import { getManualC, hasReadingListeners, publishReading, setLiveC, setManualC } from '@/lib/isingFeed';
+import { getManualC, hasReadingListeners, publishPhase, publishReading, setLiveC, setManualC } from '@/lib/isingFeed';
 import CSlider from './CSlider';
+import { createTicker } from './Ticker';
 import styles from './IsingField.module.css';
 
 const GAP = 10;
 const RADIUS = 1.1;
 const CYCLE = 54; // seconds for one sweep of c through the critical point and back
-const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
+export const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
 const BOOT_SPEED = 900; // px per second for the load-in sweep
 const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
 const MAX_QUENCHES = 32; // a dragged stroke leaves a trail of them
@@ -58,6 +59,9 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         if (!canvas || !ctx) return;
 
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // The readout's digits roll to each new value
+        const cTicker = cRef.current && createTicker(cRef.current);
+        const acceptTicker = acceptRef.current && createTicker(acceptRef.current);
         let width = 0;
         let height = 0;
         let cols = 0;
@@ -80,6 +84,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         // The nucleation opening, while it plays
         let nucleating = false;
         let nucleateStart = 0;
+        let announced: 'none' | 'nucleus' | 'front' = 'none'; // how far the opening has told the name
         let equilibrium = new Int8Array(0); // the state the front reveals
         let revealed = new Uint8Array(0);
         let grain = new Float32Array(0); // each spin's fixed offset from the front
@@ -279,9 +284,9 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             }
             const trend = c > lastC + 0.0004 ? '↑' : c < lastC - 0.0004 ? '↓' : ' ';
             lastC = c;
-            if (cRef.current) cRef.current.textContent = `c ${c.toFixed(3)} ${trend}`;
-
-            if (acceptRef.current) acceptRef.current.textContent = `accept ${(acceptance * 100).toFixed(0)}%`;
+            cTicker?.set(`c ${c.toFixed(3)} ${trend}`);
+            // Padded so the digits keep their places between 9% and 10%
+            acceptTicker?.set(`accept ${(acceptance * 100).toFixed(0).padStart(2)}%`);
 
             // How many edges join agreeing spins, for Fig. 2 to plot against c
             // (each vertex's right and lower edge, wrapping around the torus)
@@ -324,9 +329,19 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             run(due, t);
             sweepDebt -= due;
             if (nucleating) {
-                const radius = frontAt(t - nucleateStart);
+                const e = t - nucleateStart;
+                const radius = frontAt(e);
                 if (radius === null) nucleating = false;
                 else holdFront(radius);
+                if (announced === 'none' && e >= NUCLEUS_IN) {
+                    announced = 'nucleus';
+                    publishPhase('nucleus');
+                }
+            }
+            // The front has started (or the opening was cut short by a resize)
+            if (announced === 'nucleus' && (!nucleating || t - nucleateStart >= NUCLEUS_IN + NUCLEUS_HOLD)) {
+                announced = 'front';
+                publishPhase('front');
             }
 
             // Offscreen, the chain keeps sampling (undrawn) only while Fig. 2 plots it
@@ -466,7 +481,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             </figcaption>
             <div className={styles.stats} aria-hidden>
                 <span ref={cRef}>c {C_CRITICAL.toFixed(3)}</span>
-                <span ref={acceptRef}>accept 0%</span>
+                <span ref={acceptRef}>accept  0%</span>
             </div>
         </figure>
     );

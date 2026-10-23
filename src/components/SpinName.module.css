@@ -1,0 +1,15 @@
+/* Up letters in ink, down letters faint, like the lattice's dots; flips fade
+   between the two rather than blink */
+.name [data-spin] {
+  transition: color 0.35s ease;
+}
+
+.name [data-spin][data-down] {
+  color: color-mix(in srgb, var(--text-primary) 22%, transparent);
+}
+
+@media print {
+  .name [data-spin][data-down] {
+    color: inherit;
+  }
+}

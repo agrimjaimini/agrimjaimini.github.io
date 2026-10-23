@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useEffectEvent, useRef, useState } from 'react';
 import field from './IsingField.module.css';
+import Ticker from './Ticker';
 import styles from './ProjectFigure.module.css';
 
 export { styles as figureStyles };
@@ -185,7 +186,7 @@ export default function ProjectFigure({
                 </span>
                 {readout && (
                     <span className={styles.readout}>
-                        {readout}
+                        {typeof readout === 'string' ? <Ticker value={readout} /> : readout}
                     </span>
                 )}
             </figcaption>

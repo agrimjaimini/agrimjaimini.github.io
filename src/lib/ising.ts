@@ -28,9 +28,10 @@ function random(seed: number) {
 /**
  * One step of the chain Fig. 1 runs: propose flipping a uniformly random vertex
  * of the cols × rows torus, and accept with probability min{1, w(y)/w(x)}.
+ * An external field h > 0 adds h · Σ x(v) to the exponent of w, pulling spins up.
  * Returns the flipped vertex, or -1 if the proposal was rejected.
  */
-export function step(x: Int8Array, cols: number, rows: number, c: number, rand: () => number = Math.random) {
+export function step(x: Int8Array, cols: number, rows: number, c: number, rand: () => number = Math.random, h = 0) {
     const col = (rand() * cols) | 0;
     const row = (rand() * rows) | 0;
     const r = row * cols + col;
@@ -38,7 +39,7 @@ export function step(x: Int8Array, cols: number, rows: number, c: number, rand: 
         x[row * cols + ((col + 1) % cols)] +
         x[row * cols + ((col - 1 + cols) % cols)] +
         (rows > 1 ? x[((row + 1) % rows) * cols + col] + x[((row - 1 + rows) % rows) * cols + col] : 0);
-    const ratio = Math.exp(c * -2 * x[r] * neighbors);
+    const ratio = Math.exp(-2 * x[r] * (c * neighbors + h));
     if (ratio >= 1 || rand() < ratio) {
         x[r] = -x[r];
         return r;

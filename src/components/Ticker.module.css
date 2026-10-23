@@ -1,0 +1,40 @@
+/* One rolling digit: a hidden 0 gives it its width and baseline; the strip
+   of digits behind it slides, clipped close around the glyph (not the whole
+   line) and faded at its edges, so a digit rolls out of sight in a few pixels */
+.digit {
+  position: relative;
+  display: inline-block;
+  line-height: 1.2;
+  clip-path: inset(0);
+  mask: linear-gradient(transparent, #000 18%, #000 82%, transparent) no-repeat;
+  -webkit-mask: linear-gradient(transparent, #000 18%, #000 82%, transparent) no-repeat;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  white-space: pre;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+/* The value for screen readers; the rolling copy is hidden from them */
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    transition: none;
+  }
+}

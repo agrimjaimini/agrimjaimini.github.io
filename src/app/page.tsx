@@ -14,6 +14,7 @@ import Year from "@/components/Year";
 import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
 import LocalTime from "@/components/LocalTime";
+import SpinName from "@/components/SpinName";
 import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
 import { education, educationLines, experienceLines, now, projectLines } from "@/data/portfolioData";
@@ -89,7 +90,7 @@ export default function Home() {
       />
 
       <header className={`cell ${styles.header} enter`}>
-        <h1 className={styles.name}>Agrim Jaimini</h1>
+        <SpinName name="Agrim Jaimini" className={styles.name} />
         <LocalTime className={styles.clock} />
         <PrintStamp className={styles.stamp} />
       </header>
@@ -244,7 +245,7 @@ export default function Home() {
       </div>
 
       <footer className={`cell screen-only ${styles.footer}`}>
-        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} fade={0.6} className="lattice-rule" />
+        <Lattice seed="footer" cols={68} rows={1} gap={10} radius={1.4} c={0.9} fade={0.6} settle className="lattice-rule" />
         <span>© <Year /> Agrim Jaimini</span>
         <span className={styles.footerLinks}>
           <ThemeToggle className={styles.footerLink} />

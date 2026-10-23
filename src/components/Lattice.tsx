@@ -18,6 +18,9 @@ interface LatticeProps {
     speed?: number;
     /** Dims dots toward the edges, from this fraction of the way out (0–1); omit for none. */
     fade?: number;
+    /** Pull the row into line as the page nears its end: over the last stretch
+        of scrolling a field grows until every spin is up, and lets go on the way back. */
+    settle?: boolean;
     className?: string;
 }
 
@@ -35,13 +38,18 @@ function edgeGain(col: number, row: number, cols: number, rows: number, from: nu
 // How much faster the chain runs while the link around it is hovered
 const HOVER_BOOST = 6;
 
+// Settling: the field at the very end of the page, and how much faster the
+// chain runs at full field (quick enough to see, slow enough to watch)
+const SETTLE_FIELD = 1.5;
+const SETTLE_SPEEDUP = 10;
+
 /**
  * A small Fig. 1: the same chain, drawn the same way (up spins as full dots,
  * down spins as faint ones), in the text color. It renders its seeded state on
  * the server, then keeps sampling in the browser: slowly at rest, quicker while
  * the link it sits in is hovered. Paused offscreen and under reduced motion.
  */
-export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE_C, speed = 0.25, fade, className }: LatticeProps) {
+export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE_C, speed = 0.25, fade, settle = false, className }: LatticeProps) {
     const svgRef = useRef<SVGSVGElement>(null);
     const initial = isingState(seed, cols, rows, c);
     const r = radius ?? gap * 0.28;
@@ -57,13 +65,30 @@ export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE
         let debt = 0;
         let last = 0;
         let raf = 0;
+        let field = 0;
+
+        // How far the row has risen from the bottom of the screen toward where
+        // it sits at the end of the page: 0 as it comes into view, 1 at the end
+        const readScroll = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const top = svg.getBoundingClientRect().top;
+            const rise = window.innerHeight - (top - (max - window.scrollY));
+            const t = rise <= 1 ? (window.scrollY >= max - 1 ? 1 : 0) : (window.innerHeight - top) / rise;
+            const clamped = Math.min(1, Math.max(0, t));
+            field = clamped * clamped * SETTLE_FIELD;
+        };
+        if (settle) {
+            readScroll();
+            window.addEventListener('scroll', readScroll, { passive: true });
+            window.addEventListener('resize', readScroll);
+        }
 
         const loop = (now: number) => {
             const dt = last ? Math.min(0.1, (now - last) / 1000) : 0;
             last = now;
-            debt += dt * speed * boost * x.length;
+            debt += dt * speed * boost * (1 + (field / SETTLE_FIELD) * SETTLE_SPEEDUP) * x.length;
             for (; debt >= 1; debt--) {
-                const flipped = step(x, cols, rows, c);
+                const flipped = step(x, cols, rows, c, Math.random, field);
                 if (flipped >= 0) dots[flipped].classList.toggle(styles.down, x[flipped] < 0);
             }
             raf = requestAnimationFrame(loop);
@@ -73,6 +98,12 @@ export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE
             cancelAnimationFrame(raf);
             last = 0;
             if (entry.isIntersecting) raf = requestAnimationFrame(loop);
+            // A settling row melts back to its seeded state out of sight, so it
+            // falls into line again each time the reader reaches the end
+            else if (settle) {
+                x.set(isingState(seed, cols, rows, c));
+                x.forEach((s, i) => dots[i].classList.toggle(styles.down, s < 0));
+            }
         });
         io.observe(svg);
 
@@ -86,8 +117,10 @@ export default function Lattice({ seed, cols, rows, gap = 4, radius, c = LATTICE
             io.disconnect();
             host?.removeEventListener('pointerenter', onEnter);
             host?.removeEventListener('pointerleave', onLeave);
+            window.removeEventListener('scroll', readScroll);
+            window.removeEventListener('resize', readScroll);
         };
-    }, [seed, cols, rows, c, speed]);
+    }, [seed, cols, rows, c, speed, settle]);
 
     return (
         <svg

@@ -21,12 +21,31 @@ export function hasReadingListeners() {
     return listeners.size > 0;
 }
 
+/** The latest readout, without following them (and so without keeping Fig. 1 running offscreen). */
+export const getLastReading = () => last;
+
 /** Follow Fig. 1's readouts, starting with the latest one if there is one. */
 export function subscribeReadings(listener: Listener) {
     listeners.add(listener);
     if (last) listener(last);
     return () => {
         listeners.delete(listener);
+    };
+}
+
+// Fig. 1's opening, as it happens: the lone flipped spin appears ('nucleus'),
+// then the front starts to spread from it ('front')
+export type Phase = 'nucleus' | 'front';
+const phaseListeners = new Set<(phase: Phase) => void>();
+
+export function publishPhase(phase: Phase) {
+    phaseListeners.forEach((l) => l(phase));
+}
+
+export function subscribePhase(listener: (phase: Phase) => void) {
+    phaseListeners.add(listener);
+    return () => {
+        phaseListeners.delete(listener);
     };
 }
 
