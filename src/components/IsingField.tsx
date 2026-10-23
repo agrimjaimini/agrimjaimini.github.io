@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { C_CRITICAL } from '@/lib/ising';
-import { getManualC, hasReadingListeners, publishPhase, publishReading, setLiveC, setManualC } from '@/lib/isingFeed';
+import { getManualC, hasReadingListeners, publishReading, setLiveC, setManualC } from '@/lib/isingFeed';
 import CSlider from './CSlider';
 import { createTicker } from './Ticker';
 import styles from './IsingField.module.css';
@@ -10,7 +10,7 @@ import styles from './IsingField.module.css';
 const GAP = 10;
 const RADIUS = 1.1;
 const CYCLE = 54; // seconds for one sweep of c through the critical point and back
-export const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
+const SWEEPS_PER_SECOND = 7; // |V(G)| proposals per sweep
 const BOOT_SPEED = 900; // px per second for the load-in sweep
 const QUENCH_LIFE = 2.4; // seconds a click keeps its spot cold
 const MAX_QUENCHES = 32; // a dragged stroke leaves a trail of them
@@ -39,6 +39,9 @@ interface IsingFieldProps {
     linked?: boolean;
     /** Hold c fixed instead of drifting it across the critical point. */
     fixedC?: number;
+    /** Drift c only between these two values, rather than well past the critical
+        point on both sides (where the field orders into one solid sheet). */
+    range?: [number, number];
     /** Sweep the dots in from the center on load (off when morphing in from another page). */
     intro?: boolean;
     /** Show a slider that lets the reader set c by hand. */
@@ -48,10 +51,12 @@ interface IsingFieldProps {
     nucleate?: boolean;
 }
 
-export default function IsingField({ linked = true, fixedC, intro = true, control = false, nucleate = false }: IsingFieldProps) {
+export default function IsingField({ linked = true, fixedC, range, intro = true, control = false, nucleate = false }: IsingFieldProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const cRef = useRef<HTMLSpanElement>(null);
     const acceptRef = useRef<HTMLSpanElement>(null);
+    // As two numbers, so a new array each render doesn't restart the figure
+    const [rangeLo, rangeHi] = range ?? [];
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -84,7 +89,6 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
         // The nucleation opening, while it plays
         let nucleating = false;
         let nucleateStart = 0;
-        let announced: 'none' | 'nucleus' | 'front' = 'none'; // how far the opening has told the name
         let equilibrium = new Int8Array(0); // the state the front reveals
         let revealed = new Uint8Array(0);
         let grain = new Float32Array(0); // each spin's fixed offset from the front
@@ -150,6 +154,14 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             if (manual !== null) return manual;
             const s = Math.sin((t / CYCLE) * Math.PI * 2);
             const shaped = Math.sign(s) * Math.pow(Math.abs(s), 1.6);
+            if (rangeLo !== undefined && rangeHi !== undefined) {
+                // The same sweep, squeezed into the range, leaving room at each end
+                // for the clock's nudge (a fifth of its usual ±0.05) so c never pins there
+                const room = 0.01;
+                const lo = rangeLo + room;
+                const hi = rangeHi - room;
+                return lo + (hi - lo) * (0.5 + 0.5 * shaped) + dailyOffset(t) * 0.2;
+            }
             return C_CRITICAL + dailyOffset(t) + shaped * (shaped > 0 ? 0.12 : 0.08);
         };
 
@@ -329,19 +341,9 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             run(due, t);
             sweepDebt -= due;
             if (nucleating) {
-                const e = t - nucleateStart;
-                const radius = frontAt(e);
+                const radius = frontAt(t - nucleateStart);
                 if (radius === null) nucleating = false;
                 else holdFront(radius);
-                if (announced === 'none' && e >= NUCLEUS_IN) {
-                    announced = 'nucleus';
-                    publishPhase('nucleus');
-                }
-            }
-            // The front has started (or the opening was cut short by a resize)
-            if (announced === 'nucleus' && (!nucleating || t - nucleateStart >= NUCLEUS_IN + NUCLEUS_HOLD)) {
-                announced = 'front';
-                publishPhase('front');
             }
 
             // Offscreen, the chain keeps sampling (undrawn) only while Fig. 2 plots it
@@ -463,7 +465,7 @@ export default function IsingField({ linked = true, fixedC, intro = true, contro
             // A hand-set c belongs to this page; the next visit starts drifting again
             if (control) setManualC(null);
         };
-    }, [fixedC, intro, nucleate, control]);
+    }, [fixedC, rangeLo, rangeHi, intro, nucleate, control]);
 
     return (
         <figure className={styles.figure}>

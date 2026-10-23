@@ -14,7 +14,6 @@ import Year from "@/components/Year";
 import PrintLink from "@/components/PrintLink";
 import PrintStamp from "@/components/PrintStamp";
 import LocalTime from "@/components/LocalTime";
-import SpinName from "@/components/SpinName";
 import CopyEmail from "@/components/CopyEmail";
 import { EMAIL } from "@/lib/contact";
 import { education, educationLines, experienceLines, now, projectLines } from "@/data/portfolioData";
@@ -90,7 +89,7 @@ export default function Home() {
       />
 
       <header className={`cell ${styles.header} enter`}>
-        <SpinName name="Agrim Jaimini" className={styles.name} />
+        <h1 className={styles.name}>Agrim Jaimini</h1>
         <LocalTime className={styles.clock} />
         <PrintStamp className={styles.stamp} />
       </header>
@@ -128,7 +127,9 @@ export default function Home() {
       {/* The figure sits in the text column, after the introduction */}
       <div className={`cell screen-only ${styles.visual} enter`} style={delay(2)}>
         <Morph name="fig-1">
-          <IsingField nucleate />
+          {/* Between noise and a little structure, never one solid sheet; the
+              write-up's slider can take it anywhere */}
+          <IsingField nucleate range={[0.36, 0.45]} />
         </Morph>
       </div>
 
