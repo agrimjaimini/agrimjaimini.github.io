@@ -105,12 +105,15 @@ export default function IsingField({ linked = true, fixedC, range, intro = true,
         };
 
         const layout = () => {
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-            width = canvas.clientWidth;
-            height = canvas.clientHeight;
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            // Full device resolution (iPhones are 3x), and the backing store sized
+            // from the fractional box so it maps 1:1 onto screen pixels
+            const dpr = Math.min(window.devicePixelRatio || 1, 3);
+            const rect = canvas.getBoundingClientRect();
+            width = rect.width;
+            height = rect.height;
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            ctx.setTransform(canvas.width / width || dpr, 0, 0, canvas.height / height || dpr, 0, 0);
 
             cols = Math.max(8, Math.floor(width / GAP));
             rows = Math.max(5, Math.floor(height / GAP));
