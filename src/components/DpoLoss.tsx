@@ -13,7 +13,7 @@ const B_MAX = 0.5;
 const softplusNeg = (z: number) => (z > 0 ? Math.log1p(Math.exp(-z)) : -z + Math.log1p(Math.exp(z)));
 
 /**
- * Fig. 5: the DPO objective, loss = −log σ(β·Δ). A pair the policy gets wrong
+ * Fig. 6: the DPO objective, loss = −log σ(β·Δ). A pair the policy gets wrong
  * (Δ < 0) costs about β·|Δ| and is pushed hardest; one it gets right fades
  * toward zero. β sets how sharply: small β is a gentle slope, large β a hinge.
  * Every curve passes through log 2 at Δ = 0, where the policy is indifferent.
@@ -52,7 +52,7 @@ export default function DpoLoss() {
 
     return (
         <ProjectFigure
-            n={5}
+            n={6}
             title="DPO loss"
             readout={`Δ ${d.toFixed(1).padStart(5)}  loss ${loss(d).toFixed(2)}`}
             controls={

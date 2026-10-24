@@ -49,7 +49,7 @@ const initial = (): Store => {
 };
 
 /**
- * Fig. 6: OCaml-Git's object store. Every object is filed under the hash of
+ * Fig. 7: OCaml-Git's object store. Every object is filed under the hash of
  * its content, so editing one file makes a new blob, a new tree that lists
  * it, and a new commit that points to that tree and its parent. The files
  * that didn't change keep their hashes, and the new tree points to the very
@@ -87,7 +87,7 @@ export default function ObjectStore() {
 
     return (
         <ProjectFigure
-            n={6}
+            n={7}
             title="Object store"
             readout={`objects ${objects}  reused ${reused}`}
             controls={

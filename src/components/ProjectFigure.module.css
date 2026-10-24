@@ -131,7 +131,32 @@
   cursor: default;
 }
 
-/* Fig. 6's new objects fade in where they're filed */
+/* Fig. 5's proofs: a step is faint until Lean checks it, like a down spin,
+   and full once it does. The step Lean rejects becomes a ring and the rest
+   of that proof fades. Then each column glides to its advantage */
+.column {
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.step {
+  transition: opacity 0.3s ease;
+}
+
+.step[data-state='wait'] {
+  opacity: 0.3;
+}
+
+.step[data-state='fail'] {
+  fill: none;
+  stroke: var(--spin);
+  stroke-width: 1;
+}
+
+.step[data-state='dead'] {
+  opacity: 0.12;
+}
+
+/* Fig. 7's new objects fade in where they're filed */
 .appear {
   animation: appear 0.4s var(--ease-out-expo) both;
 }
@@ -200,6 +225,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .column,
+  .step,
   .node,
   .ring,
   .edge,

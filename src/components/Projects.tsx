@@ -7,6 +7,7 @@ import DpoLoss from './DpoLoss';
 import { BatchNumber, ChipName, DecodeRate } from './LiveNumbers';
 import type { MentionItem } from './Mentions';
 import ObjectStore from './ObjectStore';
+import ProofCheck from './ProofCheck';
 import Roofline from './Roofline';
 import TaskGraph from './TaskGraph';
 
@@ -17,6 +18,7 @@ const figures: Record<string, React.ReactNode> = {
     Trellis: <TaskGraph key="fig" />,
     Lore: <CacheScore key="fig" />,
     'Trace-Accel': <Roofline key="fig" />,
+    EuclidRL: <ProofCheck key="fig" />,
     'DPO Alignment Stack': <DpoLoss key="fig" />,
     'OCaml-Git': <ObjectStore key="fig" />,
 };

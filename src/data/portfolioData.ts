@@ -160,6 +160,19 @@ export const projects: Project[] = [
         date: "2026"
     },
     {
+        title: "EuclidRL",
+        story: "The model is Qwen2.5-Math-1.5B, trained on the recipe from DeepSeek-Prover-V1.5. After supervised fine-tuning, GRPO samples {32 proofs|group} of each theorem and {Lean checks every one|reward}: 1 if it verifies, 0 if not. Each proof is pushed by {how it scored against its group|advantage}, so no critic model is needed. A group that all passes or all fails teaches nothing.",
+        summary: "RL theorem prover in Lean 4",
+        description: "Cornell Data Science pipeline that fine-tunes Qwen2.5-Math-1.5B on Lean 4 proofs, then trains it with GRPO on binary rewards from the Lean verifier, following DeepSeek-Prover-V1.5.",
+        highlights: [
+            "Worked in a Cornell Data Science team on an SFT + RL pipeline that teaches Qwen2.5-Math-1.5B to write Lean 4 proofs, following DeepSeek-Prover-V1.5",
+            "GRPO samples {32 candidate proofs|group} per theorem, scores each with {a binary reward from the Lean verifier|reward} through LeanDojo, and weights updates by {group-relative advantage|advantage} with a KL penalty, so no critic model is needed"
+        ],
+        tech: ["PyTorch", "Hugging Face TRL", "Lean 4", "LeanDojo"],
+        date: "Dec 2025",
+        github: "https://github.com/CornellDataScience/EuclidRL"
+    },
+    {
         title: "DPO Alignment Stack",
         story: "SFT and DPO trainers in PyTorch that preference-tune Mistral 7B on Anthropic’s HH data, with bfloat16 and gradient checkpointing for memory-efficient runs on an A100. The {DPO loss|loss} pushes hardest on the pairs the model gets wrong, and the evals track preference accuracy, {reward margin|margin}, and perplexity.",
         summary: "Preference-tuning Mistral 7B (DPO)",
@@ -172,19 +185,6 @@ export const projects: Project[] = [
         tech: ["PyTorch", "Hugging Face Transformers", "DPO", "Google Colab"],
         date: "Aug 2025",
         github: "https://github.com/agrimjaimini/dpo"
-    },
-    {
-        title: "BugSense",
-        summary: "ML bug triage on Kafka and GKE",
-        description: "Production ML triage engine that ranks bug tickets by severity using embeddings, duplicate detection, and component history. Event-driven ingest on Kafka with Redis caching; PyTorch + LightGBM on GKE behind explainable REST APIs and a Next.js dashboard.",
-        highlights: [
-            "Ranked tickets by severity using embeddings, duplicate signals, and component history with PyTorch + LightGBM on GKE",
-            "Event-driven ingestion with Kafka plus Redis caching for sub-200ms reads and explainable REST endpoints",
-            "Next.js dashboard surfacing severity, duplicates, and model explanations for engineering teams"
-        ],
-        tech: ["Next.js", "Node.js", "Kafka", "PostgreSQL", "Redis", "PyTorch", "Kubernetes", "GCP"],
-        date: "Jul 2025",
-        github: "https://github.com/agrimjaimini/bug-sense"
     },
     {
         title: "Cortex",
@@ -299,5 +299,6 @@ export const educationLines = [
 export const projectLines = [
     "Lately I’ve been building [Trellis], a runtime for parallel coding agents, and [Lore], a memory market that AI agents pay to read.",
     "[Trace-Accel] simulates transformer inference on configurable hardware.",
+    "In 2025 I worked on [EuclidRL] with Cornell Data Science, training a small model to prove theorems in Lean.",
     "Earlier, I preference-tuned Mistral 7B with [DPO Alignment Stack|DPO] and wrote a Git clone in [OCaml-Git|OCaml].",
 ];
