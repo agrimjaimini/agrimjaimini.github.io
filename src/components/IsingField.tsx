@@ -104,9 +104,9 @@ export default function IsingField({ linked = true, fixedC, range, intro = true,
             gain = Number(root.getPropertyValue('--spin-gain')) || 1;
         };
 
-        const layout = () => {
-            // Full device resolution (iPhones are 3x), and the backing store sized
-            // from the fractional box so it maps 1:1 onto screen pixels
+        // Full device resolution (iPhones are 3x), and the backing store sized
+        // from the fractional box so it maps 1:1 onto screen pixels
+        const sizeCanvas = () => {
             const dpr = Math.min(window.devicePixelRatio || 1, 3);
             const rect = canvas.getBoundingClientRect();
             width = rect.width;
@@ -114,7 +114,10 @@ export default function IsingField({ linked = true, fixedC, range, intro = true,
             canvas.width = Math.round(width * dpr);
             canvas.height = Math.round(height * dpr);
             ctx.setTransform(canvas.width / width || dpr, 0, 0, canvas.height / height || dpr, 0, 0);
+        };
 
+        const layout = () => {
+            sizeCanvas();
             cols = Math.max(8, Math.floor(width / GAP));
             rows = Math.max(5, Math.floor(height / GAP));
             offsetX = (width - (cols - 1) * GAP) / 2;
@@ -407,9 +410,26 @@ export default function IsingField({ linked = true, fixedC, range, intro = true,
         themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         const scheme = window.matchMedia('(prefers-color-scheme: dark)');
         scheme.addEventListener('change', onTheme);
+        // Moving to a screen of another density (or zooming the page) keeps the
+        // box but not the pixel ratio: redraw the backing store, keep the spins.
+        // The query matches only the current ratio, so it's rebuilt each change
+        let density: MediaQueryList | null = null;
+        const watchDensity = () => {
+            density?.removeEventListener('change', onDensity);
+            density = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+            density.addEventListener('change', onDensity);
+        };
+        const onDensity = () => {
+            watchDensity();
+            sizeCanvas();
+            if (reduced) draw(0, 1);
+        };
+        watchDensity();
+
         const stopThemeWatch = () => {
             themeObserver.disconnect();
             scheme.removeEventListener('change', onTheme);
+            density?.removeEventListener('change', onDensity);
         };
 
         // Burn-in: run the chain before the first frame so it opens near equilibrium
